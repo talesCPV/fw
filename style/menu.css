@@ -200,7 +200,6 @@ li > a:only-child:after { content: ''; }
 
 	}
 
-
 	#usr-name{
 		display: none;
 	}

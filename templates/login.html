@@ -83,13 +83,10 @@
 
                 if(json.length>0){                    
                     localStorage.setItem("id_user",json[0].id);
-                    localStorage.setItem("username",json[0].email.split('@')[0]);
                     localStorage.setItem("hash",json[0].hash);
-                    localStorage.setItem("access",json[0].class);
-                    localStorage.setItem("nome",json[0].nome);
-                    localStorage.setItem("cel",json[0].cel);
-                    localStorage.setItem("email",json[0].email);
-                    localStorage.setItem("db",json[0].db);                  
+                    localStorage.setItem("access",json[0].access);
+                    localStorage.setItem("nome",json[0].nome);                    
+                    localStorage.setItem("email",json[0].email);                               
                     openHTML('dashboard.html','main-screen')
 //                    document.documentElement.requestFullscreen();
                 }else{

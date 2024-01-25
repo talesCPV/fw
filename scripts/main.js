@@ -255,7 +255,7 @@ function openMenu(){
         fetch(myRequest)
         .then(function (response){         
             if (response.status === 200) { 
-                document.querySelector('#usr-name').innerHTML = '<span id="badge" class="badge"></span> '+localStorage.getItem('username').toUpperCase()
+                document.querySelector('#usr-name').innerHTML = '<span id="badge" class="badge"></span> '+localStorage.getItem('nome').toUpperCase()
                 resolve(response.text()); 
 //                checkMail()                   
             } else { 
@@ -265,7 +265,7 @@ function openMenu(){
     }); 
 
     myPromisse.then((resolve)=>{
-        localStorage.setItem("menu",resolve);
+//        localStorage.setItem("menu",resolve);
         const menu_data = JSON.parse(resolve)
         const menu = document.querySelector('.menu')
         pushMenu(menu, menu_data)
@@ -445,10 +445,10 @@ function listNF(dir,ext='txt'){
 
 function setLog(line){
     const now = new Date
-    line = `${now.getFullDate()} ${localStorage.getItem('username')} -> ` + line.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    line = `${now.getFullDate()} ${localStorage.getItem('email')} -> ` + line.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     const data = new URLSearchParams();        
         data.append("line",line);
-        data.append("db",localStorage.getItem('db'));
+        data.append("hash",localStorage.getItem('hash'));
     const myRequest = new Request("backend/setLog.php",{
         method : "POST",
         body : data
