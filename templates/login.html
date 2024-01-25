@@ -1,0 +1,141 @@
+
+<template>
+
+    <style>
+        body{
+/*            background-image: url('https://img.wallpapersafari.com/desktop/1536/864/66/27/CMAa8P.jpg');*/
+            background-image: url('assets/background.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            font-size:12px;
+            color: black;
+        }
+
+        .frm-login{
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 300px;
+            height: 100%;
+            padding-top: 20vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(168,232,79,0.9);
+            text-align: center;
+
+        }
+
+        .frm-login *{
+            padding: 8px;
+            margin: 10px;
+            width: 80%;
+        }
+
+        @media all and (max-width : 720px) {
+            .frm-login{
+                position: relative;
+                width: 80%;
+                height: auto;
+               /* margin: auto;*/
+                padding-top: 0;
+                margin: 25vh auto;
+                border-radius: 15px;
+            }
+
+        }
+    </style>
+
+    <div class="frm-login">
+       
+        <a href="#" class="logo"><img src="assets/logo.png" alt=""></a>
+
+        <input type="text"     id="edtUser" placeholder="Email" onkeyup="validate(this)">
+        <input type="password" id="edtPass" placeholder="Senha" onkeypress="return getEnter(event, 'btnLogin')" >
+        <button id="btnLogin"> LOGIN </button>
+        
+        <hr size="1" width="90%" />
+
+        <p>FW Tecnologia - 2024</p>
+
+
+    </div>
+
+</template>
+<script>
+
+    localStorage.clear();                
+    
+    document.querySelector('#btnLogin').addEventListener('click',()=>{
+
+        if(checkField(['edtUser','edtPass'])){
+            let notfound = true            
+            let user = document.querySelector('#edtUser').value
+            let pass = document.querySelector('#edtPass').value
+            const params = new Object;
+                params.user = user;
+                params.pass = pass;
+
+            const myPromisse = queryDB(params,0);
+            myPromisse.then((resolve)=>{
+                const json = JSON.parse(resolve)
+
+                if(json.length>0){                    
+                    localStorage.setItem("id_user",json[0].id);
+                    localStorage.setItem("username",json[0].email.split('@')[0]);
+                    localStorage.setItem("hash",json[0].hash);
+                    localStorage.setItem("access",json[0].class);
+                    localStorage.setItem("nome",json[0].nome);
+                    localStorage.setItem("cel",json[0].cel);
+                    localStorage.setItem("email",json[0].email);
+                    localStorage.setItem("db",json[0].db);                  
+                    openHTML('dashboard.html','main-screen')
+//                    document.documentElement.requestFullscreen();
+                }else{
+                    alert('Usuário ou Senha inválido!')
+                    document.querySelector('#edtUser').focus()
+                }
+            })
+
+
+
+
+            function login(i){
+
+                localStorage.setItem("storage",databases[i]);
+                const myPromisse = queryDB(params,0,databases[i])
+
+                myPromisse.then((resolve)=>{
+                    const json = JSON.parse(resolve);
+                    if(json.length > 0){
+                        notfound = false
+                        localStorage.setItem("id_user",json[0].id);
+                        localStorage.setItem("username",json[0].user);
+                        localStorage.setItem("hash",json[0].hash);
+                        localStorage.setItem("access",json[0].class);
+                        localStorage.setItem("nome",json[0].nome);
+                        localStorage.setItem("cel",json[0].cel);
+                        localStorage.setItem("email",json[0].email);
+                        localStorage.setItem("db",json[0].db);
+                        localStorage.setItem("storage",databases[i]);                    
+                        openHTML('dashboard.html','main-screen')
+    //                    document.documentElement.requestFullscreen();
+                                        
+                    }else{
+                        if( i<databases.length-1){
+                            login(i+1)
+                        }else{
+                            alert("Usuário ou senha inválido!");
+                            localStorage.clear();  
+                        }
+                    }                
+                });
+            }
+        }
+    })
+
+//         'e9a5438692c002bf4e761e95350284a15d740c71bd65edfa8a1217a2be312730'
+
+
+</script>

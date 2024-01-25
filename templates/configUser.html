@@ -1,0 +1,144 @@
+
+<template>
+    <style>
+
+        #btnSave{
+            width: 98%;
+        }
+
+    </style>
+  <fieldset>
+    <legend>Papel de Parede</legend>
+
+    <div class="inline">
+        <label for="cmbWallpaper">Padrão</label>
+        <select id="cmbWallpaper">
+            <option value="wallpaper_01.jpg">Wallpaper 01</option>
+            <option value="wallpaper_02.jpg">Wallpaper 02</option>
+            <option value="wallpaper_03.jpg">Wallpaper 03</option>
+            <option value="wallpaper_04.jpg">Wallpaper 04</option>
+        </select>        
+    </div>
+    <button id="btnUserUp">Upload</button>
+
+  </fieldset>
+
+  <fieldset>
+    <legend>Menu</legend>
+    <div class="inline">
+        <label for="edtBarColor">Cor de Fundo</label>
+        <input type="color" id="edtBarColor">
+        <input id="rngBarColor" type="range" min="0" max="255" step="1" value="255">
+    </div>
+    <div class="inline">
+        <label for="edtBarFontColor">Cor da Fonte</label>
+        <input type="color" id="edtBarFontColor">
+        <input id="rngFontColor" type="range" min="0" max="255" step="1" value="255">
+    </div>
+    <div class="inline">
+        <label for="edtBarMouse">Selecionado</label>
+        <input type="color" id="edtBarMouse">
+        <input id="rngBarMouse" type="range" min="0" max="255" step="1" value="255">
+    </div>
+
+  </fieldset>
+
+
+  <fieldset>
+    <legend>Janelas</legend>
+    <div class="inline">
+        <label for="edtWinColor">Cor de Fundo</label>
+        <input type="color" id="edtWinColor">
+        <input id="rngWinColor" type="range" min="0" max="255" step="1" value="255">
+    </div>
+    <div class="inline">
+        <label for="edtWinFontColor">Cor da Fonte</label>
+        <input type="color" id="edtWinFontColor">
+        <input id="rngWinFontColor" type="range" min="0" max="255" step="1" value="255">
+    </div>
+  </fieldset>
+  <button id="btnSave">Salvar</button>
+
+</template>
+<script>
+// #2C3D3A
+
+    try{
+        document.querySelector('#cmbWallpaper').value = main_data.dashboard.data.wallpaper.substr(7)
+        document.querySelector('#edtBarColor').value = main_data.dashboard.data.bar_back_color.substr(0,7)
+        document.querySelector('#edtBarFontColor').value = main_data.dashboard.data.bar_font_color.substr(0,7)
+        document.querySelector('#edtBarMouse').value = main_data.dashboard.data.bar_mouse_color.substr(0,7)
+        document.querySelector('#edtWinColor').value = main_data.dashboard.data.win_back_color.substr(0,7)
+        document.querySelector('#edtWinFontColor').value = main_data.dashboard.data.win_font_color.substr(0,7)
+        document.querySelector('#rngBarColor').value = parseInt(main_data.dashboard.data.bar_back_color.substr(7,2),16).toString()
+        document.querySelector('#rngFontColor').value = parseInt(main_data.dashboard.data.bar_font_color.substr(7,2),16).toString()
+        document.querySelector('#rngBarMouse').value = parseInt(main_data.dashboard.data.bar_mouse_color.substr(7,2),16).toString()
+        document.querySelector('#rngWinColor').value = parseInt(main_data.dashboard.data.win_back_color.substr(7,2),16).toString()
+        document.querySelector('#rngWinFontColor').value = parseInt(main_data.dashboard.data.win_font_color.substr(7,2),16).toString()
+        if(document.querySelector('#cmbWallpaper').value == ''){
+            const opt = document.createElement('option')
+            opt.value = main_data.dashboard.data.wallpaper.substr(7)
+            opt.innerHTML = 'Personalizado'
+            document.querySelector('#cmbWallpaper').appendChild(opt)
+            document.querySelector('#cmbWallpaper').value = main_data.dashboard.data.wallpaper.substr(7)
+        }
+    } catch {
+        document.querySelector('#edtBarColor').value = '#2C3D3A'
+        document.querySelector('#edtBarFontColor').value = '#FFFFFF'
+        document.querySelector('#edtBarMouse').value = '#000000'
+        document.querySelector('#rngBarColor').value = parseInt('3A',16).toString()
+        document.querySelector('#rngFontColor').value = '255'
+        document.querySelector('#rngBarMouse').value = '255'
+    }
+
+
+    const saveBackground = function(filename, path='assets/users/'){ 
+        try{
+            getConfig(localStorage.getItem('username'),'config.json','wallpaper',path+filename)
+            main_data.dashboard.wallpaper()
+            closeModal('uploadFile')
+        }catch{
+            console.log('clear wallpaper')
+        }            
+    }
+
+    document.querySelector('#btnUserUp').addEventListener('click',()=>{
+            const obj = new Object
+                obj.path = '../assets/users/'
+                obj.filename = 'wallpaper_'+localStorage.getItem('username')
+                obj.ext = '.jpg,.jpeg,.png'
+                obj.func = saveBackground
+                
+            openHTML('uploadFile.html','pop-up','Upload de NF',obj,[20,150])
+    })
+
+    document.querySelector('#btnSave').addEventListener('click',()=>{
+
+        saveBackground(document.querySelector('#cmbWallpaper').value,'assets/')
+        main_data.dashboard.wallpaper()
+
+        try{
+            getConfig(localStorage.getItem('username'),'config.json','bar_back_color',document.querySelector('#edtBarColor').value + parseInt(document.querySelector('#rngBarColor').value).toString(16).padStart(2, "0"))
+            getConfig(localStorage.getItem('username'),'config.json','bar_font_color',document.querySelector('#edtBarFontColor').value + parseInt(document.querySelector('#rngFontColor').value).toString(16).padStart(2, "0"))
+            getConfig(localStorage.getItem('username'),'config.json','bar_mouse_color',document.querySelector('#edtBarMouse').value + parseInt(document.querySelector('#rngBarMouse').value).toString(16).padStart(2, "0"))
+            getConfig(localStorage.getItem('username'),'config.json','win_back_color',document.querySelector('#edtWinColor').value + parseInt(document.querySelector('#rngWinColor').value).toString(16).padStart(2, "0"))
+            getConfig(localStorage.getItem('username'),'config.json','win_font_color',document.querySelector('#edtWinFontColor').value + parseInt(document.querySelector('#rngWinFontColor').value).toString(16).padStart(2, "0"))
+            getConfig(localStorage.getItem('username'),'config.json').then((txt)=>{
+                const json = JSON.parse(txt)
+                document.body.style.setProperty('-top-bar', document.querySelector('#edtBarColor').value);
+                document.body.style.setProperty('--top-bar-hover', document.querySelector('#edtBarMouse').value + parseInt(document.querySelector('#rngBarMouse').value).toString(16).padStart(2, "0")) ;
+                document.body.style.setProperty('--win-back', document.querySelector('#edtWinColor').value + parseInt(document.querySelector('#rngWinColor').value).toString(16).padStart(2, "0")) ;
+                document.body.style.setProperty('--win-font', document.querySelector('#edtWinFontColor').value + parseInt(document.querySelector('#rngWinFontColor').value).toString(16).padStart(2, "0")) ;
+
+                setBarStyle()
+                alert('Aparência alterada com sucesso!')
+            })
+        }catch{
+            console.log('Error!!')
+        } 
+
+
+    })
+
+
+</script>

@@ -1,0 +1,79 @@
+31/01/2023 20:52:38 sassu -> Compra 10Kg de ACO INOX por R$8.6 para A. DE F. SILVA RECICLAVEIS  
+31/01/2023 20:52:38 sassu -> Compra 20Kg de ALUMINIO BLOCO 50% por R$5.6 para A. DE F. SILVA RECICLAVEIS  
+31/01/2023 23:24:48 sassu -> Estorno de material: 20 KG de ALUMINIO BLOCO 50% em MONTANA
+31/01/2023 23:27:22 sassu -> Estorno de material: 10 KG de ACO INOX em MONTANA
+31/01/2023 23:28:04 sassu -> Compra deletada, Fornecedor:A. DE F. SILVA RECICLAVEIS, valor R$198.00, data da compra:31/01/2023 20:52
+01/02/2023 08:06:43 sassu -> Compra (data editada), de 31/01/2023 09:48 p/ 2023-01-31 08:52:00
+01/02/2023 08:07:01 sassu -> Compra (data editada), de 31/01/2023 14:24 p/ 2023-01-31 10:15:00
+01/02/2023 08:07:15 sassu -> Compra (data editada), de 31/01/2023 14:32 p/ 2023-01-31 12:37:00
+01/02/2023 08:09:59 adriano -> Alteracao de preco de compra: ALUMINIO BLOCO LIMPO, de R$5.20 p/ R$5.20 em MONTANA
+01/02/2023 08:16:03 sassu -> Alteracao de preco de compra: ALUMINIO BLOCO LIMPO, de R$5.20 p/ R$6.20 em MONTANA
+01/02/2023 08:16:21 sassu -> Alteracao de preco de compra: ANTIMONIO, de R$9.50 p/ R$10.00 em MONTANA
+01/02/2023 08:16:34 sassu -> Alteracao de preco de compra: CHUMBO, de R$7.00 p/ R$8.00 em MONTANA
+01/02/2023 08:16:54 sassu -> Alteracao de preco de compra: METAL, de R$23.00 p/ R$23.50 em MONTANA
+01/02/2023 08:17:02 sassu -> Alteracao de preco de compra: MOTOR DE GELADEIRA, de R$3.50 p/ R$3.60 em MONTANA
+01/02/2023 08:18:40 adriano -> Compra 10.2Kg de ALUMINIO BLOCO 50% por R$3.5 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 30.6Kg de ACO INOX por R$6 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 36.2Kg de ALUMINIO BLOCO LIMPO por R$6.2 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 18.8Kg de ALUMINIO BLOCO SUJO por R$5.2 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 7Kg de ALUMINIO CHAPA por R$6.5 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 265.9Kg de ALUMINIO LATA por R$7.3 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 32.6Kg de ALUMINIO PANELA por R$11 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 5.6Kg de ALUMINIO PERFIL 2Ã‚Â° por R$11.5 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 31.8Kg de ALUMINIO PERFIL 1Ã‚Â° por R$12.5 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 2.6Kg de ALUMINIO TUBINHO por R$9 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 18Kg de COBRE VERMELHO por R$42 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 10.2Kg de ANTIMONIO por R$10 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 20Kg de COBRE MISTO por R$40 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 335.2Kg de BATERIA por R$4.7 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 15.6Kg de METAL por R$23.5 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 5.6Kg de CHUMBO por R$8 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 30Kg de INOX FERROSO por R$2 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 6.4Kg de PLACA MARROM por R$2.5 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:18:40 adriano -> Compra 16.2Kg de MOTOR DE GELADEIRA por R$3.6 para BENEDITO CARLOS DE JESUS  
+01/02/2023 08:19:53 sassu -> Compra (data editada), de 01/02/2023 08:18 p/ 2023-01-31 18:13:00
+01/02/2023 08:23:47 sassu -> Alteracao de preco de compra: METAL, de R$23.00 p/ R$23.50 em MONTANA
+01/02/2023 08:23:58 sassu -> Alteracao de preco de compra: BRONZE, de R$25.20 p/ R$26.00 em MONTANA
+01/02/2023 08:24:22 adriano -> Compra 89.5Kg de COBRE MISTO por R$40 para PAULO BATISTA  
+01/02/2023 08:24:22 adriano -> Compra 28.7Kg de METAL por R$23.5 para PAULO BATISTA  
+01/02/2023 08:24:22 adriano -> Compra 3Kg de BRONZE por R$26 para PAULO BATISTA  
+01/02/2023 08:24:22 adriano -> Compra 42.8Kg de COBRE VERMELHO por R$42 para PAULO BATISTA  
+01/02/2023 08:25:02 sassu -> Compra (data editada), de 01/02/2023 08:24 p/ 2023-02-01 07:14:00
+01/02/2023 08:26:35 sassu -> Alteracao de preco de compra: COBRE MISTO, de R$40.00 p/ R$44.00 em MONTANA
+01/02/2023 08:26:39 sassu -> Alteracao de preco de compra: COBRE MISTO, de R$44.00 p/ R$41.00 em MONTANA
+01/02/2023 08:26:45 sassu -> Alteracao de preco de compra: METAL, de R$23.00 p/ R$24.00 em MONTANA
+01/02/2023 08:27:05 adriano -> Compra 96.4Kg de COBRE MISTO por R$41 para LUCAS DE FARIA FIALHO LTDA  
+01/02/2023 08:27:05 adriano -> Compra 91.1Kg de COBRE VERMELHO por R$43.5 para LUCAS DE FARIA FIALHO LTDA  
+01/02/2023 08:27:05 adriano -> Compra 4.8Kg de METAL por R$24 para LUCAS DE FARIA FIALHO LTDA  
+01/02/2023 08:27:31 sassu -> Compra (data editada), de 01/02/2023 08:27 p/ 2023-02-01 07:38:00
+01/02/2023 08:28:42 sassu -> Venda (data editada), de 31/01/2023 17:13 p/ 2023-01-31 07:31:00
+01/02/2023 08:30:52 sassu -> Tranferencia de material 110Kg de ACO INOX de MONTANA para CAMINHAO AMARELO
+01/02/2023 08:44:33 sassu -> Alteracao de preco de compra: ALUMINIO CAVACO, de R$4.80 p/ R$5.00 em MONTANA
+01/02/2023 08:48:31 adriano -> Alteracao de preco de compra: ALUMINIO CAVACO, de R$5.00 p/ R$4.24 em MONTANA
+01/02/2023 08:51:13 adriano -> Alteracao de preco de compra: ALUMINIO CAVACO, de R$4.24 p/ R$4.24 em MONTANA
+01/02/2023 08:51:31 sassu -> Alteracao de preco de compra: ALUMINIO CAVACO, de R$4.24 p/ R$4.25 em MONTANA
+01/02/2023 08:52:20 adriano -> Compra 187Kg de ALUMINIO PERFIL 1Ã‚Â° por R$12.5 para ROBSON CUNHA RIBEIRO  
+01/02/2023 08:52:20 adriano -> Compra 372.94Kg de ALUMINIO CAVACO por R$4.25 para ROBSON CUNHA RIBEIRO  
+01/02/2023 08:53:00 sassu -> Compra (data editada), de 01/02/2023 08:52 p/ 2023-01-31 14:42:00
+01/02/2023 08:57:46 sassu -> Conversao de 0.90Kg de VARREDURA em ALUMINIO CABO
+01/02/2023 08:59:15 sassu -> Tranferencia de material 372.94Kg de ALUMINIO CAVACO de MONTANA para CAMINHAO AMARELO
+01/02/2023 09:04:05 sassu -> Conversao de 0.2Kg de COBRE VERMELHO em COBRE VERMELHO MOIDO
+01/02/2023 09:11:39 sassu -> Conversao de 11Kg de ALUMINIO CAVACO em CAVACO DE METAL
+01/02/2023 09:16:44 sassu -> Conversao de 68.5Kg de ALUMINIO LATA em ALUMINIO CHAPA
+01/02/2023 09:17:06 sassu -> Tranferencia de material 68.5Kg de ALUMINIO LATA de MONTANA para CAMINHAO AMARELO
+01/02/2023 09:20:45 sassu -> Tranferencia de material 262.5Kg de ALUMINIO PERFIL 1Ã‚Â° de MONTANA para CAMINHAO AMARELO
+01/02/2023 09:39:26 sassu -> Alteracao de preco de compra: COBRE MISTO, de R$41.00 p/ R$41.00 em GALPAO DA V. PARAISO
+01/02/2023 09:39:41 sassu -> Alteracao de preco de compra: COBRE MISTO, de R$41.00 p/ R$41.00 em GALPAO DA V. PARAISO
+01/02/2023 09:40:54 sassu -> Alteracao de preco de compra: COBRE MISTO, de R$41.00 p/ R$41.00 em GALPAO DA V. PARAISO
+01/02/2023 09:41:07 sassu -> Compra 1102.7Kg de COBRE MISTO por R$41 para ALOISIO (MOTOR)  
+01/02/2023 09:42:21 sassu -> Alteracao de estoque, de 1606.6999999999998Kg p/ 10517.00Kg de MOTOR DE GELADEIRA em GALPAO DA V. PARAISO
+01/02/2023 10:03:17 sassu -> Tranferencia de material 10Kg de ALUMINIO MOTOR de CAMINHAO AMARELO para GALPAO DA V. PARAISO
+01/02/2023 10:03:17 sassu -> Tranferencia de material 138.3Kg de MOTOR DE GELADEIRA de CAMINHAO AMARELO para GALPAO DA V. PARAISO
+01/02/2023 10:04:14 sassu -> Tranferencia de material 16.2Kg de MOTOR DE GELADEIRA de MONTANA para GALPAO DA V. PARAISO
+01/02/2023 10:04:14 sassu -> Tranferencia de material 161.6Kg de ALUMINIO MOTOR de MONTANA para GALPAO DA V. PARAISO
+01/02/2023 10:04:39 sassu -> Item deletado: ALUMINIO MOTOR em GALPAO DA V. PARAISO
+01/02/2023 10:07:06 sassu -> Alteracao de estoque, de 10671.5Kg p/ 10764.45Kg de MOTOR DE GELADEIRA em GALPAO DA V. PARAISO
+01/02/2023 10:10:51 sassu -> Item deletado: MOTOR DE GELADEIRA em GALPAO DA V. PARAISO
+01/02/2023 10:15:53 sassu -> Compra 10764.45Kg de MOTOR DE GELADEIRA por R$4.2 para ALOISIO (MOTOR)  
+01/02/2023 10:16:09 sassu -> Compra deletada, Fornecedor:ALOISIO (MOTOR), valor R$45210.69, data da compra:01/02/2023 10:15
+01/02/2023 10:18:28 sassu -> Venda 10764.45Kg de MOTOR DE GELADEIRA por R$4.2  para ALOISIO (MOTOR) 
