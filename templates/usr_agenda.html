@@ -167,7 +167,7 @@
         }   
 
         function clickDate(square){
-            openHTML("viewAgenda.html",'pop-up', square.id+'/'+cmbAno.value,square.lastChild);
+            openHTML("usr_viewAgenda.html",'pop-up', square.id+'/'+cmbAno.value,square.lastChild);
         }
  
     }
@@ -175,10 +175,10 @@
     function busca(start,end){
       
         const params = new Object;
-        params.id_user = localStorage.getItem('hash');
+        params.hash = localStorage.getItem('hash');
         params.dt_ini = start.getFormatDate();
         params.dt_fin = end.getFormatDate();
-        const myPromisse = queryDB(params,1);
+        const myPromisse = queryDB(params,'CAL-0');
 
         myPromisse.then((resolve)=>{
             if(resolve.trim() != ""){

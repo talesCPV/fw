@@ -40,7 +40,7 @@
         params.data_agd = main_data.viewAgenda.data.data
         params.obs = text
 
-    const resp = queryDB(params,2)
+    const resp = queryDB(params,'CAL-1')
     resp.then((resolve)=>{
         document.getElementById(main_data.viewAgenda.data.data).innerHTML = text
         document.getElementById(main_data.viewAgenda.data.data).parentNode.style.background = color

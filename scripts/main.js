@@ -14,6 +14,7 @@ function closeModal(id='all'){
     const mod_main = document.querySelector('#myModal')
     if(id=='all'){
         while(mod_main.querySelectorAll('.modal').length > 0){
+            delete main_data[mod_main.querySelectorAll('.modal')[0].id.split('-')[1]]
             mod_main.querySelectorAll('.modal')[0].remove()    
         }
     }else{
@@ -97,7 +98,7 @@ async function openHTML(template,where="content-screen",label="", data="",pos=[3
                     label = 'ERRO 404!'
                 }
 
-                if(where == "pop-up"){
+                if(where == "pop-up" && !main_data.hasOwnProperty(page_name)){                    
                     newModal(label,body.innerHTML,pos,page_name)
                 }else{
                     const cont = body.innerHTML.replace('<h1>', `<span id="close-screen" onclick="document.querySelector('#imgLogo').click()">&times;</span><h1>`)
@@ -255,7 +256,7 @@ function openMenu(){
         fetch(myRequest)
         .then(function (response){         
             if (response.status === 200) { 
-                document.querySelector('#usr-name').innerHTML = '<span id="badge" class="badge"></span> '+localStorage.getItem('nome').toUpperCase()
+                document.querySelector('#usr-name').innerHTML = ''+localStorage.getItem('nome').toUpperCase()
                 resolve(response.text()); 
 //                checkMail()                   
             } else { 
@@ -265,7 +266,7 @@ function openMenu(){
     }); 
 
     myPromisse.then((resolve)=>{
-//        localStorage.setItem("menu",resolve);
+        localStorage.setItem("menu",resolve);
         const menu_data = JSON.parse(resolve)
         const menu = document.querySelector('.menu')
         pushMenu(menu, menu_data)
@@ -470,41 +471,46 @@ function setLog(line){
 
 function setBarStyle(){
 
-        getConfig(localStorage.getItem('username'),'config.json').then((txt)=>{
-            try{
+    getConfig(localStorage.getItem('username'),'config.json').then((txt)=>{
+        try{
 
-                const json = JSON.parse(txt)
+            const json = JSON.parse(txt)
 
-                document.body.style.setProperty('-top-bar', json.bar_back_color)
-                document.body.style.setProperty('-top-bar-font', json.bar_font_color)
-                document.body.style.setProperty('--top-bar-hover', json.bar_mouse_color)
-                document.body.style.setProperty('--win-back', json.win_back_color);
-                document.body.style.setProperty('--win-font', json.win_font_color);
-                
-                document.querySelector('nav').style.backgroundColor = json.bar_back_color
-                document.querySelector('#usr-name').style.color = json.bar_font_color
+            document.body.style.setProperty('-top-bar', json.bar_back_color)
+            document.body.style.setProperty('-top-bar-font', json.bar_font_color)
+            document.body.style.setProperty('--top-bar-hover', json.bar_mouse_color)
+            document.body.style.setProperty('--win-back', json.win_back_color);
+            document.body.style.setProperty('--win-font', json.win_font_color);
+            
+            document.querySelector('nav').style.backgroundColor = json.bar_back_color
+            document.querySelector('#usr-name').style.color = json.bar_font_color
 
-                                
-                main_data.dashboard.data.bar_back_color = json.bar_back_color
-                main_data.dashboard.data.bar_font_color = json.bar_font_color
-                main_data.dashboard.data.bar_mouse_color = json.bar_mouse_color
-                main_data.dashboard.data.win_back_color = json.win_back_color
-                main_data.dashboard.data.win_font_color = json.win_font_color
+                            
+            main_data.dashboard.data.bar_back_color = json.bar_back_color
+            main_data.dashboard.data.bar_font_color = json.bar_font_color
+            main_data.dashboard.data.bar_mouse_color = json.bar_mouse_color
+            main_data.dashboard.data.win_back_color = json.win_back_color
+            main_data.dashboard.data.win_font_color = json.win_font_color
 
-                const ulli = document.querySelectorAll('nav ul li ul li') 
-                for(let i=0; i<ulli.length; i++){
-                    ulli[i].style.backgroundColor = json.bar_back_color            
-                }
-                const a = document.querySelectorAll('nav a')
-                for(let i=0; i<a.length; i++){
-                    a[i].style.color = json.bar_font_color
-                }
-            } catch {
-                return
+            const ulli = document.querySelectorAll('nav ul li ul li') 
+            for(let i=0; i<ulli.length; i++){
+                ulli[i].style.backgroundColor = json.bar_back_color            
             }
-    
-        })
-    
+            const a = document.querySelectorAll('nav a')
+            for(let i=0; i<a.length; i++){
+                a[i].style.color = json.bar_font_color
+            }
+        } catch {
+            return
+        }
+
+    })
+}
 
 
+function logout(){
+    if(confirm(`Encerrar login de ${localStorage.getItem('email')}?`)){
+        localStorage.clear()
+        this.location.reload(true)    
+    }
 }

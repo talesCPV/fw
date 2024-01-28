@@ -2,7 +2,6 @@
 
 function addItem($access,$obj){
   $menu = [];
-  $open_mod = explode(',',$modulos);
 
   for($i = 0; $i< count($obj); $i++){  
 
@@ -16,7 +15,6 @@ function addItem($access,$obj){
       $item->itens = [];
 
       if(count($obj[$i]->itens) > 0){
-//        $item->itens = addItem($modulos, $obj[$i]->itens);
           array_push($item->itens, addItem($access, $obj[$i]->itens));          
       } 
 

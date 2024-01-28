@@ -108,7 +108,8 @@ nav ul li {
 
 /* Styling the links */
 nav a {
-	display:block;
+	display:flex;
+	gap: 5px;
 	padding:14px 20px;	
 	color:var(--top-bar-font);
 	font-size:14px;

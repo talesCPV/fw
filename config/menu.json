@@ -1,54 +1,63 @@
 {
 	"menu": [
 		{
-			"modulo" : "Cadastros",
+			"modulo" : "Admin",
 			"script" : "#",
 			"access" : [100],
 			"class"  : "",
 			"icone"  : "fa fa-industry",
 			"itens"  : [
 				{
-					"modulo" : "Empresas",
-					"script" : "javascript:openHTML('clientes.html','content-screen')",
-					"access" : [100],
-					"class"  : "",
-					"icone"  : "fa fa-industry",
-					"itens"  : []
-				},
-				{
-					"modulo" : "Comprador",
-					"script" : "javascript:openHTML('motoristas.html','content-screen')",
-					"access" : [100],
-					"class"  : "",
-					"icone"  : "fa fa-industry",
-					"itens"  : []
-				},
-				{
-					"modulo" : "Usuários",
-					"script" : "javascript:openHTML('usuarios.html','content-screen')",
-					"access" : [100],
-					"class"  : "",
-					"icone"  : "fa fa-industry",
-					"itens"  : []
-				},
-				{
-					"modulo" : "Configurações",
+					"modulo" : "Cadastros",
 					"script" : "#",
 					"access" : [100],
 					"class"  : "",
 					"icone"  : "fa fa-industry",
 					"itens"  : [
 						{
-							"modulo" : "Unidades",
-							"script" : "javascript:openHTML('unidades.html','content-screen')",
+							"modulo" : "Empresas",
+							"script" : "javascript:openHTML('newEmp.html','content-screen')",
 							"access" : [100],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
 							"itens"  : []
 						},
 						{
-							"modulo" : "Material (NFe)",
-							"script" : "javascript:openHTML('material.html','content-screen')",
+							"modulo" : "Produtos",
+							"script" : "javascript:openHTML('newProd.html','content-screen')",
+							"access" : [100],
+							"class"  : "",
+							"icone"  : "fa fa-industry",
+							"itens"  : []
+						},						
+						{
+							"modulo" : "Funcionários",
+							"script" : "javascript:openHTML('newFunc.html','pop-up')",
+							"access" : [100],
+							"class"  : "",
+							"icone"  : "fa fa-industry",
+							"itens"  : []
+						}
+					]
+				},
+				{
+					"modulo" : "Gerenciamento",
+					"script" : "#",
+					"access" : [100],
+					"class"  : "",
+					"icone"  : "fa fa-industry",
+					"itens"  : [
+						{
+							"modulo" : "Usuários",
+							"script" : "javascript:openHTML('usuarios.html','content-screen')",
+							"access" : [100],
+							"class"  : "",
+							"icone"  : "fa fa-industry",
+							"itens"  : []
+						},		
+						{
+							"modulo" : "Setores",
+							"script" : "javascript:openHTML('setores.html','pop-up', 'Gerenciamento de Setores')",
 							"access" : [100],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
@@ -61,30 +70,46 @@
 							"class"  : "",
 							"icone"  : "fa fa-industry",
 							"itens"  : []
-						}																
+						}
 					]
-				}						
+				}
 			]
 		},		
-
 		{
-			"modulo" : "Estoque",
+			"modulo" : "Comercial",
+			"script" : "#",
+			"access" : [100],
+			"class"  : "",
+			"icone"  : "fa fa-industry",
+			"itens"  : [
+				{
+					"modulo" : "Agenda",
+					"script" : "javascript:openHTML('com_agenda.html','content-screen')",
+					"access" : [100],
+					"class"  : "",
+					"icone"  : "fa fa-industry",
+					"itens"  : []
+				}				
+			]
+		},
+		{
+			"modulo" : "Engenharia",
 			"script" : "#",
 			"access" : [100,10],
 			"class"  : "",
 			"icone"  : "fa fa-industry",
 			"itens"  : [
 				{
-					"modulo" : "Local",
-					"script" : "javascript:openHTML('local.html','content-screen')",
+					"modulo" : "Orçamento",
+					"script" : "javascript:openHTML('eng_orc.html','content-screen')",
 					"access" : [100,10],
 					"class"  : "",
 					"icone"  : "fa fa-industry",
 					"itens"  : []
 				},				
 				{
-					"modulo" : "Produtos",
-					"script" : "javascript:openHTML('produtos.html','content-screen')",
+					"modulo" : "Projetos",
+					"script" : "javascript:openHTML('eng_proj.html','content-screen')",
 					"access" : [100,10],
 					"class"  : "",
 					"icone"  : "fa fa-industry",
@@ -93,7 +118,7 @@
 			]
 		},	
 		{
-			"modulo" : "Comercial",
+			"modulo" : "Produção",
 			"script" : "#",
 			"access" : [100,2],
 			"class"  : "",
@@ -118,7 +143,7 @@
 			]
 		},							
 		{
-			"modulo" : "Minha Carga",
+			"modulo" : "RH",
 			"script" : "javascript:openHTML('viewLocal.html','pop-up','Minha Carga',{mode:'motorista'})",
 			"access" : [100],
 			"class"  : "",
@@ -183,22 +208,6 @@
 					"itens"  : []
 				}				
 			]
-		},			
-		{
-			"modulo" : "Mensagens <span id='badge_mobile' class='badge'></span>",
-			"script" : "javascript:openHTML('mail.html','pop-up')",
-			"access" : [100],
-			"class"  : "hideMenu",
-			"icone"  : "fa fa-industry",
-			"itens"  : []
-		},			
-		{
-			"modulo" : "Logout",
-			"script" : "javascript:localStorage.clear();this.location.reload(true);",
-			"access" : [100],
-			"class"  : "hideMenu",
-			"icone"  : "fa fa-industry",
-			"itens"  : []
 		}	
 	]
 }

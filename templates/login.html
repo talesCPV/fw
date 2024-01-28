@@ -51,7 +51,7 @@
        
         <a href="#" class="logo"><img src="assets/logo.png" alt=""></a>
 
-        <input type="text"     id="edtUser" placeholder="Email" onkeyup="validate(this)">
+        <input type="text"     id="edtUser" placeholder="Email" onkeyup="validaEmail(this)">
         <input type="password" id="edtPass" placeholder="Senha" onkeypress="return getEnter(event, 'btnLogin')" >
         <button id="btnLogin"> LOGIN </button>
         
@@ -77,7 +77,7 @@
                 params.user = user;
                 params.pass = pass;
 
-            const myPromisse = queryDB(params,0);
+            const myPromisse = queryDB(params,'LOG-0');
             myPromisse.then((resolve)=>{
                 const json = JSON.parse(resolve)
 

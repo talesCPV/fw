@@ -354,15 +354,15 @@ function hideOrig(){
 }
 
 
-function validateEmail (email){
+function checkEmail (email){
     return email.match(
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
 };
 
-function validate(edt){
+function validaEmail(edt){
 
-    if(validateEmail(edt.value)){
+    if(checkEmail(edt.value)){
         edt.style.color = 'green'
         return true
     } else{
