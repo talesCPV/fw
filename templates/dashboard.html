@@ -34,11 +34,8 @@
                     <li> <a href="javascript:openHTML('usr_config.html','pop-up','Aparência de Sistema')"><span class="mdi mdi-pencil-circle"></span>Config.</a></li>
                     <li> <a href="javascript:logout()"><span class="mdi mdi-power"></span>Logout</a></li>
                 </ul>
-
-<!--                <div onclick="javascript:openHTML('viewUser.html','pop-up','Dados do Usuário',{'mode':'user','id':localStorage.getItem('id'),'user':localStorage.getItem('username'),'email':localStorage.getItem('email'),'nome':localStorage.getItem('nome'),'cel':localStorage.getItem('cel'),'class':localStorage.getItem('access')})"></div>-->
             </li>
         </ul>
-
 
     </nav>
 
@@ -47,15 +44,19 @@
 </template>
 <script>
 
+    const pageData = main_data.dashboard.data
+    const pageFunc = main_data.dashboard.func
 
     openMenu()
     setBarStyle()
-    main_data.dashboard.wallpaper = ()=>{
+    pageFunc.wallpaper = ()=>{
         getConfig(localStorage.getItem('username')).then((json)=>{
             try{
-                main_data.dashboard.data = JSON.parse(json)
-                if(main_data.dashboard.data.hasOwnProperty('wallpaper')){
-                    document.querySelector('body').style.backgroundImage = `url(${main_data.dashboard.data.wallpaper})`
+                pageData = JSON.parse(json)
+                if(pageData.hasOwnProperty('wallpaper')){
+                    document.querySelector('body').style.backgroundImage = `url(${pageData.wallpaper})`
+                }else{
+                    main_data.dashboard.data.wallpaper = 'assets/wallpaper_03.jpg'
                 }
             } catch{
 //                console.log('Não existe este registro!')
@@ -64,7 +65,7 @@
         })
     } 
 
-    main_data.dashboard.wallpaper()
+    pageFunc.wallpaper()
     
     document.querySelector('#imgLogo').addEventListener('click',()=>{
         document.querySelector('#content-screen').innerHTML = ''

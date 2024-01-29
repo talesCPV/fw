@@ -374,20 +374,36 @@ function aspect_ratio(img,cvw=300, cvh=300){
     return out
 }
 
-function loadImg(filename, id='cnvImg') {
+function showFile(idFile,idCanvas){
+    const inputFile = document.querySelector(idFile)
+    if (inputFile.files && inputFile.files[0]) {
+        var reader = new FileReader();
 
-    var ctx = document.getElementById(id);
-    if (ctx.getContext) {
-
-        ctx = ctx.getContext('2d');
-        var img = new Image();
-        img.onload = function () {
-            ar = aspect_ratio(img)
-            ctx.drawImage(img, 0, 0,img.width,img.height,ar[0],ar[1],ar[2],ar[3]);
-        };
-
-        img.src = './'+filename;
+        reader.onload = function (e) {
+            loadImg(e.target.result,idCanvas)             
+        }
+        reader.readAsDataURL(inputFile.files[0]);
     }
+}
+
+function loadImg(filename, id='#cnvImg') {
+    var ctx = document.querySelector(id); 
+    try{
+        const size = {w:ctx.width, h:ctx.height}
+        if (ctx.getContext) {
+            ctx = ctx.getContext('2d');
+            ctx.clearRect(0, 0, size.w, size.h);
+            var img = new Image();
+            img.onload = function () {
+                ar = aspect_ratio(img)
+                ctx.drawImage(img, 0, 0,img.width,img.height,ar[0],ar[1],ar[2],ar[3]);
+            };        
+            img.src = filename;        
+        }
+    }catch{
+        console.error('Imagem não existe!')
+    }
+
 }
 
 function uploadImage(fileID,path,filename){
@@ -471,10 +487,18 @@ function setLog(line){
 
 function setBarStyle(){
 
-    getConfig(localStorage.getItem('username'),'config.json').then((txt)=>{
+    getConfig(localStorage.getItem('id_user'),'config.json').then((txt)=>{
         try{
 
+            const styleSheet = document.styleSheets[0].cssRules[2].style
+
             const json = JSON.parse(txt)
+
+            json.bar_back_color = json.bar_back_color==undefined ? styleSheet.getPropertyValue('--top-bar') : json.bar_back_color
+            json.bar_font_color = json.bar_font_color==undefined ? styleSheet.getPropertyValue('--top-bar-font') : json.bar_font_color
+            json.bar_mouse_color = json.bar_mouse_color==undefined ? styleSheet.getPropertyValue('--top-bar-hover') : json.bar_mouse_color
+            json.win_back_color = json.win_back_color==undefined ? styleSheet.getPropertyValue('--win-back') : json.win_back_color
+            json.win_font_color = json.win_font_color==undefined ? styleSheet.getPropertyValue('--win-font') : json.win_font_color
 
             document.body.style.setProperty('-top-bar', json.bar_back_color)
             document.body.style.setProperty('-top-bar-font', json.bar_font_color)
