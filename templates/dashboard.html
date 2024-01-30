@@ -44,32 +44,44 @@
 </template>
 <script>
 
-    const pageData = main_data.dashboard.data
-    const pageFunc = main_data.dashboard.func
-
     openMenu()
-    setBarStyle()
+    const pageFunc = main_data.dashboard.func
+    const styleSheet = document.styleSheets[0].cssRules[2].style
+
+    const myConfig = getConfig(localStorage.getItem('id_user'))
+    myConfig.then((response)=>{
+
+        try{
+            main_data.dashboard.data = JSON.parse(response)
+        }catch{
+            const pageData = main_data.dashboard.data
+
+            pageData.bar_back_color = styleSheet.getPropertyValue('--top-bar')
+            pageData.bar_font_color = styleSheet.getPropertyValue('--top-bar-font')
+            pageData.bar_mouse_color = styleSheet.getPropertyValue('--top-bar-hover')
+            pageData.win_back_color = styleSheet.getPropertyValue('--win-back')
+            pageData.win_font_color = styleSheet.getPropertyValue('--win-font')
+
+            main_data.dashboard.data.wallpaper = 'assets/wallpaper_03.jpg'
+        }
+        pageFunc.wallpaper()
+        pageFunc.setBarStyle()
+    })
+
     pageFunc.wallpaper = ()=>{
-        getConfig(localStorage.getItem('username')).then((json)=>{
-            try{
-                pageData = JSON.parse(json)
-                if(pageData.hasOwnProperty('wallpaper')){
-                    document.querySelector('body').style.backgroundImage = `url(${pageData.wallpaper})`
-                }else{
-                    main_data.dashboard.data.wallpaper = 'assets/wallpaper_03.jpg'
-                }
-            } catch{
-//                console.log('Não existe este registro!')
-                return 
-            }
-        })
+        document.querySelector('body').style.backgroundImage = `url(${main_data.dashboard.data.wallpaper}?${new Date().getTime()})`
     } 
 
-    pageFunc.wallpaper()
-    
+    pageFunc.setBarStyle = ()=>{
+        styleSheet.setProperty('--top-bar', main_data.dashboard.data.bar_back_color)
+        styleSheet.setProperty('-top-bar-font', main_data.dashboard.data.bar_font_color)
+        styleSheet.setProperty('--top-bar-hover', main_data.dashboard.data.bar_mouse_color)
+        styleSheet.setProperty('--win-back', main_data.dashboard.data.win_back_color);
+        styleSheet.setProperty('--win-font', main_data.dashboard.data.win_font_color);
+    }
+
     document.querySelector('#imgLogo').addEventListener('click',()=>{
         document.querySelector('#content-screen').innerHTML = ''
     })
-
 
 </script>

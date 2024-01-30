@@ -27,29 +27,31 @@
 </template>
 <script>
 
-    
+    const pageData = main_data.admin_usuarios.data
+    const pageFunc = main_data.admin_usuarios.func
 
-  /*
-    main_data.usuarios.fillUser = function(){      
+  
+    pageFunc.fillUser = ()=>{      
         const tbl = document.getElementById('tblUser')
         tbl.innerHTML = ''
         const params = new Object;
             params.hash = localStorage.getItem('hash');
-        const myPromisse = queryDB(params,26);
+            params.field = 'email'
+            params.value = ''
+        const myPromisse = queryDB(params,'USR-0');
         myPromisse.then((resolve)=>{
-            if(resolve.trim() != ""){
-                const json = JSON.parse(resolve);
-                document.querySelector('#fdsUser').style.display = json.length > 0 ? 'block' : 'none'
-                tbl.head('Usuário,Nome,Email|mobHide')
-                for(let i=0; i<json.length;i++){
-                    tbl.plot(json[i],'nome,user,email|mobHide','str,Upp,str')
-                }
-            }        
+            const json = JSON.parse(resolve)
+            document.querySelector('#fdsUser').style.display = json.length > 0 ? 'block' : 'none'
+
+            tbl.head('Cod.,Email,Acesso')
+            for(let i=0; i<json.length;i++){
+                tbl.plot(json[i],'id,email,access','str,Low,int')                
+            }         
         });
     }
 
-    main_data.usuarios.fillUser()
-
+    pageFunc.fillUser()
+/*
     document.querySelector('#tblUser').addEventListener('click',(e)=>{
         data = e.target.parentNode.data
         data.mode = 'edit'

@@ -38,13 +38,14 @@ function addItem($access,$obj){
 
     $query = "SELECT access FROM tb_usuario WHERE hash=\"$hash\";";
 
+// echo $query;    
+
     $result = mysqli_query($conexao, $query);
 		$qtd_lin = $result->num_rows;
 
 		if($qtd_lin > 0){
       $row = $result->fetch_assoc();
 //      var_dump($row);
-//      $access = $row["class"];
       $access = $row["access"];
 
 		}
@@ -60,8 +61,6 @@ function addItem($access,$obj){
           fclose($fp);
           $json = json_decode($resp);
           $out = addItem($access,$json->menu);
-//          $out = addItem($modulos,$json->menu);
-
       }            
 
   }

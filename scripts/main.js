@@ -197,6 +197,28 @@ function getConfig(field,file='config.json',order='read',value=0){
     }); 
 }
 
+function setConfig(user,field,value){
+    const data = new URLSearchParams();        
+        data.append("user", user);
+        data.append("field", field);
+        data.append("value", value);
+    const myRequest = new Request("backend/setConfig.php",{
+        method : "POST",
+        body : data
+    });
+
+    return new Promise((resolve,reject) =>{
+        fetch(myRequest)
+        .then(function (response){
+            if (response.status === 200) {                 
+                resolve(response.text());                    
+            } else { 
+                reject(new Error("Houve algum erro na comunicação com o servidor"));                    
+            } 
+        });
+    }); 
+}
+
 function loadTXT(file='templateNFe.txt'){
         const data = new URLSearchParams();        
             data.append("file",file);
@@ -254,7 +276,7 @@ function openMenu(){
 
     const myPromisse = new Promise((resolve,reject) =>{
         fetch(myRequest)
-        .then(function (response){         
+        .then(function (response){        
             if (response.status === 200) { 
                 document.querySelector('#usr-name').innerHTML = ''+localStorage.getItem('nome').toUpperCase()
                 resolve(response.text()); 
@@ -316,7 +338,7 @@ function openMenu(){
 
             menu.appendChild(li)
         }
-        setBarStyle()
+//        setBarStyle()
     }
 }
 
@@ -398,7 +420,7 @@ function loadImg(filename, id='#cnvImg') {
                 ar = aspect_ratio(img)
                 ctx.drawImage(img, 0, 0,img.width,img.height,ar[0],ar[1],ar[2],ar[3]);
             };        
-            img.src = filename;        
+            img.src = filename+'?'+new Date().getTime()
         }
     }catch{
         console.error('Imagem não existe!')
@@ -484,7 +506,7 @@ function setLog(line){
 
     })    
 }
-
+/*
 function setBarStyle(){
 
     getConfig(localStorage.getItem('id_user'),'config.json').then((txt)=>{
@@ -530,7 +552,7 @@ function setBarStyle(){
 
     })
 }
-
+*/
 
 function logout(){
     if(confirm(`Encerrar login de ${localStorage.getItem('email')}?`)){

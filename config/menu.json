@@ -49,7 +49,7 @@
 					"itens"  : [
 						{
 							"modulo" : "Usuários",
-							"script" : "javascript:openHTML('usuarios.html','content-screen')",
+							"script" : "javascript:openHTML('admin_usuarios.html','content-screen')",
 							"access" : [100],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
@@ -57,7 +57,7 @@
 						},		
 						{
 							"modulo" : "Setores",
-							"script" : "javascript:openHTML('setores.html','pop-up', 'Gerenciamento de Setores')",
+							"script" : "javascript:openHTML('admin_setores.html','pop-up', 'Gerenciamento de Setores')",
 							"access" : [100],
 							"class"  : "",
 							"icone"  : "fa fa-industry",

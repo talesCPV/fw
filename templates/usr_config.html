@@ -2,31 +2,38 @@
 <template>
     <style>
 
+        .fds-wallpaper{
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+
+        #cmbWallpaper{
+            max-width: 300px;
+        }
+
         #btnSave{
             width: 98%;
         }
 
     </style>
-  <fieldset>
+  <fieldset class="fds-wallpaper">
     <legend>Papel de Parede</legend>
 
-    <div class="img-perfil">
-        <canvas width="300" height="300" id="cnvImg"></canvas>
-        <input  name="up_file" id="up_file" type="file" accept=".jpg,.jpeg">
+    <select id="cmbWallpaper">
+        <option value="assets/wallpaper_01.jpg">Wallpaper 01</option>
+        <option value="assets/wallpaper_02.jpg">Wallpaper 02</option>
+        <option value="assets/wallpaper_03.jpg">Wallpaper 03</option>
+        <option value="assets/wallpaper_04.jpg">Wallpaper 04</option>        
+    </select>        
 
-<!--            <button id="btnUpload" class="btn btn-primary">upload</button>  -->
-    </div>
+    <canvas width="300" height="300" id="cnvImg"></canvas>
+    <input  name="up_file" id="up_file" type="file" accept=".jpg,.jpeg">
 
-    <div class="inline">
-        <label for="cmbWallpaper">Padrão</label>
-        <select id="cmbWallpaper">
-            <option value="wallpaper_01.jpg">Wallpaper 01</option>
-            <option value="wallpaper_02.jpg">Wallpaper 02</option>
-            <option value="wallpaper_03.jpg">Wallpaper 03</option>
-            <option value="wallpaper_04.jpg">Wallpaper 04</option>
-        </select>        
-    </div>
-    <button id="btnUserUp">Upload</button>
+<!--    <button id="btnUserUp">Salvar</button>-->
 
   </fieldset>
 
@@ -71,103 +78,72 @@
 
     const pageData = main_data.usr_config.data
     const pageFunc = main_data.usr_config.func
-    const dashboard = main_data.dashboard
+    const dashboard = main_data.dashboard.data
     const styleSheet = document.styleSheets[0].cssRules[2].style
+
+    document.querySelector('#edtBarColor').value = dashboard.bar_back_color.substr(0,7)
+    document.querySelector('#edtBarFontColor').value = dashboard.bar_font_color.substr(0,7)
+    document.querySelector('#edtBarMouse').value = dashboard.bar_mouse_color.substr(0,7)
+    document.querySelector('#edtWinColor').value = dashboard.win_back_color.substr(0,7)
+    document.querySelector('#edtWinFontColor').value = dashboard.win_font_color.substr(0,7)
     
-    dashboard.colors = new Object
-    dashboard.colors.bar_back_color = dashboard.data.bar_back_color==undefined ? styleSheet.getPropertyValue('--top-bar') : dashboard.data.bar_back_color.substr(0,7)
-    dashboard.colors.bar_font_color = dashboard.data.bar_font_color==undefined ? styleSheet.getPropertyValue('--top-bar-font') : dashboard.data.bar_font_color.substr(0,7)
-    dashboard.colors.bar_mouse_color = dashboard.data.bar_mouse_color==undefined ? styleSheet.getPropertyValue('--top-bar-hover') : dashboard.data.bar_mouse_color.substr(0,7)
-    dashboard.colors.win_back_color = dashboard.data.win_back_color==undefined ? styleSheet.getPropertyValue('--win-back') : dashboard.data.win_back_color.substr(0,7)
-    dashboard.colors.win_font_color = dashboard.data.win_font_color==undefined ? styleSheet.getPropertyValue('--win-font') : dashboard.data.win_font_color.substr(0,7)
+    document.querySelector('#rngBarColor').value = parseInt(dashboard.bar_back_color.substr(7,2),16)
+    document.querySelector('#rngFontColor').value = parseInt(dashboard.bar_font_color.substr(7,2),16)
+    document.querySelector('#rngBarMouse').value = parseInt(dashboard.bar_mouse_color.substr(7,2),16)
+    document.querySelector('#rngWinColor').value = parseInt(dashboard.win_back_color.substr(7,2),16)
+    document.querySelector('#rngWinFontColor').value = parseInt(dashboard.win_font_color.substr(7,2),16)
 
-    dashboard.colors.bar_back_alpha = dashboard.data.bar_back_color==undefined ? 241 : parseInt(dashboard.data.bar_back_color.substr(7,2),16)
-    dashboard.colors.bar_font_alpha  = dashboard.data.bar_font_color==undefined ? 255 : parseInt(dashboard.data.bar_font_color.substr(7,2),16)
-    dashboard.colors.bar_mouse_alpha  = dashboard.data.bar_mouse_color==undefined ? 241 : parseInt(dashboard.data.bar_mouse_color.substr(7,2),16)
-    dashboard.colors.win_back_alpha  = dashboard.data.win_back_color==undefined ? 241 : parseInt(dashboard.data.win_back_color.substr(7,2),16)
-    dashboard.colors.win_font_alpha  = dashboard.data.win_font_color==undefined ? 255 : parseInt(dashboard.data.win_font_color.substr(7,2),16)
+    loadImg(dashboard.wallpaper)
 
-    console.log(dashboard)
-    console.log(dashboard.colors.bar_back_alpha)
-
-
-//        document.querySelector('#cmbWallpaper').value = dashboard.wallpaper.substr(7)
-        document.querySelector('#edtBarColor').value = dashboard.colors.bar_back_color
-        document.querySelector('#edtBarFontColor').value = dashboard.colors.bar_font_color
-        document.querySelector('#edtBarMouse').value = dashboard.colors.bar_mouse_color
-        document.querySelector('#edtWinColor').value = dashboard.colors.win_back_color
-        document.querySelector('#edtWinFontColor').value = dashboard.colors.win_font_color
-        document.querySelector('#rngBarColor').value = dashboard.colors.bar_back_alpha
-        document.querySelector('#rngFontColor').value = dashboard.colors.bar_font_alpha
-        document.querySelector('#rngBarMouse').value = dashboard.colors.bar_mouse_alpha
-        document.querySelector('#rngWinColor').value = dashboard.colors.win_back_alpha
-        document.querySelector('#rngWinFontColor').value = dashboard.colors.win_font_alpha
-        if(document.querySelector('#cmbWallpaper').value == ''){
-            const opt = document.createElement('option')
-            opt.value = dashboard.data.wallpaper.substr(7)
-            opt.innerHTML = 'Personalizado'
-            document.querySelector('#cmbWallpaper').appendChild(opt)
-            document.querySelector('#cmbWallpaper').value = dashboard.data.wallpaper.substr(7)
+    const cmb = document.querySelector('#cmbWallpaper')
+    for(let i=0; i<cmb.options.length; i++){
+        if(cmb.options[i].value == dashboard.wallpaper){
+            cmb.options.selectedIndex = i
         }
-
-
-
-    const saveBackground = function(filename, path='assets/users/'){ 
-        try{
-            getConfig(localStorage.getItem('id_user'),'config.json','wallpaper',path+filename)
-            main_data.dashboard.wallpaper()
-            closeModal('uploadFile')
-        }catch{
-            console.log('clear wallpaper')
-        }            
     }
-/*
-    function uploadImg(){
-        uploadImage('up_file','/../assets/users/',localStorage.getItem('idUser')+'.jpg')
-        .then(()=>{                     
-            document.querySelector('#imgUser').src = `assets/users/${localStorage.getItem('idUser')}.jpg?${new Date().getTime()}`
-            document.querySelector('#pic-perfil').src = `assets/users/${localStorage.getItem('idUser')}.jpg?${new Date().getTime()}`            
-        })
-    }
-*/
+
     document.querySelector('#up_file').addEventListener('change',()=>{
         showFile('#up_file','#cnvImg')
-//        uploadImg()
+
+        const up = uploadImage('up_file',`assets/users/${localStorage.getItem('id_user')}/`,'wallpaper')
+        up.then((resp)=>{
+            dashboard.wallpaper = `assets/users/${localStorage.getItem('id_user')}/${resp}`
+            main_data.dashboard.func.wallpaper()
+            setConfig(localStorage.getItem('id_user'),'wallpaper',`assets/users/${localStorage.getItem('id_user')}/${resp}`)
+            loadImg(`assets/users/${localStorage.getItem('id_user')}/${resp}`)
+        })
+
     })
 
+    document.querySelector('#cmbWallpaper').addEventListener('change',()=>{
+        const cmb = document.querySelector('#cmbWallpaper')
+        loadImg(cmb.value)
 
-    document.querySelector('#btnUserUp').addEventListener('click',()=>{
-            const obj = new Object
-                obj.path = '../assets/users/'
-                obj.filename = 'wallpaper_'+localStorage.getItem('id_user')
-                obj.ext = '.jpg,.jpeg,.png'
-                obj.func = saveBackground
-                
-            openHTML('uploadFile.html','pop-up','Upload de NF',obj,[20,150])
+        dashboard.wallpaper = cmb.value
+        main_data.dashboard.func.wallpaper()
+        setConfig(localStorage.getItem('id_user'),'wallpaper',cmb.value)
     })
 
     document.querySelector('#btnSave').addEventListener('click',()=>{
 
-        saveBackground(document.querySelector('#cmbWallpaper').value,'assets/')
-        main_data.dashboard.func.wallpaper() 
-
         try{
-            getConfig(localStorage.getItem('id_user'),'config.json','bar_back_color',document.querySelector('#edtBarColor').value + parseInt(document.querySelector('#rngBarColor').value).toString(16).padStart(2, "0"))
-            getConfig(localStorage.getItem('id_user'),'config.json','bar_font_color',document.querySelector('#edtBarFontColor').value + parseInt(document.querySelector('#rngFontColor').value).toString(16).padStart(2, "0"))
-            getConfig(localStorage.getItem('id_user'),'config.json','bar_mouse_color',document.querySelector('#edtBarMouse').value + parseInt(document.querySelector('#rngBarMouse').value).toString(16).padStart(2, "0"))
-            getConfig(localStorage.getItem('id_user'),'config.json','win_back_color',document.querySelector('#edtWinColor').value + parseInt(document.querySelector('#rngWinColor').value).toString(16).padStart(2, "0"))
-            getConfig(localStorage.getItem('id_user'),'config.json','win_font_color',document.querySelector('#edtWinFontColor').value + parseInt(document.querySelector('#rngWinFontColor').value).toString(16).padStart(2, "0"))
-            getConfig(localStorage.getItem('id_user'),'config.json').then((txt)=>{
-                const json = JSON.parse(txt)
-                document.body.style.setProperty('-top-bar', document.querySelector('#edtBarColor').value);
-                document.body.style.setProperty('--top-bar-hover', document.querySelector('#edtBarMouse').value + parseInt(document.querySelector('#rngBarMouse').value).toString(16).padStart(2, "0")) ;
-                document.body.style.setProperty('--top-bar-font', document.querySelector('#edtBarFontColor').value + parseInt(document.querySelector('#rngFontColor').value).toString(16).padStart(2, "0")) ;
-                document.body.style.setProperty('--win-back', document.querySelector('#edtWinColor').value + parseInt(document.querySelector('#rngWinColor').value).toString(16).padStart(2, "0")) ;
-                document.body.style.setProperty('--win-font', document.querySelector('#edtWinFontColor').value + parseInt(document.querySelector('#rngWinFontColor').value).toString(16).padStart(2, "0")) ;
 
-                setBarStyle()
-                alert('Aparência alterada com sucesso!')
-            })
+            dashboard.bar_back_color = document.querySelector('#edtBarColor').value + parseInt(document.querySelector('#rngBarColor').value).toString(16).padStart(2, "0")
+            dashboard.bar_font_color = document.querySelector('#edtBarFontColor').value + parseInt(document.querySelector('#rngFontColor').value).toString(16).padStart(2, "0")
+            dashboard.bar_mouse_color = document.querySelector('#edtBarMouse').value + parseInt(document.querySelector('#rngBarMouse').value).toString(16).padStart(2, "0")
+            dashboard.win_back_color = document.querySelector('#edtWinColor').value + parseInt(document.querySelector('#rngWinColor').value).toString(16).padStart(2, "0")
+            dashboard.win_font_color = document.querySelector('#edtWinFontColor').value + parseInt(document.querySelector('#rngWinFontColor').value).toString(16).padStart(2, "0")
+
+            setConfig(localStorage.getItem('id_user'),'bar_back_color' , dashboard.bar_back_color)
+            setConfig(localStorage.getItem('id_user'),'bar_font_color' , dashboard.bar_font_color)
+            setConfig(localStorage.getItem('id_user'),'bar_mouse_color', dashboard.bar_mouse_color)
+            setConfig(localStorage.getItem('id_user'),'win_back_color' , dashboard.win_back_color)
+            setConfig(localStorage.getItem('id_user'),'win_font_color' , dashboard.win_font_color)
+
+            main_data.dashboard.func.setBarStyle()
+            
+            closeModal('usr_config')
+
         }catch{
             console.log('Error!!')
         } 
