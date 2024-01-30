@@ -53,15 +53,20 @@
     document.querySelector('#tblSetor').addEventListener('click',(e)=>{
         data = e.target.parentNode.data
      
-        const params = new Object
+        try{
+            const params = new Object
             params.hash = localStorage.getItem('hash')
             params.id = data.id
             params.nome = prompt('Digite o nome do setor:',data.nome).toUpperCase()
 
-        const myPromisse = queryDB(params,'ADM-0');
-        myPromisse.then((resolve)=>{
-            pageFunc.fillSetor()
-        })
+            const myPromisse = queryDB(params,'ADM-0');
+            myPromisse.then((resolve)=>{
+                pageFunc.fillSetor()
+            })
+        }catch{
+            console.error('operação cancelada pelo usuário!')
+        }
+
 
     })
 
