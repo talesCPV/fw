@@ -32,7 +32,7 @@
 						},						
 						{
 							"modulo" : "Funcionários",
-							"script" : "javascript:openHTML('newFunc.html','pop-up')",
+							"script" : "javascript:openHTML('adm_funcionarios.html','content-screen')",
 							"access" : [100],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
@@ -49,7 +49,7 @@
 					"itens"  : [
 						{
 							"modulo" : "Usuários",
-							"script" : "javascript:openHTML('admin_usuarios.html','content-screen')",
+							"script" : "javascript:openHTML('adm_usuarios.html','content-screen')",
 							"access" : [100],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
@@ -57,7 +57,15 @@
 						},		
 						{
 							"modulo" : "Setores",
-							"script" : "javascript:openHTML('admin_setores.html','pop-up', 'Gerenciamento de Setores')",
+							"script" : "javascript:openHTML('adm_setores.html','pop-up', 'Gerenciamento de Setores')",
+							"access" : [100],
+							"class"  : "",
+							"icone"  : "fa fa-industry",
+							"itens"  : []
+						},
+						{
+							"modulo" : "Cargos",
+							"script" : "javascript:openHTML('adm_cargos.html','pop-up', 'Gerenciamento de Cargos')",
 							"access" : [100],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
@@ -65,7 +73,7 @@
 						},
 						{
 							"modulo" : "Log do sistema",
-							"script" : "javascript:openHTML('viewLog.html','pop-up', 'Leitor de Log do Sistema')",
+							"script" : "javascript:openHTML('adm_log.html','pop-up', 'Leitor de Log do Sistema',null,500)",
 							"access" : [100],
 							"class"  : "",
 							"icone"  : "fa fa-industry",

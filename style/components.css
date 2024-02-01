@@ -1,0 +1,17 @@
+
+/* CAMPO DE FILTRO / BUSCA */
+
+#cmbBusca{
+    max-width: 200px;
+}
+
+
+
+
+@media all and (max-width : 768px) {
+
+    #cmbBusca{
+        max-width: unset;
+    }
+
+}

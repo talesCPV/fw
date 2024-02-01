@@ -18,12 +18,12 @@
         padding: 0;
         box-sizing: border-box;
     }
-    
+/*    
     input[type=checkbox]{
         width: auto !important;
         margin: auto;
     }
-/*
+
     input[type=date]{
         max-width: 150px;
     }
@@ -152,6 +152,25 @@
         color: var(--top-bar) !important;
       }
 
+      .btn-round{
+        padding: 10px;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 1.4em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .btn-round:hover{
+        border: solid 2px #16a083;
+        color: #16a083;
+        background-color: #ffffff;
+      }
+      
+
+
     /*  ABAS (TAB) */
 
     .tab-bar{
@@ -226,6 +245,11 @@
 
     .inline :first-child{
         min-width: 120px;
+    }
+
+    .inline span{
+        width: auto;
+        min-width: unset !important;
     }
 
     .inline label{

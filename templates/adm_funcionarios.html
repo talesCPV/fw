@@ -1,0 +1,44 @@
+<template>
+    <style>
+
+     
+    </style>
+
+    <div class="form-base">
+        <h1>Funcionários</h1>
+
+        <fieldset>
+            <legend>Busca</legend>
+            <div class="inline">
+                <label for="cmbBusca">Pesquisa</label>
+                <select id="cmbBusca">
+                    <option value="true" signal="=" val="true">Todos</option>
+                    <option value="FUNC.status" signal="=" val="ATIVO" selected>Ativos</option>
+                    <option value="FUNC.status" signal="=" val="DEMIT" >Inativos</option>
+                    <option value="FUNC.nome" signal="LIKE">Nome</option>
+                    <option value="CAR.cargo" signal="LIKE">Cargo</option>
+                    <option value="SET.nome" signal="LIKE">Setor</option>
+                    <option value="CAR.tipo" signal="=" val="HORA">Horista</option>
+                    <option value="CAR.tipo" signal="=" val="MENSAL">Mensalista</option>
+                </select>
+                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
+                <button id="btnBusca" class="btn-round" onclick="main_data.funcionarios.data.query()"><span class="mdi mdi-magnify"></span></button>
+                <button id="btnNovo" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
+            </div>
+        </fieldset>
+
+        <table id="tblFunc"></table>
+    </div>
+
+
+
+</template>
+<script>
+
+    document.querySelector('#btnNovo').addEventListener('click',()=>{
+        openHTML('adm_view_func.html','pop-up')
+    })
+
+
+
+</script>

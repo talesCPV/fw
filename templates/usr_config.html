@@ -103,7 +103,7 @@
     }
 
     document.querySelector('#up_file').addEventListener('change',()=>{
-        showFile('#up_file','#cnvImg')
+//        showFile('up_file','cnvImg')
 
         const up = uploadImage('up_file',`assets/users/${localStorage.getItem('id_user')}/`,'wallpaper')
         up.then((resp)=>{

@@ -21,7 +21,7 @@ DELIMITER $$
     )
 	BEGIN    
 		SET @access = (SELECT IFNULL(access,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
-		IF(@access=100)THEN
+		IF(@access IN (100))THEN
 			INSERT INTO tb_usuario (email,hash,access)VALUES(Iemail,SHA2(CONCAT(Iemail, Isenha), 256),Iaccess);
             SELECT 1 AS ok;
 		ELSE 
@@ -39,7 +39,7 @@ DELIMITER $$
     )
 	BEGIN    
 		SET @access = (SELECT IFNULL(access,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
-		IF(@access=100)THEN
+		IF(@access IN(100))THEN
 			SET @quer =CONCAT('SELECT id,email,id_func,access FROM tb_usuario WHERE ',Ifield,' LIKE "%',Ivalue,'%";');
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
@@ -153,8 +153,8 @@ DELIMITER $$
 		IN Inome varchar(30)
     )
 	BEGIN    
-		SET @id_call = (SELECT IFNULL(id,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
-        IF(@id_call >0)THEN
+		SET @access = (SELECT IFNULL(access,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+        IF(@id_call IN(100))THEN
 			IF(Iid_setor = 0)THEN
 				INSERT INTO tb_setores (nome) VALUES (Inome);
             ELSE
@@ -174,16 +174,68 @@ DELIMITER $$
 	CREATE PROCEDURE sp_view_setor(	
 		IN Ihash varchar(64),
 		IN Ifield varchar(30),
+        IN Isignal varchar(4),
 		IN Ivalue varchar(50)
     )
 	BEGIN    
 		SET @access = (SELECT IFNULL(access,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
-		IF(@access=100)THEN
-			SET @quer =CONCAT('SELECT * FROM tb_setores WHERE ',Ifield,' LIKE "%',Ivalue,'%";');
+		IF(@access IN (100))THEN
+			SET @quer =CONCAT('SELECT * FROM tb_setores WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
 		ELSE 
 			SELECT 0 AS id, "" AS nome;
+        END IF;
+	END $$
+DELIMITER ;
+
+ DROP PROCEDURE sp_set_cargo;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_cargo(	
+		IN Ihash varchar(64),
+        In Iid_cargo int(11),
+		IN Icargo varchar(30),
+        IN Isalario double,
+        IN Imensal boolean,
+        IN Icbo varchar(8)
+    )
+	BEGIN    
+		SET @access = (SELECT IFNULL(access,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+        IF(@access IN (100))THEN
+			IF(Iid_cargo = 0)THEN
+				INSERT INTO tb_cargos (cargo,salario,mensal,cbo) VALUES (Icargo, Isalario, Imensal, Icbo);
+            ELSE
+				IF(Icargo = "")THEN
+					DELETE FROM tb_cargos WHERE id=Iid_cargo;
+				ELSE
+					UPDATE tb_cargos SET cargo = Icargo, salario=Isalario, mensal=Imensal, cbo=Icbo WHERE id=Iid_cargo;
+                END IF;
+            END IF;			
+			SELECT * FROM tb_cargos;
+        END IF;
+	END $$
+DELIMITER ;
+
+ DROP PROCEDURE sp_view_cargo;
+DELIMITER $$
+	CREATE PROCEDURE sp_view_cargo(	
+		IN Ihash varchar(64),
+		IN Ifield varchar(30),
+        IN Isignal varchar(4),
+		IN Ivalue varchar(50)
+    )
+	BEGIN    
+		SET @access = (SELECT IFNULL(access,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+		IF(@access IN (100))THEN
+			SET @quer = CONCAT('SELECT * FROM tb_cargos WHERE ',Ifield,Isignal,Ivalue,';');
+            
+            SELECT @quer;
+/*            
+			PREPARE stmt1 FROM @quer;
+			EXECUTE stmt1;
+*/            
+		ELSE 
+			SELECT 0 AS id, "" AS cargo, 0.00 AS salario, 0 AS mensal, NULL as cbo;
         END IF;
 	END $$
 DELIMITER ;

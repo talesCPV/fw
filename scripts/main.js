@@ -8,118 +8,7 @@ var semana = ['Dom','Seg','Ter','Qua','Qui','Sex','Sab']
 
 /*  FUNCTIONS  */
 
-/*  MODAL  */
 
-function closeModal(id='all'){
-    const mod_main = document.querySelector('#myModal')
-    if(id=='all'){
-        while(mod_main.querySelectorAll('.modal').length > 0){
-            delete main_data[mod_main.querySelectorAll('.modal')[0].id.split('-')[1]]
-            mod_main.querySelectorAll('.modal')[0].remove()    
-        }
-    }else{
-        id = (id=='')? mod_main.querySelectorAll('.modal').length-1 : id
-        mod_main.querySelector('#modal-'+id).remove()
-        delete main_data[id]
-    }
-    mod_main.style.display = (mod_main.querySelectorAll('.modal').length < 1) ? "none" : 'block'
-//    checkMail()
-}
-
-function newModal(title, content, pos, id){
-
-    const mod_main = document.querySelector('#myModal')
-    const index = mod_main.querySelectorAll('.modal-content').length        
-    const offset = 15
-
-    const backModal = document.createElement('div')
-        backModal.classList = 'modal'
-        backModal.id = 'modal-'+id
-        backModal.style.zIndex = 2+index
-        backModal.style.display = 'block'
-
-    const mod_card = document.createElement('div')
-        mod_card.classList = 'modal-content'
-        mod_card.id = 'card-'+id        
-        mod_card.style.position = 'absolute'
-        mod_card.style.zIndex = 3+index
-        mod_card.style.margin = '0 auto'
-        mod_card.style.top = pos[1] + 50 + index*offset+'px'
-        mod_card.style.left = pos[0] + index*offset+'px'
-        mod_card.style.right = pos[0] - index*offset+'px'
-    
-    const mod_title = document.createElement('div')
-    mod_title.className = 'modal-title'    
-
-    const p = document.createElement('p')
-    p.innerHTML = title
-    mod_title.appendChild(p)
-
-    const span = document.createElement('span')
-    span.classList = 'close'
-    span.innerHTML = '&times;'
-    span.addEventListener('click',()=>{
-        closeModal(id)
-    })
-    mod_title.appendChild(span)
-    mod_card.appendChild(mod_title)
-
-    const mod_content = document.createElement('div')
-    mod_content.classList = 'modal-text'
-    mod_content.innerHTML = content
-    mod_card.appendChild(mod_content)
-
-
-    backModal.appendChild(mod_card)
-    mod_main.appendChild(backModal)
-    mod_main.style.display = "block"
-
-
-}
-
-async function openHTML(template,where="content-screen",label="", data="",pos=[30,30]){
-    if(template.trim() != ""){
-        const page_name = template.split('.')[0]
-        return await new Promise((resolve,reject) =>{
-            fetch( "templates/"+template)
-            .then( stream => stream.text())
-            .then( text => {
-                const temp = document.createElement('div');
-                temp.innerHTML = text;
-                let body = temp.getElementsByTagName('template')[0];
-                let script = temp.getElementsByTagName('script')[0];
-
-                if(body == undefined){
-                    script = ''
-                    body = document.createElement('div')
-                    body.innerHTML = '<style>p{text-align : center;}</style> <p>Desculpe, este módulo ainda não foi implementado</p>'
-                    body.style.color = '#FFFF00 !important'
-                    where = 'pop-up'
-                    label = 'ERRO 404!'
-                }
-
-                if(where == "pop-up" && !main_data.hasOwnProperty(page_name)){                    
-                    newModal(label,body.innerHTML,pos,page_name)
-                }else{
-                    const cont = body.innerHTML.replace('<h1>', `<span id="close-screen" onclick="document.querySelector('#imgLogo').click()">&times;</span><h1>`)
-                    
-//                    const close = where == 'content-screen' ? `<div id="close-screen"><span onclick="document.querySelector('#imgLogo').click()">&times;</span></div>` : ''
-                    document.getElementById(where).innerHTML = cont;                    
-                }
-
-                main_data[page_name] = new Object
-                main_data[page_name].data = data == "" ? new Object : data
-                main_data[page_name].func = new Object
-
-                eval(script.innerHTML);
-                resolve = body
-                if(localStorage.getItem('hash') != null){
-                    document.querySelector('#drop').checked = false // close menu
-                }           
-            }); 
-        }); 
-    }
-}
 
 /*  DATABASE  */
 function queryDB(params,cod){
@@ -396,17 +285,54 @@ function aspect_ratio(img,cvw=300, cvh=300){
     return out
 }
 
-function showFile(idFile,idCanvas){
-    const inputFile = document.querySelector(idFile)
+function showFile(idFile='up_file',idCanvas='cnvImg'){
+    const inputFile = document.getElementById(idFile)
     if (inputFile.files && inputFile.files[0]) {
         var reader = new FileReader();
-
-        reader.onload = function (e) {
-            loadImg(e.target.result,idCanvas)             
+        reader.onload = function (e) {            
+            var ctx = document.getElementById(idCanvas)
+            if (ctx.getContext) {
+                ctx = ctx.getContext('2d');
+                let preview = new Image();
+                preview.onload = function () {
+                    ar = aspect_ratio(preview)
+                    ctx.drawImage(preview, 0, 0,preview.width,preview.height,ar[0],ar[1],ar[2],ar[3]);
+                };
+                preview.src = e.target.result
+            }
         }
         reader.readAsDataURL(inputFile.files[0]);
     }
 }
+
+/*
+
+        if (document.querySelector('#up_file').files && document.querySelector('#up_file').files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                var ctx = document.getElementById('cnvImg');
+                if (ctx.getContext) {
+
+                    ctx = ctx.getContext('2d');
+                    let preview = new Image();
+                    preview.onload = function () {
+                        ar = aspect_ratio(preview)
+                        ctx.drawImage(preview, 0, 0,preview.width,preview.height,ar[0],ar[1],ar[2],ar[3]);
+                    };
+
+                    preview.src = e.target.result
+              
+                }
+
+            }
+
+            reader.readAsDataURL(document.querySelector('#up_file').files[0]);
+        }
+
+*/
+
 
 function loadImg(filename, id='#cnvImg') {
     var ctx = document.querySelector(id); 
@@ -484,7 +410,7 @@ function listNF(dir,ext='txt'){
 
 function setLog(line){
     const now = new Date
-    line = `${now.getFullDate()} ${localStorage.getItem('email')} -> ` + line.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    line = line.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     const data = new URLSearchParams();        
         data.append("line",line);
         data.append("hash",localStorage.getItem('hash'));
@@ -506,53 +432,7 @@ function setLog(line){
 
     })    
 }
-/*
-function setBarStyle(){
 
-    getConfig(localStorage.getItem('id_user'),'config.json').then((txt)=>{
-        try{
-
-            const styleSheet = document.styleSheets[0].cssRules[2].style
-
-            const json = JSON.parse(txt)
-
-            json.bar_back_color = json.bar_back_color==undefined ? styleSheet.getPropertyValue('--top-bar') : json.bar_back_color
-            json.bar_font_color = json.bar_font_color==undefined ? styleSheet.getPropertyValue('--top-bar-font') : json.bar_font_color
-            json.bar_mouse_color = json.bar_mouse_color==undefined ? styleSheet.getPropertyValue('--top-bar-hover') : json.bar_mouse_color
-            json.win_back_color = json.win_back_color==undefined ? styleSheet.getPropertyValue('--win-back') : json.win_back_color
-            json.win_font_color = json.win_font_color==undefined ? styleSheet.getPropertyValue('--win-font') : json.win_font_color
-
-            document.body.style.setProperty('-top-bar', json.bar_back_color)
-            document.body.style.setProperty('-top-bar-font', json.bar_font_color)
-            document.body.style.setProperty('--top-bar-hover', json.bar_mouse_color)
-            document.body.style.setProperty('--win-back', json.win_back_color);
-            document.body.style.setProperty('--win-font', json.win_font_color);
-            
-            document.querySelector('nav').style.backgroundColor = json.bar_back_color
-            document.querySelector('#usr-name').style.color = json.bar_font_color
-
-                            
-            main_data.dashboard.data.bar_back_color = json.bar_back_color
-            main_data.dashboard.data.bar_font_color = json.bar_font_color
-            main_data.dashboard.data.bar_mouse_color = json.bar_mouse_color
-            main_data.dashboard.data.win_back_color = json.win_back_color
-            main_data.dashboard.data.win_font_color = json.win_font_color
-
-            const ulli = document.querySelectorAll('nav ul li ul li') 
-            for(let i=0; i<ulli.length; i++){
-                ulli[i].style.backgroundColor = json.bar_back_color            
-            }
-            const a = document.querySelectorAll('nav a')
-            for(let i=0; i<a.length; i++){
-                a[i].style.color = json.bar_font_color
-            }
-        } catch {
-            return
-        }
-
-    })
-}
-*/
 
 function logout(){
     if(confirm(`Encerrar login de ${localStorage.getItem('email')}?`)){

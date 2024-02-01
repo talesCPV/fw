@@ -16,15 +16,29 @@ INSERT INTO tb_usuario (email,hash,access)VALUES("admin@fwtecnologia.com.br","e9
  DROP TABLE tb_funcionario;
 CREATE TABLE tb_funcionario (
     id int(11) NOT NULL AUTO_INCREMENT,
-    nome varchar(70) NOT NULL,
-    id_cargo int(11) DEFAULT 0,
-    id_setor int(11) DEFAULT 0,
-    id_func int(11) DEFAULT 0,
-    FOREIGN KEY (id_cargo) REFERENCES tb_cargos(id),
+    nome varchar(30) DEFAULT NULL,    
+    rg varchar(15) DEFAULT NULL,
+    cpf varchar(15) DEFAULT NULL,
+    pis varchar(15) DEFAULT NULL,
+    endereco varchar(60) DEFAULT NULL,
+    num varchar(6) DEFAULT NULL,
+    cidade varchar(30) DEFAULT NULL,
+    bairro varchar(40) DEFAULT NULL,
+    estado varchar(2) DEFAULT NULL,
+    cep varchar(10) DEFAULT NULL,    
+    data_adm datetime DEFAULT CURRENT_TIMESTAMP,
+	data_dem datetime DEFAULT NULL,
+    id_cargo int(11) NOT NULL,
+	id_setor int(11) NOT NULL,
+    tel varchar(15) DEFAULT NULL,
+    cel varchar(15) DEFAULT NULL,
+    ativo boolean DEFAULT 1,
+	obs varchar(200) DEFAULT NULL,
+    PRIMARY KEY (id),
     FOREIGN KEY (id_setor) REFERENCES tb_setores(id),
-    PRIMARY KEY (id)
-) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
-
+    FOREIGN KEY (id_cargo) REFERENCES tb_cargos(id)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8; 
+ 
 -- DROP TABLE tb_setores;
 CREATE TABLE tb_setores (
     id int(11) NOT NULL AUTO_INCREMENT,
@@ -38,7 +52,7 @@ CREATE TABLE tb_cargos (
     cargo varchar(30) NOT NULL,
     salario double NOT NULL DEFAULT 0,
     mensal boolean NOT NULL DEFAULT 0,
-    cbo varchar(8),
+    cbo varchar(8) DEFAULT NULL,
     PRIMARY KEY (id)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 

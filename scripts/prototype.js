@@ -33,8 +33,13 @@ String.prototype.getHash = function(S){
     return hash;
 }
 
-String.prototype.maxWidth = function(N=0){
+String.prototype.maxWidth = (N=0)=>{
     return ((N>0 && N<this.length) ? this.valueOf().substring(0,N) : this.valueOf())
+}
+
+String.prototype.money = function(D=2){
+    const str = this.valueOf()
+    return ('R$'+ parseFloat(str).toFixed(D))
 }
 
 /* DATE */
