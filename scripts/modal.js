@@ -27,7 +27,7 @@ async function openHTML(template,where="content-screen",label="", data="",width=
                 }
 
                 main_data[page_name] = new Object
-                main_data[page_name].data = data == "" ? new Object : data
+                main_data[page_name].data = typeof(data) != 'object' ? new Object : data
                 main_data[page_name].func = new Object
 
                 eval(script.innerHTML);

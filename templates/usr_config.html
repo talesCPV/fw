@@ -102,6 +102,17 @@
         }
     }
 
+    function saveConfig(){
+
+        setConfig(localStorage.getItem('id_user'),'bar_back_color' , dashboard.bar_back_color)
+        setConfig(localStorage.getItem('id_user'),'bar_font_color' , dashboard.bar_font_color)
+        setConfig(localStorage.getItem('id_user'),'bar_mouse_color', dashboard.bar_mouse_color)
+        setConfig(localStorage.getItem('id_user'),'win_back_color' , dashboard.win_back_color)
+        setConfig(localStorage.getItem('id_user'),'win_font_color' , dashboard.win_font_color)
+        setConfig(localStorage.getItem('id_user'),'wallpaper',dashboard.wallpaper)
+    }
+
+
     document.querySelector('#up_file').addEventListener('change',()=>{
 //        showFile('up_file','cnvImg')
 
@@ -109,7 +120,9 @@
         up.then((resp)=>{
             dashboard.wallpaper = `assets/users/${localStorage.getItem('id_user')}/${resp}`
             main_data.dashboard.func.wallpaper()
-            setConfig(localStorage.getItem('id_user'),'wallpaper',`assets/users/${localStorage.getItem('id_user')}/${resp}`)
+            dashboard.wallpaper = `assets/users/${localStorage.getItem('id_user')}/${resp}`
+            saveConfig()
+//            setConfig(localStorage.getItem('id_user'),'wallpaper',`assets/users/${localStorage.getItem('id_user')}/${resp}`)
             loadImg(`assets/users/${localStorage.getItem('id_user')}/${resp}`)
         })
 
@@ -120,8 +133,9 @@
         loadImg(cmb.value)
 
         dashboard.wallpaper = cmb.value
+        saveConfig()
         main_data.dashboard.func.wallpaper()
-        setConfig(localStorage.getItem('id_user'),'wallpaper',cmb.value)
+//        setConfig(localStorage.getItem('id_user'),'wallpaper',cmb.value)
     })
 
     document.querySelector('#btnSave').addEventListener('click',()=>{
@@ -134,11 +148,7 @@
             dashboard.win_back_color = document.querySelector('#edtWinColor').value + parseInt(document.querySelector('#rngWinColor').value).toString(16).padStart(2, "0")
             dashboard.win_font_color = document.querySelector('#edtWinFontColor').value + parseInt(document.querySelector('#rngWinFontColor').value).toString(16).padStart(2, "0")
 
-            setConfig(localStorage.getItem('id_user'),'bar_back_color' , dashboard.bar_back_color)
-            setConfig(localStorage.getItem('id_user'),'bar_font_color' , dashboard.bar_font_color)
-            setConfig(localStorage.getItem('id_user'),'bar_mouse_color', dashboard.bar_mouse_color)
-            setConfig(localStorage.getItem('id_user'),'win_back_color' , dashboard.win_back_color)
-            setConfig(localStorage.getItem('id_user'),'win_font_color' , dashboard.win_font_color)
+            saveConfig()
 
             main_data.dashboard.func.setBarStyle()
             

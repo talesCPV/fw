@@ -361,7 +361,7 @@ function checkEmail (email){
 };
 
 function validaEmail(edt){
-
+    edt.value = edt.value.trim()
     if(checkEmail(edt.value)){
         edt.style.color = 'green'
         return true

@@ -6,20 +6,31 @@
             display: none;
         }
 
-
-        #btnNovoUser{
-            width: 98%;
-        }
-
     </style>
 
     <div class="form-base">
         <h1>Usuários</h1>
+
+        <fieldset class="fds-busca">
+            <legend>Busca</legend>
+            <div class="inline">
+                <label for="cmbBusca">Pesquisa</label>
+                <select id="cmbBusca">
+                    <option value="email" signal="LIKE">Email</option>
+                    <option value="id" signal="IN">Código</option>
+                    <option value="access" signal="IN">Acesso</option>
+                </select>
+                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
+                <button id="btnBusca" class="btn-round"><span class="mdi mdi-magnify"></span></button>
+                <button id="btnNovoUser" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
+            </div>
+        </fieldset>
+
+
         <fieldset id="fdsUser">
             <legend>Usuários</legend>
             <table id="tblUser"></table>
-        </fieldset>
-        <button id="btnNovoUser">Novo Usuário</button>    
+        </fieldset>  
         
     </div>
 
@@ -30,14 +41,24 @@
     const pageData = main_data.adm_usuarios.data
     const pageFunc = main_data.adm_usuarios.func
 
+    function getVal(){
+        const sel = document.querySelector('#cmbBusca')
+        const field = sel.value
+        const signal = sel.options[sel.selectedIndex].getAttribute('signal')
+        let value = sel.options[sel.selectedIndex].hasAttribute('val') ? sel.options[sel.selectedIndex].getAttribute('val') : document.querySelector('#edtBusca').value.trim()
+            value = signal=='LIKE' ? `'%${value}%'` : signal=='IN' ? `(${value})` : parseInt(value)? value : `"${value}"`
+        return [field,signal,value]
+    }
   
     pageFunc.fillUser = ()=>{      
         const tbl = document.getElementById('tblUser')
         tbl.innerHTML = ''
+        const query = getVal()
         const params = new Object;
             params.hash = localStorage.getItem('hash');
-            params.field = 'email'
-            params.value = ''
+            params.field = query[0]
+            params.signal = query[1]
+            params.value = query[2]
         const myPromisse = queryDB(params,'USR-0');
         myPromisse.then((resolve)=>{
             const json = JSON.parse(resolve)
@@ -50,19 +71,19 @@
         });
     }
 
-    pageFunc.fillUser()
-/*
+    document.querySelector('#btnBusca').addEventListener('click',()=>{
+        pageFunc.fillUser()
+    })
+
+    document.querySelector('#btnNovoUser').addEventListener('click',()=>{
+        openHTML('adm_view_user.html','pop-up','Novo Usuario',{'id':'0'})
+    })
+    
+
     document.querySelector('#tblUser').addEventListener('click',(e)=>{
         data = e.target.parentNode.data
         data.mode = 'edit'
-        openHTML('viewUser.html','pop-up','Editar Usuario',data)
+        openHTML('adm_view_user.html','pop-up','Editar Usuario',data)
     })
 
-
-    document.querySelector('#btnNovoUser').addEventListener('click',()=>{
-        const data = new Object
-        data.mode = 'new'
-        openHTML('viewUser.html','pop-up','Novo Usuario',data)
-    })
-*/
 </script>

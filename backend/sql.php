@@ -5,7 +5,7 @@ $query_db = array(
     "LOG-0"  => 'CALL sp_login("x00","x01");', // USER, PASS
 
     /* USERS */
-    "USR-0"  => 'CALL sp_viewUser("x00","x01","x02");', // #, FIELD,(LIKE) VALUE
+    "USR-0"  => 'CALL sp_viewUser("x00","x01","x02","x03");', // #, FIELD,SIGNAL, VALUE
     "USR-1"  => 'CALL sp_newUser("x00","x01","x02",x03);', // #, EMAIL, PASS, ACCESS
     "USR-2"  => 'CALL sp_updatePass("x00","x01");', // #, PASS
 

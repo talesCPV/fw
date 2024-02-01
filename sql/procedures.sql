@@ -35,12 +35,12 @@ DELIMITER $$
 	CREATE PROCEDURE sp_viewUser(	
 		IN Ihash varchar(64),
 		IN Ifield varchar(30),
+        IN Isignal varchar(4),
 		IN Ivalue varchar(50)
-    )
 	BEGIN    
 		SET @access = (SELECT IFNULL(access,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
 		IF(@access IN(100))THEN
-			SET @quer =CONCAT('SELECT id,email,id_func,access FROM tb_usuario WHERE ',Ifield,' LIKE "%',Ivalue,'%";');
+			SET @quer =CONCAT('SELECT id,email,id_func,access FROM tb_usuario WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
 		ELSE 

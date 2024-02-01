@@ -1,7 +1,7 @@
 
-/* CAMPO DE FILTRO / BUSCA */
+/* FIELDSET BUSCA */
 
-#cmbBusca{
+.fds-busca select{
     max-width: 200px;
 }
 
@@ -10,8 +10,24 @@
 
 @media all and (max-width : 768px) {
 
-    #cmbBusca{
-        max-width: unset;
+    .fds-busca .inline{
+        flex-direction: unset;
+        flex-wrap: wrap;
     }
+
+    .fds-busca label{
+        display: none;
+    }
+
+    .fds-busca input{
+        order: 5;
+        width: 100%;
+    }
+
+    .fds-busca select{
+        max-width: unset;
+        width: calc(100% - 140px);
+    }
+
 
 }

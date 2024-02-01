@@ -45,15 +45,18 @@
 <script>
 
     openMenu()
+//    const pageData = main_data.dashboard.data
     const pageFunc = main_data.dashboard.func
     const styleSheet = document.styleSheets[0].cssRules[2].style
+
+//    console.log(pageData)
 
     const myConfig = getConfig(localStorage.getItem('id_user'))
     myConfig.then((response)=>{
 
-        try{
-            main_data.dashboard.data = JSON.parse(response)
-        }catch{
+        const json = JSON.parse(response)
+
+        if(json == null){
             const pageData = main_data.dashboard.data
 
             pageData.bar_back_color = styleSheet.getPropertyValue('--top-bar')
@@ -63,7 +66,24 @@
             pageData.win_font_color = styleSheet.getPropertyValue('--win-font')
 
             main_data.dashboard.data.wallpaper = 'assets/wallpaper_03.jpg'
+        }else{
+            try{
+                main_data.dashboard.data = JSON.parse(response)
+            }catch{
+                const pageData = main_data.dashboard.data
+
+                pageData.bar_back_color = styleSheet.getPropertyValue('--top-bar')
+                pageData.bar_font_color = styleSheet.getPropertyValue('--top-bar-font')
+                pageData.bar_mouse_color = styleSheet.getPropertyValue('--top-bar-hover')
+                pageData.win_back_color = styleSheet.getPropertyValue('--win-back')
+                pageData.win_font_color = styleSheet.getPropertyValue('--win-font')
+
+                main_data.dashboard.data.wallpaper = 'assets/wallpaper_03.jpg'
+            }
         }
+
+
+
         pageFunc.wallpaper()
         pageFunc.setBarStyle()
     })

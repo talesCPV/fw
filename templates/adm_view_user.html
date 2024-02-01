@@ -1,0 +1,85 @@
+<template>
+    <style>
+
+        .linCKB{
+            display: flex;
+            flex-direction: row;
+        }
+
+        .linCKB label {
+            text-align: right;
+            width: auto;
+            min-width: 120px;
+            align-self: flex-end;
+            padding: 10px;
+            white-space: nowrap;
+        }
+
+        .linCKB input[type=checkbox]{
+            margin: 30px 10px 10px 0 !important;
+
+        }
+
+    </style>
+    
+    <fieldset>
+        <legend>Registro de Usuário</legend>
+
+        <div class="inline">
+            <label for="edtEmail">Email</label>
+            <input type="text" id="edtEmail" maxlength="70" onkeyup="validaEmail(this)">
+        </div>
+
+        <div class="inline">
+            <label for="edtPass">Password</label>
+            <input type="password" id="edtPass" maxlength="25">
+        </div>
+
+        <div class="inline">
+            <label for="edtRepass">Repita Pass.</label>
+            <input type="password" id="edtRepass" maxlength="25">
+        </div>        
+
+        <div class="inline">
+            <label for="edtAcesso">Cod. Acesso</label>
+            <input type="text" id="edtAcesso" maxlength="8" onkeyup="return valInt(this)">   
+        </div>
+
+        <button id="btnSaveUser" class="btn">Salvar</button>
+    
+      </fieldset>    
+
+</template>
+<script>
+
+    const pageData = main_data.adm_view_user.data
+    const pageFunc = main_data.adm_view_user.func
+
+    pageFunc.fill = ()=>{
+        if(parseInt(pageData.id)>0){
+            document.querySelector('#edtEmail').value = pageData.email
+            document.querySelector('#edtAcesso').value = pageData.access
+        }
+    }
+
+
+    document.querySelector('#btnSaveUser').addEventListener('click',()=>{
+        if(checkField(['edtEmail','edtPass','edtAcesso']) && checkRepass(['edtPass','edtRepass'])){
+            const params = new Object
+                params.hash = localStorage.getItem('hash')
+                params.email = document.querySelector('#edtEmail').value.trim()
+                params.pass = document.querySelector('#edtPass').value.trim()
+                params.acesso = document.querySelector('#edtAcesso').value.trim()
+            const myPromisse = queryDB(params,'USR-1');
+            myPromisse.then((resolve)=>{
+                setLog(`Inclusão de novo Usuário, email:${params.email} e acesso:${params.acesso}`)
+                main_data.adm_usuarios.func.fillUser()
+                closeModal('adm_view_user')
+            })
+
+        }
+    })
+
+    pageFunc.fill()
+
+</script>
