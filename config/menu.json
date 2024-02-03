@@ -3,21 +3,21 @@
 		{
 			"modulo" : "Admin",
 			"script" : "#",
-			"access" : [100],
+			"access" : [0],
 			"class"  : "",
 			"icone"  : "fa fa-industry",
 			"itens"  : [
 				{
 					"modulo" : "Cadastros",
 					"script" : "#",
-					"access" : [100],
+					"access" : [0],
 					"class"  : "",
 					"icone"  : "fa fa-industry",
 					"itens"  : [
 						{
 							"modulo" : "Empresas",
 							"script" : "javascript:openHTML('newEmp.html','content-screen')",
-							"access" : [100],
+							"access" : [0],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
 							"itens"  : []
@@ -25,7 +25,7 @@
 						{
 							"modulo" : "Produtos",
 							"script" : "javascript:openHTML('newProd.html','content-screen')",
-							"access" : [100],
+							"access" : [0],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
 							"itens"  : []
@@ -33,7 +33,7 @@
 						{
 							"modulo" : "Funcionários",
 							"script" : "javascript:openHTML('adm_funcionarios.html','content-screen')",
-							"access" : [100],
+							"access" : [0],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
 							"itens"  : []
@@ -43,14 +43,22 @@
 				{
 					"modulo" : "Gerenciamento",
 					"script" : "#",
-					"access" : [100],
+					"access" : [0],
 					"class"  : "",
 					"icone"  : "fa fa-industry",
 					"itens"  : [
 						{
 							"modulo" : "Usuários",
 							"script" : "javascript:openHTML('adm_usuarios.html','content-screen')",
-							"access" : [100],
+							"access" : [0],
+							"class"  : "",
+							"icone"  : "fa fa-industry",
+							"itens"  : []
+						},
+						{
+							"modulo" : "Permissões",
+							"script" : "javascript:openHTML('adm_perm.html','pop-up','Permissões')",
+							"access" : [0],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
 							"itens"  : []
@@ -58,7 +66,7 @@
 						{
 							"modulo" : "Setores",
 							"script" : "javascript:openHTML('adm_setores.html','pop-up', 'Gerenciamento de Setores')",
-							"access" : [100],
+							"access" : [0],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
 							"itens"  : []
@@ -66,7 +74,7 @@
 						{
 							"modulo" : "Cargos",
 							"script" : "javascript:openHTML('adm_cargos.html','pop-up', 'Gerenciamento de Cargos')",
-							"access" : [100],
+							"access" : [0],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
 							"itens"  : []
@@ -74,7 +82,7 @@
 						{
 							"modulo" : "Log do sistema",
 							"script" : "javascript:openHTML('adm_log.html','pop-up', 'Leitor de Log do Sistema',null,500)",
-							"access" : [100],
+							"access" : [0],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
 							"itens"  : []
@@ -86,31 +94,47 @@
 		{
 			"modulo" : "Comercial",
 			"script" : "#",
-			"access" : [100],
+			"access" : [0],
 			"class"  : "",
 			"icone"  : "fa fa-industry",
 			"itens"  : [
 				{
 					"modulo" : "Agenda",
 					"script" : "javascript:openHTML('com_agenda.html','content-screen')",
-					"access" : [100],
+					"access" : [0],
 					"class"  : "",
 					"icone"  : "fa fa-industry",
 					"itens"  : []
-				}				
+				},
+				{
+					"modulo" : "Compras",
+					"script" : "javascript:openHTML('viewCompras.html','content-screen')",
+					"access" : [0,10],
+					"class"  : "",
+					"icone"  : "fa fa-industry",
+					"itens"  : []
+				},
+				{
+					"modulo" : "Vendas",
+					"script" : "javascript:openHTML('viewVendas.html','content-screen')",
+					"access" : [0,2],
+					"class"  : "",
+					"icone"  : "fa fa-industry",
+					"itens"  : []
+				}
 			]
 		},
 		{
 			"modulo" : "Engenharia",
 			"script" : "#",
-			"access" : [100,10],
+			"access" : [0,10],
 			"class"  : "",
 			"icone"  : "fa fa-industry",
 			"itens"  : [
 				{
 					"modulo" : "Orçamento",
 					"script" : "javascript:openHTML('eng_orc.html','content-screen')",
-					"access" : [100,10],
+					"access" : [0,10],
 					"class"  : "",
 					"icone"  : "fa fa-industry",
 					"itens"  : []
@@ -118,7 +142,7 @@
 				{
 					"modulo" : "Projetos",
 					"script" : "javascript:openHTML('eng_proj.html','content-screen')",
-					"access" : [100,10],
+					"access" : [0,10],
 					"class"  : "",
 					"icone"  : "fa fa-industry",
 					"itens"  : []
@@ -128,32 +152,15 @@
 		{
 			"modulo" : "Produção",
 			"script" : "#",
-			"access" : [100,2],
+			"access" : [0,2],
 			"class"  : "",
 			"icone"  : "fa fa-industry",
-			"itens"  : [
-				{
-					"modulo" : "Compras",
-					"script" : "javascript:openHTML('viewCompras.html','content-screen')",
-					"access" : [100,2],
-					"class"  : "",
-					"icone"  : "fa fa-industry",
-					"itens"  : []
-				},
-				{
-					"modulo" : "Vendas",
-					"script" : "javascript:openHTML('viewVendas.html','content-screen')",
-					"access" : [100,2],
-					"class"  : "",
-					"icone"  : "fa fa-industry",
-					"itens"  : []
-				}				
-			]
+			"itens"  : []
 		},							
 		{
 			"modulo" : "RH",
 			"script" : "javascript:openHTML('viewLocal.html','pop-up','Minha Carga',{mode:'motorista'})",
-			"access" : [100],
+			"access" : [0],
 			"class"  : "",
 			"icone"  : "fa fa-industry",
 			"itens"  : []
@@ -161,14 +168,14 @@
 		{
 			"modulo" : "Financeiro",
 			"script" : "#",
-			"access" : [100],
+			"access" : [0],
 			"class"  : "",
 			"icone"  : "fa fa-industry",
 			"itens"  : [
 				{
 					"modulo" : "Lançamentos",
 					"script" : "javascript:openHTML('financeiro.html','content-screen')",
-					"access" : [100],
+					"access" : [0],
 					"class"  : "",
 					"icone"  : "fa fa-industry",
 					"itens"  : []
@@ -176,14 +183,14 @@
 				{
 					"modulo" : "Banco",
 					"script" : "#",
-					"access" : [100],
+					"access" : [0],
 					"class"  : "",
 					"icone"  : "fa fa-industry",
 					"itens"  : [
 						{
 							"modulo" : "Contas",
 							"script" : "javascript:openHTML('banco.html','content-screen')",
-							"access" : [100],
+							"access" : [0],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
 							"itens"  : []
@@ -191,7 +198,7 @@
 						{
 							"modulo" : "Extrato",
 							"script" : "javascript:openHTML('extrato.html','content-screen')",
-							"access" : [100],
+							"access" : [0],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
 							"itens"  : []
@@ -203,14 +210,14 @@
 		{
 			"modulo" : "Fiscal",
 			"script" : "javascript:openHTML('mail.html','pop-up')",
-			"access" : [100],
+			"access" : [0],
 			"class"  : "",
 			"icone"  : "fa fa-industry",
 			"itens"  : [
 				{
 					"modulo" : "NFe",
 					"script" : "javascript:openHTML('nfe.html','content-screen')",
-					"access" : [100],
+					"access" : [0],
 					"class"  : "",
 					"icone"  : "fa fa-industry",
 					"itens"  : []

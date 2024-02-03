@@ -1,17 +1,27 @@
--- DROP TABLE tb_usuario;
+ DROP TABLE tb_usuario;
 CREATE TABLE tb_usuario (
     id int(11) NOT NULL AUTO_INCREMENT,
     email varchar(70) NOT NULL,
     hash varchar(64) NOT NULL,
     id_func int(11) DEFAULT 0,
-    access int(11) DEFAULT 1,
+    access int(11) DEFAULT -1,
 	UNIQUE KEY (hash),
 	UNIQUE KEY (email),
     FOREIGN KEY (id_func) REFERENCES tb_funcionario(id),
     PRIMARY KEY (id)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
-INSERT INTO tb_usuario (email,hash,access)VALUES("admin@fwtecnologia.com.br","e9a5438692c002bf4e761e95350284a15d740c71bd65edfa8a1217a2be312730",100);
+INSERT INTO tb_usuario (email,hash,access)VALUES("admin@fwtecnologia.com.br","e9a5438692c002bf4e761e95350284a15d740c71bd65edfa8a1217a2be312730",0);
+
+ DROP TABLE tb_usr_perm_perfil;
+CREATE TABLE tb_usr_perm_perfil (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    nome varchar(30) NOT NULL,
+    perm varchar(50) NOT NULL DEFAULT "0",
+    PRIMARY KEY (id)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+
 
  DROP TABLE tb_funcionario;
 CREATE TABLE tb_funcionario (

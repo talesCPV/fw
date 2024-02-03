@@ -440,3 +440,14 @@ function logout(){
         this.location.reload(true)    
     }
 }
+
+/* FRM BUSCA */
+
+function getVal(){
+    const sel = document.querySelector('#cmbBusca')
+    const field = sel.value
+    const signal = sel.options[sel.selectedIndex].getAttribute('signal')
+    let value = sel.options[sel.selectedIndex].hasAttribute('val') ? sel.options[sel.selectedIndex].getAttribute('val') : document.querySelector('#edtBusca').value.trim()
+        value = signal=='LIKE' ? `'%${value}%'` : signal=='IN' ? `(${value})` : parseInt(value)? value : `"${value}"`
+    return [field,signal,value]
+}

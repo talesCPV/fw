@@ -56,8 +56,16 @@
 
             myPromisse.then((resolve)=>{
                 const json = JSON.parse(resolve)
-                console.log(json[0].ok)
-                json[0].ok == '1' ? alert('Senha alterada com sucesso!') : alert('Houve algum problema, favor tentar novamente mais tarde.')
+
+                if(json[0].ok == '1'){
+                    setLog(`${localStorage.getItem('email')} -> Senha alterada pelo usuário`)
+                    alert('Senha alterada com sucesso! Favor logar novamente.')
+                    localStorage.clear()
+                    this.location.reload(true)    
+                }else{
+                    alert('Houve algum problema, favor tentar novamente mais tarde.')
+                    setLog('Tentativa de alteração de senha')
+                }
                 closeModal('usr_viewUser')
             })
         }   

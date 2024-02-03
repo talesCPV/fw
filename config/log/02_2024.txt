@@ -12,3 +12,53 @@
 31/01/2024 21:23 admin@fwtecnologia.com.br : Inclusao de novo Cargo (ashgj)
 31/01/2024 21:23 admin@fwtecnologia.com.br : Inclusao de novo Cargo (qww)
 31/01/2024 23:32 admin@fwtecnologia.com.br : Inclusao de novo Usuario, email:teste@fwtecnologia.com.br e acesso:10
+01/02/2024 09:54 admin@fwtecnologia.com.br : Delecao de usuario, email:teste@fwtecnologia.com.br e acesso:10
+01/02/2024 09:54 admin@fwtecnologia.com.br : Delecao de usuario, email:teste@fwtecnologia.com.br e acesso:10
+01/02/2024 10:03 admin@fwtecnologia.com.br : Delecao de usuario, email:teste@fwtecnologia.com.br e acesso:10
+01/02/2024 10:05 admin@fwtecnologia.com.br : Delecao de usuario, email:teste@fwtecnologia.com.br e acesso:10
+01/02/2024 10:05 admin@fwtecnologia.com.br : Delecao de usuario, email:teste@fwtecnologia.com.br e acesso:10
+01/02/2024 10:07 admin@fwtecnologia.com.br : Delecao de usuario, email:teste@fwtecnologia.com.br e acesso:10
+01/02/2024 10:08 admin@fwtecnologia.com.br : Delecao de usuario, email:teste@fwtecnologia.com.br e acesso:10
+01/02/2024 10:09 admin@fwtecnologia.com.br : Delecao de usuario, email:teste@fwtecnologia.com.br e acesso:10
+01/02/2024 10:09 admin@fwtecnologia.com.br : Delecao de usuario, email:teste@fwtecnologia.com.br e acesso:10
+01/02/2024 10:11 admin@fwtecnologia.com.br : Delecao de usuario, email: e acesso:10
+01/02/2024 10:11 admin@fwtecnologia.com.br : Inclusao de novo Usuario, email:teste2@fwtecnologia.com.br e acesso:11
+01/02/2024 10:19 admin@fwtecnologia.com.br : Inclusao de novo Usuario, email:pedreiro@fwtecnologia.com.br e acesso:5
+01/02/2024 10:20 admin@fwtecnologia.com.br : Alteracao de Usuario, email: e acesso:12
+01/02/2024 10:34 admin@fwtecnologia.com.br : Alteracao de usuario, email:pedreiro@fwtecnologia.com.br e acesso:6
+01/02/2024 10:35 admin@fwtecnologia.com.br : Alteracao de usuario, email:pedreiro@fwtecnologia.com.br e acesso:5
+01/02/2024 10:48 admin@fwtecnologia.com.br : Delecao de usuario, email: e acesso:5
+01/02/2024 10:52 admin@fwtecnologia.com.br : Alteracao de usuario, email:producao@fwtecnologia.com.br e acesso:undefined
+01/02/2024 10:55 admin@fwtecnologia.com.br : Alteracao de usuario, email:producao@fwtecnologia.com.br e acesso:undefined
+01/02/2024 10:56 admin@fwtecnologia.com.br : Alteracao de usuario, email:producao@fwtecnologia.com.br e acesso:undefined
+01/02/2024 10:57 admin@fwtecnologia.com.br : Alteracao de usuario, email:producao@fwtecnologia.com.br e acesso:10
+01/02/2024 10:59  : Alteracao de senha de usuario
+01/02/2024 11:01  : teste
+01/02/2024 11:02  : teste
+01/02/2024 11:02  : teste
+01/02/2024 11:04 producao@fwtecnologia.com.br : teste
+01/02/2024 11:10  : Alteracao de senha de usuario
+01/02/2024 11:12  : producao@fwtecnologia.com.br : Alteracao de senha de usuario
+01/02/2024 11:12 producao@fwtecnologia.com.br : teste 2
+01/02/2024 11:15 admin@fwtecnologia.com.br : Alteracao de usuario, email:producao@fwtecnologia.com.br e acesso:11
+01/02/2024 11:17 producao@fwtecnologia.com.br : Alteracao de usuario, email:producao@fwtecnologia.com.br -> producao@fwtecnologia.com.br, acesso:100 -> 10
+01/02/2024 11:19 admin@fwtecnologia.com.br : Alteracao de nome de Setor (FINANCEIRO -> FINANCEIROS)
+01/02/2024 11:19 admin@fwtecnologia.com.br : Alteracao de nome de Setor (FINANCEIROS -> FINANCEIRO)
+01/02/2024 11:25 admin@fwtecnologia.com.br : Delecao de Cargo (qww)
+02/02/2024 11:24 admin@fwtecnologia.com.br : Inclusao de novo Setor (CHEFE ENGENHARIA)
+02/02/2024 11:26 admin@fwtecnologia.com.br : Inclusao de novo Setor (TESTE)
+02/02/2024 11:27 admin@fwtecnologia.com.br : Inclusao de novo Setor (TESTE)
+02/02/2024 11:50  : Tentativa de alteracao de senha
+02/02/2024 12:04 admin@fwtecnologia.com.br : Inclusao de novo Setor (TESTE)
+02/02/2024 12:05 admin@fwtecnologia.com.br : Alteracao de nome de Setor (TESTE -> TESTE 2)
+02/02/2024 12:05 admin@fwtecnologia.com.br : Delecao de Setor (TESTE 2)
+02/02/2024 12:06 admin@fwtecnologia.com.br : Inclusao de novo Setor (TESTE)
+02/02/2024 12:06 admin@fwtecnologia.com.br : Alteracao de nome de Setor (TESTE -> TESTE 2)
+02/02/2024 12:06 admin@fwtecnologia.com.br : Delecao de Setor (TESTE 2)
+02/02/2024 12:07 admin@fwtecnologia.com.br : Inclusao de novo Cargo (teste)
+02/02/2024 12:07 admin@fwtecnologia.com.br : Alteracao de Cargo (teste, R$20.00, 0, 2200) -> (teste 2,R$15.32,0,220033)
+02/02/2024 12:07 admin@fwtecnologia.com.br : Delecao de Cargo (teste 2)
+02/02/2024 12:08 admin@fwtecnologia.com.br : Insercao de novo usuarios, email:undefined -> pedreiro@fwtecnologia.com.br, acesso:undefined -> 3
+02/02/2024 12:08 admin@fwtecnologia.com.br : Alteracao de usuario, email:pedreiro@fwtecnologia.com.br -> pedreiro@fwtecnologia.com.br, acesso:3 -> 4
+02/02/2024 12:09 admin@fwtecnologia.com.br : Inclusao de novo Setor (GERENTE DE PRODUCAO)
+02/02/2024 14:08 admin@fwtecnologia.com.br : Inclusao de novo Setor (APONTAMENTO)

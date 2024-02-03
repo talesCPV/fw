@@ -1,6 +1,10 @@
 <template>
     <style>
 
+        #btnDelUser{
+            display: none;
+        }
+
         .linCKB{
             display: flex;
             flex-direction: row;
@@ -45,7 +49,10 @@
             <input type="text" id="edtAcesso" maxlength="8" onkeyup="return valInt(this)">   
         </div>
 
-        <button id="btnSaveUser" class="btn">Salvar</button>
+        <div class="inline">
+            <button id="btnDelUser"  class="btn">Deletar</button>
+            <button id="btnSaveUser" class="btn">Salvar </button>
+        </div>
     
       </fieldset>    
 
@@ -59,26 +66,51 @@
         if(parseInt(pageData.id)>0){
             document.querySelector('#edtEmail').value = pageData.email
             document.querySelector('#edtAcesso').value = pageData.access
+            document.querySelector('#btnDelUser').style.display = 'block'
         }
+    }
+
+    pageFunc.setUser = (id, email)=>{
+
+        const message = email=='' ? 'Deleção de usuário' : id>0 ? 'Alteração de usuário' : 'Inserção de novo usuários' 
+
+        const params = new Object
+                params.hash = localStorage.getItem('hash')
+                params.id = id
+                params.email = email
+                params.pass = document.querySelector('#edtPass').value.trim()
+                params.acesso = document.querySelector('#edtAcesso').value.trim()
+        
+            const myPromisse = queryDB(params,'USR-1');
+            myPromisse.then((resolve)=>{
+                setLog(`${message}, email:${pageData.email} -> ${params.email}, acesso:${pageData.access} -> ${params.acesso}`)
+                main_data.adm_usuarios.func.fillUser()
+                closeModal('adm_view_user')
+            })
     }
 
 
     document.querySelector('#btnSaveUser').addEventListener('click',()=>{
-        if(checkField(['edtEmail','edtPass','edtAcesso']) && checkRepass(['edtPass','edtRepass'])){
-            const params = new Object
-                params.hash = localStorage.getItem('hash')
-                params.email = document.querySelector('#edtEmail').value.trim()
-                params.pass = document.querySelector('#edtPass').value.trim()
-                params.acesso = document.querySelector('#edtAcesso').value.trim()
-            const myPromisse = queryDB(params,'USR-1');
-            myPromisse.then((resolve)=>{
-                setLog(`Inclusão de novo Usuário, email:${params.email} e acesso:${params.acesso}`)
-                main_data.adm_usuarios.func.fillUser()
-                closeModal('adm_view_user')
-            })
-
+        if(checkField(['edtEmail','edtAcesso']) && checkRepass(['edtPass','edtRepass'])){
+            const id = parseInt(pageData.id)
+            const email = document.querySelector('#edtEmail').value.trim().toLowerCase()
+            const pass = document.querySelector('#edtPass')
+            if(id==0 && pass.value.trim()==''){
+                alert('Favor digitar uma senha válida!')
+                pass.focus()
+            }else{
+                pageFunc.setUser(id, email)
+            }
         }
     })
+
+    document.querySelector('#btnDelUser').addEventListener('click',()=>{
+        if(confirm(`Deseja deletar o usuário ${pageData.email}?`)){
+            const id = parseInt(pageData.id)
+            pageFunc.setUser(id,'')
+        }        
+    })
+
 
     pageFunc.fill()
 

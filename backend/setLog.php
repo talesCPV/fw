@@ -4,9 +4,9 @@
                 include "connect.php";
 
                 $hash = $_POST["hash"];
-
                 $rows = array();
                 $query = 'SELECT email FROM tb_usuario WHERE hash COLLATE utf8_general_ci = "'.$hash.'" COLLATE utf8_general_ci LIMIT 1;';
+                
                 $result = mysqli_query($conexao, $query);
                 if(is_object($result)){
                         if($result->num_rows > 0){			
@@ -27,7 +27,7 @@
         if (IsSet($_POST["line"])){
 
                 $email = getEmail();
-
+                
                 $path = getcwd().'/../config/log/'.date("m_Y").'.txt';
                 $line =  date("d/m/Y H:i", strtotime('-4 hours')).' '.$email.' : '.mb_convert_encoding($_POST["line"],'UTF-8'); 
                 

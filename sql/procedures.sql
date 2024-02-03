@@ -11,18 +11,31 @@ DELIMITER ;
 
 /* USER */
 
- DROP PROCEDURE sp_newUser;
+ DROP PROCEDURE sp_setUser;
 DELIMITER $$
-	CREATE PROCEDURE sp_newUser(	
+	CREATE PROCEDURE sp_setUser(	
 		IN Ihash varchar(64),
+        IN Iid int(11),
 		IN Iemail varchar(80),
 		IN Isenha varchar(30),
         IN Iaccess int(11)
     )
 	BEGIN    
-		SET @access = (SELECT IFNULL(access,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
-		IF(@access IN (100))THEN
-			INSERT INTO tb_usuario (email,hash,access)VALUES(Iemail,SHA2(CONCAT(Iemail, Isenha), 256),Iaccess);
+		SET @access = (SELECT IFNULL(access,-1) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+		IF(@access IN (0))THEN
+			IF(Iemail="")THEN
+				DELETE FROM tb_usuario WHERE id=Iid;
+            ELSE			
+				IF(Iid=0)THEN
+					INSERT INTO tb_usuario (email,hash,access)VALUES(Iemail,SHA2(CONCAT(Iemail, Isenha), 256),Iaccess);            
+                ELSE
+					IF(Isenha="")THEN
+						UPDATE tb_usuario SET email=Iemail, access=Iaccess WHERE id=Iid;
+                    ELSE
+						UPDATE tb_usuario SET email=Iemail, hash=SHA2(CONCAT(Iemail, Isenha), 256), access=Iaccess WHERE id=Iid;
+                    END IF;
+                END IF;
+            END IF;
             SELECT 1 AS ok;
 		ELSE 
 			SELECT 0 AS ok;
@@ -37,9 +50,10 @@ DELIMITER $$
 		IN Ifield varchar(30),
         IN Isignal varchar(4),
 		IN Ivalue varchar(50)
+    )
 	BEGIN    
-		SET @access = (SELECT IFNULL(access,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
-		IF(@access IN(100))THEN
+		SET @access = (SELECT IFNULL(access,-1) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+		IF(@access IN(0))THEN
 			SET @quer =CONCAT('SELECT id,email,id_func,access FROM tb_usuario WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
@@ -58,13 +72,58 @@ DELIMITER $$
 	BEGIN    
 		SET @call_id = (SELECT IFNULL(id,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
 		IF(@call_id > 0)THEN
-			UPDATE tb_usuario SET hash = SHA2(CONCAT(email, Isenha), 256);
+			UPDATE tb_usuario SET hash = SHA2(CONCAT(email, Isenha), 256) WHERE id=@call_id;
             SELECT 1 AS ok;
 		ELSE 
 			SELECT 0 AS ok;
         END IF;
 	END $$
 DELIMITER ;
+
+ DROP PROCEDURE sp_set_usr_perm_perf;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_usr_perm_perf(	
+		IN Ihash varchar(64),
+        In Iid int(11),
+		IN Inome varchar(30)
+    )
+	BEGIN    
+		SET @access = (SELECT IFNULL(access,-1) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+        IF(@access IN(0))THEN
+			IF(Iid = 0 AND Inome != "")THEN
+				INSERT INTO tb_usr_perm_perfil (nome) VALUES (Inome);
+            ELSE
+				IF(Inome = "")THEN
+					DELETE FROM tb_usr_perm_perfil WHERE id=Iid;
+				ELSE
+					UPDATE tb_usr_perm_perfil SET nome = Inome WHERE id=Iid;
+                END IF;
+            END IF;			
+			SELECT * FROM tb_usr_perm_perfil;
+        END IF;
+	END $$
+DELIMITER ;
+
+ DROP PROCEDURE sp_view_usr_perm_perf;
+DELIMITER $$
+	CREATE PROCEDURE sp_view_usr_perm_perf(	
+		IN Ihash varchar(64),
+		IN Ifield varchar(30),
+        IN Isignal varchar(4),
+		IN Ivalue varchar(50)
+    )
+	BEGIN    
+		SET @access = (SELECT IFNULL(access,-1) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+		IF(@access IN (0))THEN
+			SET @quer = CONCAT('SELECT * FROM tb_usr_perm_perfil WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
+			PREPARE stmt1 FROM @quer;
+			EXECUTE stmt1;
+		ELSE 
+			SELECT 0 AS id, "" AS nome;
+        END IF;
+	END $$
+DELIMITER ;
+
 
 /* LOGIN */
 
@@ -153,8 +212,8 @@ DELIMITER $$
 		IN Inome varchar(30)
     )
 	BEGIN    
-		SET @access = (SELECT IFNULL(access,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
-        IF(@id_call IN(100))THEN
+		SET @access = (SELECT IFNULL(access,-1) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+        IF(@access IN(0))THEN
 			IF(Iid_setor = 0)THEN
 				INSERT INTO tb_setores (nome) VALUES (Inome);
             ELSE
@@ -178,8 +237,8 @@ DELIMITER $$
 		IN Ivalue varchar(50)
     )
 	BEGIN    
-		SET @access = (SELECT IFNULL(access,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
-		IF(@access IN (100))THEN
+		SET @access = (SELECT IFNULL(access,-1) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+		IF(@access IN (0))THEN
 			SET @quer =CONCAT('SELECT * FROM tb_setores WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
@@ -200,8 +259,8 @@ DELIMITER $$
         IN Icbo varchar(8)
     )
 	BEGIN    
-		SET @access = (SELECT IFNULL(access,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
-        IF(@access IN (100))THEN
+		SET @access = (SELECT IFNULL(access,-1) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+        IF(@access IN (0))THEN
 			IF(Iid_cargo = 0)THEN
 				INSERT INTO tb_cargos (cargo,salario,mensal,cbo) VALUES (Icargo, Isalario, Imensal, Icbo);
             ELSE
@@ -225,15 +284,11 @@ DELIMITER $$
 		IN Ivalue varchar(50)
     )
 	BEGIN    
-		SET @access = (SELECT IFNULL(access,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
-		IF(@access IN (100))THEN
-			SET @quer = CONCAT('SELECT * FROM tb_cargos WHERE ',Ifield,Isignal,Ivalue,';');
-            
-            SELECT @quer;
-/*            
+		SET @access = (SELECT IFNULL(access,-1) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+		IF(@access IN (0))THEN
+			SET @quer = CONCAT('SELECT * FROM tb_cargos WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
-*/            
 		ELSE 
 			SELECT 0 AS id, "" AS cargo, 0.00 AS salario, 0 AS mensal, NULL as cbo;
         END IF;

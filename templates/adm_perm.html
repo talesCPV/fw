@@ -1,0 +1,293 @@
+<template>
+    <style>
+
+        .tree{
+            --spacing : 1.5rem;
+            --radius  : 10px;
+        }
+
+        .tree li{
+            display      : block;
+            position     : relative;
+            padding-left : calc(2 * var(--spacing) - var(--radius) - 2px);
+        }
+
+        .tree ul{
+            margin-left  : calc(var(--radius) - var(--spacing));
+            padding-left : 0;
+        }
+
+        .tree ul li{
+            border-left : 2px solid #ddd;
+        }
+
+        .tree ul li:last-child{
+            border-color : transparent;
+        }
+
+        .tree ul li::before{
+            content      : '';
+            display      : block;
+            position     : absolute;
+            top          : calc(var(--spacing) / -2);
+            left         : -2px;
+            width        : calc(var(--spacing) + 2px);
+            height       : calc(var(--spacing) + 1px);
+            border       : solid #ddd;
+            border-width : 0 0 2px 2px;
+        }
+
+        .tree summary{
+            display : block;
+            cursor  : pointer;
+        }
+
+        .tree summary::marker,
+        .tree summary::-webkit-details-marker{
+            display : none;
+        }
+
+        .tree summary:focus{
+            outline : none;
+        }
+
+        .tree summary:focus-visible{
+            outline : 1px dotted #000;
+        }
+
+        .tree li::after,
+        .tree summary::before{
+            content       : '';
+            display       : block;
+            position      : absolute;
+            top           : calc(var(--spacing) / 2 - var(--radius));
+            left          : calc(var(--spacing) - var(--radius) - 1px);
+            width         : calc(2 * var(--radius));
+            height        : calc(2 * var(--radius));
+            border-radius : 50%;
+            background    : #ddd;
+        }
+
+        .tree summary::before{
+            z-index    : 1;
+            background : #696 url('https://iamkate.com/code/tree-views/expand-collapse.svg') 0 0;
+        }
+
+        .tree .last::before{
+            z-index    : 1;
+            background : rgb(194, 72, 35)  0 0;
+        }
+
+
+        .tree details[open] > summary::before{
+            background-position : calc(-2 * var(--radius)) 0;
+        }
+
+     /*  */
+
+        .frm-perm{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .panel-left, .panel-rigth{
+            overflow: scroll;
+            width: 100%;
+            max-width: 584px;
+        }
+
+
+
+
+    </style>
+  
+    <div class="frm-perm">
+        <div class="panel-left">
+            <fieldset class="fds-busca">
+                <legend>Busca</legend>
+                <div class="inline">
+                    <label for="cmbBusca">Pesquisa</label>
+                    <select id="cmbBusca">
+                        <option value="nome" signal="LIKE">Nome</option>
+                        <option value="id" signal="IN">Código</option>
+                    </select>
+                    <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
+                    <button id="btnBusca" class="btn-round"><span class="mdi mdi-magnify"></span></button>
+                    <button id="btnNovoPerfil" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
+                </div>
+                <table id="tblPerfil"></table>
+            </fieldset>
+
+
+        </div>
+        <div class="panel-rigth">
+            <fieldset>
+                <ul class="tree">
+                    <li>
+                    <details open class="menu-data">
+                        <summary>Menu</summary>
+                    </details>
+                    </li>
+                </ul>            
+                    
+            </fieldset>
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+</template>
+<script>
+
+    const pageData = main_data.adm_perm.data
+    const pageFunc = main_data.adm_perm.func
+
+    pageFunc.getMenu = ()=>{
+        const data = new URLSearchParams();        
+        data.append("path", '/../config/menu.json');
+
+
+        const myRequest = new Request("backend/loadFile.php",{
+            method : "POST",
+            body : data
+        });
+
+        const myPromisse = new Promise((resolve,reject) =>{
+            fetch(myRequest)
+            .then(function (response){        
+                resolve(response.text()); 
+            })
+        })
+
+        myPromisse.then((json)=>{
+
+            function createTree(data,index){
+                const ul = document.createElement('ul')
+                for(let i=0; i<data.length; i++){
+                    const li = document.createElement('li')
+                    const details = document.createElement('details')
+                    const summary = document.createElement('summary')
+                    summary.access = data[i].access
+                    summary.innerHTML = data[i].modulo
+                    summary.itens = data[i].itens
+                    summary.index = index.concat(i)
+                    if(data[i].itens.length == 0){
+                        summary.className = 'last'
+                    }
+                    summary.addEventListener('click',(e)=>{                        
+                        if(data[i].itens.length == 0){
+                            openHTML('adm_view_perm.html','pop-up','Controle de Permissão',summary.access,400)
+                            pageFunc.setAccess(summary.index,summary.access)
+                        }
+                    })
+                    details.appendChild(summary)
+                    details.appendChild(createTree(data[i].itens,index.concat(i)))
+                    li.appendChild(details)
+                    ul.appendChild(li)
+//                    arr.push(obj)
+                }
+                return ul
+            }
+            pageData.json = JSON.parse(json).menu    
+            const ul_menu = document.querySelector('.menu-data')
+
+            ul_menu.appendChild(createTree(pageData.json,[]))
+        })
+
+    }
+
+    pageFunc.fillPerfil = ()=>{      
+        const tbl = document.getElementById('tblPerfil')
+        tbl.innerHTML = ''
+        const query = getVal()
+        const params = new Object;
+            params.hash = localStorage.getItem('hash');
+            params.field = query[0]
+            params.signal = query[1]
+            params.value = query[2]
+        const myPromisse = queryDB(params,'ADM-5');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+            tbl.style.display = json.length > 0 ? 'inline-grid' : 'none'
+
+            tbl.head('Cod.,Perfil')
+            for(let i=0; i<json.length;i++){
+                tbl.plot(json[i],'id,nome','str,str')                
+            }         
+        });
+    }
+
+    pageFunc.setAccess = (index,access)=>{
+
+        function merge(a, b){
+            const c = a.concat([])           
+            b.forEach((bItem) => ( !a.includes(bItem) ? c.push(bItem) : 0)) 
+            return c.sort()
+        }
+
+        function getTarget(obj){            
+            for(let i=1; i<index.length; i++){
+                obj = obj.itens[index[i]]
+            }
+            return obj
+        }
+
+        function getChildPerm(obj){
+            let out = [0]
+            for(let i=0; i<obj.itens.length; i++){
+                out = merge(out,obj.itens[i].access)
+            }
+            return out
+        }
+
+        function setPerm(arr){
+            for(let i=0; i<arr.length; i++){
+                if(arr[i].itens.length > 0){
+                    arr[i].access = getChildPerm(arr[i])
+                }
+                setPerm(arr[i].itens)
+            }
+        }
+
+        target =  getTarget(pageData.json[index[0]])
+        target.access = access
+
+        setPerm(pageData.json)
+//        console.log(target)
+    }
+
+
+    document.querySelector('#btnBusca').addEventListener('click',()=>{
+        pageFunc.fillPerfil()
+    })
+
+    document.querySelector('#btnNovoPerfil').addEventListener('click',()=>{
+
+        const params = new Object
+            params.hash = localStorage.getItem('hash')
+            params.id = 0
+            params.nome = prompt('Digite o nome do Perfil:').toUpperCase()
+
+        const myPromisse = queryDB(params,'ADM-4');
+        myPromisse.then((resolve)=>{
+            setLog(`Inclusão de novo Setor (${params.nome})`)
+            pageFunc.fillPerfil()
+        })
+    })
+
+
+
+
+    pageFunc.getMenu()
+    
+
+
+
+</script>

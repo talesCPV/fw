@@ -6,7 +6,7 @@ $query_db = array(
 
     /* USERS */
     "USR-0"  => 'CALL sp_viewUser("x00","x01","x02","x03");', // #, FIELD,SIGNAL, VALUE
-    "USR-1"  => 'CALL sp_newUser("x00","x01","x02",x03);', // #, EMAIL, PASS, ACCESS
+    "USR-1"  => 'CALL sp_setUser("x00",x01,"x02","x03",x04);', // #, ID, EMAIL, PASS, ACCESS
     "USR-2"  => 'CALL sp_updatePass("x00","x01");', // #, PASS
 
     /* CALENDAR */
@@ -21,9 +21,10 @@ $query_db = array(
     "ADM-1"  => 'CALL sp_view_setor("x00","x01","x02","x03");', // #, FIELD,SIGNAL, VALUE
     "ADM-2"  => 'CALL sp_set_cargo("x00",x01,"x02",x03,x04,"x05");', // #, ID_CARGO, CARGO, SALARIO, MENSAL, CBO
     "ADM-3"  => 'CALL sp_view_cargo("x00","x01","x02","x03");', // #, FIELD,SIGNAL, VALUE
+    "ADM-4"  => 'CALL sp_set_usr_perm_perf("x00",x01,"x02");', // #, ID, NOME
+    "ADM-5"  => 'CALL sp_view_usr_perm_perf("x00","x01","x02","x03");', // #, FIELD,SIGNAL, VALUE
+
     
-
-
     );
 
 ?>
