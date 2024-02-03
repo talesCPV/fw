@@ -1,21 +1,108 @@
 <template>
     <style>
 
-     
+    .panel{
+        display: flex;
+        flex-direction: row;
+        min-height: 300px;
+        width: 100%;
+    }
+
+    .panel fieldset{
+        width: 100%;
+        padding: 10px;
+    }
+
+    .middle{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .panel select{
+        margin: 0;
+        padding: 10px;
+    }
+
+    .line{
+        width: 100%;
+    }
+
     </style>
   
-    <fieldset>
-        
-    </fieldset>
+    <div class="panel">
 
+        <fieldset>
+            <legend>Bloqueados</legend>
+            <select id="cmbForb" size="10"></select>
+        </fieldset>
+        <div class="middle">
+            <button id="btnAllow" class="btn-round">>></button>
+            <button id="btnForbid" class="btn-round"><<</button>
+        </div>
+        <fieldset>
+            <legend>Liberados</legend>
+            <select id="cmbAllow" size="10"></select>
+        </fieldset>
+
+    </div>
+    <button id="btnSavePerm" class="btn line">Salvar Permissões</button>
 
 
 
 </template>
 <script>
 
+    const pageData = main_data.adm_view_perm.data
+    const pageFunc = main_data.adm_view_perm.func
+    const allow = document.querySelector('#cmbAllow')
+    const forbid = document.querySelector('#cmbForb')
 
 
+    pageFunc.fillPerm = ()=>{
 
+        const params = new Object;
+            params.hash = localStorage.getItem('hash');
+            params.field = 'nome'
+            params.signal = 'LIKE'
+            params.value = "'%%'"
+        const myPromisse = queryDB(params,'ADM-5');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+
+            for(let i=0; i<json.length;i++){
+                const opt = document.createElement('option')
+                opt.value = json[i].id
+                opt.innerHTML = json[i].nome
+                if(pageData.access.includes(parseInt(json[i].id))){
+                    allow.appendChild(opt)
+                }else{
+                    forbid.appendChild(opt)
+                }
+            }         
+        });
+    }
+
+    pageFunc.fillPerm()
+
+    document.querySelector('#btnAllow').addEventListener('click',()=>{
+        const index = forbid.selectedIndex
+        index>-1 ? allow.appendChild(forbid.options[index]) : null
+    })
+
+    document.querySelector('#btnForbid').addEventListener('click',()=>{
+        const index = allow.selectedIndex
+        index>-1 ? forbid.appendChild(allow.options[index]) : null
+    })
+
+    document.querySelector('#btnSavePerm').addEventListener('click',()=>{
+        const perm = [0]
+        for(let i=0; i<allow.options.length; i++){
+            perm.push(parseInt(allow.options[i].value))
+        }
+
+        main_data.adm_perm.func.setAccess(pageData.index,perm)
+        closeModal('adm_view_perm')
+    })
 
 </script>

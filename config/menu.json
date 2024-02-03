@@ -17,7 +17,7 @@
 						{
 							"modulo" : "Empresas",
 							"script" : "javascript:openHTML('newEmp.html','content-screen')",
-							"access" : [0],
+							"access" : [0,1],
 							"class"  : "",
 							"icone"  : "fa fa-industry",
 							"itens"  : []

@@ -149,6 +149,32 @@
     const pageData = main_data.adm_perm.data
     const pageFunc = main_data.adm_perm.func
 
+    function createTree(data,index){
+        const ul = document.createElement('ul')
+        for(let i=0; i<data.length; i++){
+            const li = document.createElement('li')
+            const details = document.createElement('details')
+            const summary = document.createElement('summary')
+            summary.access = data[i].access
+            summary.innerHTML = data[i].modulo
+            summary.itens = data[i].itens
+            summary.index = index.concat(i)
+            if(data[i].itens.length == 0){
+                summary.className = 'last'
+            }
+            summary.addEventListener('click',(e)=>{                        
+                if(data[i].itens.length == 0){                            
+                    openHTML('adm_view_perm.html','pop-up',`Controle de Permissão - ${data[i].modulo}`,summary,800)
+                }
+            })
+            details.appendChild(summary)
+            details.appendChild(createTree(data[i].itens,index.concat(i)))
+            li.appendChild(details)
+            ul.appendChild(li)
+        }
+        return ul
+    }
+
     pageFunc.getMenu = ()=>{
         const data = new URLSearchParams();        
         data.append("path", '/../config/menu.json');
@@ -167,37 +193,8 @@
         })
 
         myPromisse.then((json)=>{
-
-            function createTree(data,index){
-                const ul = document.createElement('ul')
-                for(let i=0; i<data.length; i++){
-                    const li = document.createElement('li')
-                    const details = document.createElement('details')
-                    const summary = document.createElement('summary')
-                    summary.access = data[i].access
-                    summary.innerHTML = data[i].modulo
-                    summary.itens = data[i].itens
-                    summary.index = index.concat(i)
-                    if(data[i].itens.length == 0){
-                        summary.className = 'last'
-                    }
-                    summary.addEventListener('click',(e)=>{                        
-                        if(data[i].itens.length == 0){
-                            openHTML('adm_view_perm.html','pop-up','Controle de Permissão',summary.access,400)
-                            pageFunc.setAccess(summary.index,summary.access)
-                        }
-                    })
-                    details.appendChild(summary)
-                    details.appendChild(createTree(data[i].itens,index.concat(i)))
-                    li.appendChild(details)
-                    ul.appendChild(li)
-//                    arr.push(obj)
-                }
-                return ul
-            }
             pageData.json = JSON.parse(json).menu    
             const ul_menu = document.querySelector('.menu-data')
-
             ul_menu.appendChild(createTree(pageData.json,[]))
         })
 
@@ -250,17 +247,22 @@
         function setPerm(arr){
             for(let i=0; i<arr.length; i++){
                 if(arr[i].itens.length > 0){
-                    arr[i].access = getChildPerm(arr[i])
+                    arr[i].access = getChildPerm(arr[i])                    
                 }
                 setPerm(arr[i].itens)
             }
         }
 
-        target =  getTarget(pageData.json[index[0]])
-        target.access = access
 
-        setPerm(pageData.json)
-//        console.log(target)
+        target =  getTarget(pageData.json[index[0]])
+        target.access = access // seta o acesso atualizado
+        setPerm(pageData.json) // atualiza o json
+
+        /* Recria  arvore em cima do json atualizado */
+        const ul_menu = document.querySelector('.menu-data')
+        ul_menu.innerHTML = ''
+        ul_menu.appendChild(createTree(pageData.json,[]))
+
     }
 
 
