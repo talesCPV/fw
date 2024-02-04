@@ -65,3 +65,5 @@
 03/02/2024 20:50 admin@fwtecnologia.com.br : Inclusao de novo Setor (GERENTE FINANCEIRO)
 03/02/2024 20:53 admin@fwtecnologia.com.br : Insercao de novo usuarios, email:undefined -> fincanceiro@fwtecnologia.com.br, acesso:undefined -> 3
 03/02/2024 21:01 admin@fwtecnologia.com.br : Alteracao de usuario, email:pedreiro@fwtecnologia.com.br -> pedreiro@fwtecnologia.com.br, acesso:4 -> 2
+03/02/2024 23:52 admin@fwtecnologia.com.br : Inclusao de novo Setor (PERFIL DE TESTE)
+04/02/2024 00:04 admin@fwtecnologia.com.br : Alteracao de nome de Setor (PERFIL DE TESTE -> GERENTE TESTE)

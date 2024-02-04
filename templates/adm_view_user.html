@@ -102,12 +102,23 @@
         myPromisse.then((resolve)=>{
             const json = JSON.parse(resolve)
 
+            function addOpt(id,nome){
+                const opt = document.createElement('option')
+                opt.value = id
+                opt.innerHTML = nome
+                opt.selected = pageData.access == id 
+                cmb.appendChild(opt)
+            }
+
+
+            if(pageData.access=='0'){
+                addOpt(0,'ADMINISTRADOR ROOT')
+            }
+
             for(let i=0; i<json.length;i++){
                 const opt = document.createElement('option')
-                opt.value = json[i].id
-                opt.innerHTML = json[i].nome
-                cmb.appendChild(opt)
-            }         
+                addOpt(json[i].id,json[i].nome)
+            }
         });
     }
 

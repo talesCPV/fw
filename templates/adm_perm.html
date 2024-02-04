@@ -104,9 +104,6 @@
             max-width: 584px;
         }
 
-
-
-
     </style>
   
     <div class="frm-perm">
@@ -125,8 +122,6 @@
                 </div>
                 <table id="tblPerfil"></table>
             </fieldset>
-
-
         </div>
         <div class="panel-rigth">
             <fieldset>
@@ -140,15 +135,8 @@
                 </ul>         
                     
             </fieldset>
-
         </div>
-
-
-
     </div>
-
-
-
 
 </template>
 <script>
@@ -191,7 +179,6 @@
         const data = new URLSearchParams();        
         data.append("path", '/../config/menu.json');
 
-
         const myRequest = new Request("backend/loadFile.php",{
             method : "POST",
             body : data
@@ -207,12 +194,7 @@
         myPromisse.then((json)=>{     
             pageData.json = JSON.parse(json)
             pageFunc.refreshMenu()      
-            /*              
-            const ul_menu = document.querySelector('.menu-data')
-            ul_menu.appendChild(createTree(pageData.json.itens,[]))
-            */
         })
-
     }
 
     pageFunc.setMenu = (json)=>{
@@ -248,8 +230,7 @@
         const myPromisse = queryDB(params,'ADM-5');
         myPromisse.then((resolve)=>{
             const json = JSON.parse(resolve)
-            tbl.style.display = json.length > 0 ? 'inline-grid' : 'none'
-
+            tbl.style.display = json.length > 0 ? 'inline-table' : 'none'
             tbl.head('Cod.,Perfil')
             for(let i=0; i<json.length;i++){
                 tbl.plot(json[i],'id,nome','str,str')                
@@ -289,19 +270,11 @@
             }
         }
 
-
         target =  getTarget(pageData.json)
-        target.access = access // seta o acesso atualizado
-        setPerm(pageData.json) // atualiza o json
+        target.access = access 
+        setPerm(pageData.json)
 
-        /* Recria  arvore em cima do json atualizado */
         pageFunc.refreshMenu()
-/*        
-        const ul_menu = document.querySelector('.menu-data')
-        ul_menu.innerHTML = ''
-        ul_menu.appendChild(createTree(pageData.json.itens,[]))
-*/
-        /* Salva o json atualizado no menu.json */
         pageFunc.setMenu(JSON.stringify(pageData.json))
     }
 
@@ -311,25 +284,52 @@
     })
 
     document.querySelector('#btnNovoPerfil').addEventListener('click',()=>{
+        try{
+            const params = new Object
+                params.hash = localStorage.getItem('hash')
+                params.id = 0
+                params.nome = prompt('Digite o nome do Perfil:').toUpperCase()
 
-        const params = new Object
-            params.hash = localStorage.getItem('hash')
-            params.id = 0
-            params.nome = prompt('Digite o nome do Perfil:').toUpperCase()
-
-        const myPromisse = queryDB(params,'ADM-4');
-        myPromisse.then((resolve)=>{
-            setLog(`Inclusão de novo Setor (${params.nome})`)
-            pageFunc.fillPerfil()
-        })
+            const myPromisse = queryDB(params,'ADM-4');
+            myPromisse.then((resolve)=>{
+                setLog(`Inclusão de novo Setor (${params.nome})`)
+                pageFunc.fillPerfil()
+            })
+        }catch{
+            console.error('Cancelado pelo usuário!')
+        }
     })
 
+
+    document.querySelector('#tblPerfil').addEventListener('click',(e)=>{
+        data = e.target.parentNode.data        
+        console.log(data)
+
+        try{
+            const params = new Object
+                params.hash = localStorage.getItem('hash')
+                params.id = data.id
+                params.nome = prompt('Digite o nome do Perfil:',data.nome).toUpperCase()
+
+            const myPromisse = queryDB(params,'ADM-4');
+            myPromisse.then((resolve)=>{
+                setLog(`Alteração de nome de Setor (${data.nome} -> ${params.nome})`)
+                pageFunc.fillPerfil()
+            })
+        }catch{
+            console.error('Cancelado pelo usuário!')
+        }
+
+    })
+
+    document.querySelector('#menu-raiz').addEventListener('click',(e)=>{
+        e.preventDefault();
+        alert(1)
+//        openHTML('adm_new_menu.html','pop-up',`Novo módulo raiz`,pageData.json,600)
+    })
 
 
 
     pageFunc.getMenu()
     
-
-
-
 </script>

@@ -45,7 +45,6 @@
 
     </div>
 
-
 </template>
 <script>
 
@@ -112,7 +111,7 @@
             }
 
             obj.modulo = modulo
-            obj.script = link == '#' ? link : `javascript:openHTML('${link}','${janela}','${label}')"`
+            obj.script = link == '#' ? link : `javascript:openHTML('${link}','${janela}','${label}')`
             saveMenu()
         }
     })
