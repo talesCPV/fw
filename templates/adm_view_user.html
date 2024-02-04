@@ -45,8 +45,8 @@
         </div>        
 
         <div class="inline">
-            <label for="edtAcesso">Cod. Acesso</label>
-            <input type="text" id="edtAcesso" maxlength="8" onkeyup="return valInt(this)">   
+            <label for="edtAcesso">Perfil de Acesso</label>
+            <select id="cmbPerfil"></select>  
         </div>
 
         <div class="inline">
@@ -62,10 +62,10 @@
     const pageData = main_data.adm_view_user.data
     const pageFunc = main_data.adm_view_user.func
 
-    pageFunc.fill = ()=>{
+    pageFunc.fillData = ()=>{
         if(parseInt(pageData.id)>0){
             document.querySelector('#edtEmail').value = pageData.email
-            document.querySelector('#edtAcesso').value = pageData.access
+            document.querySelector('#cmbPerfil').value = pageData.access
             document.querySelector('#btnDelUser').style.display = 'block'
         }
     }
@@ -79,7 +79,7 @@
                 params.id = id
                 params.email = email
                 params.pass = document.querySelector('#edtPass').value.trim()
-                params.acesso = document.querySelector('#edtAcesso').value.trim()
+                params.acesso = document.querySelector('#cmbPerfil').value
         
             const myPromisse = queryDB(params,'USR-1');
             myPromisse.then((resolve)=>{
@@ -89,9 +89,30 @@
             })
     }
 
+    pageFunc.fillPerm = ()=>{
+
+        const cmb = document.querySelector('#cmbPerfil')
+        cmb.innerHTML = ''
+        const params = new Object;
+            params.hash = localStorage.getItem('hash');
+            params.field = 'nome'
+            params.signal = 'LIKE'
+            params.value = "'%%'"
+        const myPromisse = queryDB(params,'ADM-5');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+
+            for(let i=0; i<json.length;i++){
+                const opt = document.createElement('option')
+                opt.value = json[i].id
+                opt.innerHTML = json[i].nome
+                cmb.appendChild(opt)
+            }         
+        });
+    }
 
     document.querySelector('#btnSaveUser').addEventListener('click',()=>{
-        if(checkField(['edtEmail','edtAcesso']) && checkRepass(['edtPass','edtRepass'])){
+        if(checkField(['edtEmail']) && checkRepass(['edtPass','edtRepass'])){
             const id = parseInt(pageData.id)
             const email = document.querySelector('#edtEmail').value.trim().toLowerCase()
             const pass = document.querySelector('#edtPass')
@@ -112,6 +133,7 @@
     })
 
 
-    pageFunc.fill()
+    pageFunc.fillData()
+    pageFunc.fillPerm()
 
 </script>

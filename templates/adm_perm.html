@@ -106,7 +106,7 @@
     <div class="frm-perm">
         <div class="panel-left">
             <fieldset class="fds-busca">
-                <legend>Busca</legend>
+                <legend>Perfis de usuário</legend>
                 <div class="inline">
                     <label for="cmbBusca">Pesquisa</label>
                     <select id="cmbBusca">
@@ -200,6 +200,33 @@
 
     }
 
+    pageFunc.setMenu = (json)=>{
+        const data = new URLSearchParams();        
+        data.append("hash", localStorage.getItem('hash'));
+        data.append("json", json);
+
+        const myRequest = new Request("backend/setPerm.php",{
+            method : "POST",
+            body : data
+        });
+
+        const myPromisse = new Promise((resolve,reject) =>{
+            fetch(myRequest)
+/*            
+            .then(function (response){
+                resolve(response.text()); 
+            })
+*/            
+        })
+/*
+        myPromisse.then((json)=>{
+            pageData.json = JSON.parse(json).menu    
+            const ul_menu = document.querySelector('.menu-data')
+            ul_menu.appendChild(createTree(pageData.json,[]))
+        })
+*/        
+    }
+
     pageFunc.fillPerfil = ()=>{      
         const tbl = document.getElementById('tblPerfil')
         tbl.innerHTML = ''
@@ -263,6 +290,12 @@
         ul_menu.innerHTML = ''
         ul_menu.appendChild(createTree(pageData.json,[]))
 
+        /* Salva o json atualizado no menu.json */
+
+        const menu = new Object
+            menu.menu = pageData.json
+            
+        pageFunc.setMenu(JSON.stringify(menu))
     }
 
 
