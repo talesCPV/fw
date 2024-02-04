@@ -4,6 +4,7 @@
         .tree{
             --spacing : 1.5rem;
             --radius  : 10px;
+            padding: 0 20px;
         }
 
         .tree li{
@@ -40,6 +41,11 @@
         .tree summary{
             display : block;
             cursor  : pointer;
+        }
+
+        .tree summary:hover{
+            border-bottom: solid 1px;
+/*            opacity: 80%;*/
         }
 
         .tree summary::marker,
@@ -124,13 +130,14 @@
         </div>
         <div class="panel-rigth">
             <fieldset>
+                <legend>Menu</legend>
                 <ul class="tree">
                     <li>
                     <details open class="menu-data">
-                        <summary>Menu</summary>
+                        <summary id="menu-raiz">RAIZ</summary>
                     </details>
                     </li>
-                </ul>            
+                </ul>         
                     
             </fieldset>
 
@@ -159,6 +166,7 @@
             summary.innerHTML = data[i].modulo
             summary.itens = data[i].itens
             summary.index = index.concat(i)
+            summary.script = data[i].script
             if(data[i].itens.length == 0){
                 summary.className = 'last'
             }
@@ -166,6 +174,10 @@
                 if(data[i].itens.length == 0){                            
                     openHTML('adm_view_perm.html','pop-up',`Controle de Permissão - ${data[i].modulo}`,summary,800)
                 }
+            })
+            summary.addEventListener('contextmenu',(e)=>{
+                e.preventDefault();
+                openHTML('adm_new_menu.html','pop-up',`Item de Menu - ${data[i].modulo}`,summary,600)
             })
             details.appendChild(summary)
             details.appendChild(createTree(data[i].itens,index.concat(i)))
@@ -192,10 +204,13 @@
             })
         })
 
-        myPromisse.then((json)=>{
-            pageData.json = JSON.parse(json).menu    
+        myPromisse.then((json)=>{     
+            pageData.json = JSON.parse(json)
+            pageFunc.refreshMenu()      
+            /*              
             const ul_menu = document.querySelector('.menu-data')
-            ul_menu.appendChild(createTree(pageData.json,[]))
+            ul_menu.appendChild(createTree(pageData.json.itens,[]))
+            */
         })
 
     }
@@ -212,19 +227,13 @@
 
         const myPromisse = new Promise((resolve,reject) =>{
             fetch(myRequest)
-/*            
-            .then(function (response){
-                resolve(response.text()); 
-            })
-*/            
-        })
-/*
-        myPromisse.then((json)=>{
-            pageData.json = JSON.parse(json).menu    
-            const ul_menu = document.querySelector('.menu-data')
-            ul_menu.appendChild(createTree(pageData.json,[]))
-        })
-*/        
+        })      
+    }
+
+    pageFunc.refreshMenu = ()=>{       
+        const ul_menu = document.querySelector('.menu-data')
+        ul_menu.innerHTML = '<summary id="menu-raiz">RAIZ</summary>'
+        ul_menu.appendChild(createTree(pageData.json.itens,[]))
     }
 
     pageFunc.fillPerfil = ()=>{      
@@ -257,7 +266,7 @@
         }
 
         function getTarget(obj){            
-            for(let i=1; i<index.length; i++){
+            for(let i=0; i<index.length; i++){
                 obj = obj.itens[index[i]]
             }
             return obj
@@ -281,21 +290,19 @@
         }
 
 
-        target =  getTarget(pageData.json[index[0]])
+        target =  getTarget(pageData.json)
         target.access = access // seta o acesso atualizado
         setPerm(pageData.json) // atualiza o json
 
         /* Recria  arvore em cima do json atualizado */
+        pageFunc.refreshMenu()
+/*        
         const ul_menu = document.querySelector('.menu-data')
         ul_menu.innerHTML = ''
-        ul_menu.appendChild(createTree(pageData.json,[]))
-
+        ul_menu.appendChild(createTree(pageData.json.itens,[]))
+*/
         /* Salva o json atualizado no menu.json */
-
-        const menu = new Object
-            menu.menu = pageData.json
-            
-        pageFunc.setMenu(JSON.stringify(menu))
+        pageFunc.setMenu(JSON.stringify(pageData.json))
     }
 
 

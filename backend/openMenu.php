@@ -32,7 +32,7 @@ function addItem($access,$obj){
 	if (IsSet($_POST["hash"])){
 	  $path = "../config/menu.json";
 	  $hash = $_POST["hash"];
-    $access = 0;
+    $access = -1;
     
     include "connect.php";        
 
@@ -60,7 +60,7 @@ function addItem($access,$obj){
           }
           fclose($fp);
           $json = json_decode($resp);
-          $out = addItem($access,$json->menu);
+          $out = addItem($access,$json->itens);
       }            
 
   }
