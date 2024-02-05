@@ -14,8 +14,12 @@ $query_db = array(
     "CAL-1"  => 'CALL sp_set_calendar("x00","x01","x02");', // #, DT_AGD, OBS
     
     /* MAIL */
-    "MAIL-00"  => 'CALL sp_set_mail("x00","x01",x02,"x03");', // #, DATA, ID_TO, MESSAGE
- 
+    "MAIL-0"  => 'CALL sp_set_mail("x00",x01,"x02");', // #, ID_TO, MESSAGE
+    "MAIL-1"  => 'CALL sp_view_mail("x00");', // #
+    "MAIL-2"  => 'CALL sp_read_mail("x00","x01",x02);', // #, DATA, ID_FROM
+    "MAIL-3"  => 'CALL sp_all_mail_adress("x00");', // #
+    
+    
     /* ADMIN */
     "ADM-0"  => 'CALL sp_set_setor("x00",x01,"x02");', // #, ID_SETOR, NOME
     "ADM-1"  => 'CALL sp_view_setor("x00","x01","x02","x03");', // #, FIELD,SIGNAL, VALUE
@@ -24,7 +28,6 @@ $query_db = array(
     "ADM-4"  => 'CALL sp_set_usr_perm_perf("x00",x01,"x02");', // #, ID, NOME
     "ADM-5"  => 'CALL sp_view_usr_perm_perf("x00","x01","x02","x03");', // #, FIELD,SIGNAL, VALUE
 
-    
-    );
+);
 
 ?>

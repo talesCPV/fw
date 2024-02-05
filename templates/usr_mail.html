@@ -26,84 +26,92 @@
             <label for="cmbUser">Destinatário</label>
             <select id="cmbUser"></select>
         </div>
-        <textarea id="edtMail" cols="30" rows="10" maxlength="255"></textarea>
+        <textarea id="edtMail" cols="30" rows="10" maxlength="512"></textarea>
         <button id="btnEnviar">Enviar</button>
     </fieldset>
 
 </template>
 
 <script>
-/*
-    const local_data = main_data.mail
 
-    local_data.func.fillUsers = ()=>{
+
+    const pageData = main_data.usr_mail.data
+    const pageFunc = main_data.usr_mail.func
+
+    pageFunc.fillUsers = ()=>{
+
+        const cmb = document.querySelector('#cmbUser')
+        cmb.innerHTML = ''
         const params = new Object;
-            params.hash = localStorage.getItem('id_user')
-        fillCombo('cmbUser',params,56,['id','nome'], '#')
+            params.hash = localStorage.getItem('hash');
+
+        const myPromisse = queryDB(params,'MAIL-3');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+
+            function addOpt(id,email){
+                const opt = document.createElement('option')
+                opt.value = id
+                opt.innerHTML = email
+                opt.selected = pageData.access == id 
+                cmb.appendChild(opt)
+            }
+
+            for(let i=0; i<json.length;i++){
+                addOpt(json[i].id,json[i].email)                
+            }
+        });
     }
 
-    local_data.func.fillMail = ()=>{
+    pageFunc.sendMail = ()=>{
+
         const params = new Object;
-            params.id_user = localStorage.getItem('id_user')
-        const myPromisse = queryDB(params,53)
-        myPromisse.then((txt)=>{
-            const json = JSON.parse(txt)
-            const sel = document.querySelector('#cmbMail')
-            sel.innerHTML = ''
-            let unread = 0
+            params.hash = localStorage.getItem('hash')
+            params.id_to = document.querySelector('#cmbUser').value
+            params.message =  document.querySelector('#edtMail').value.trim()
+
+        const myPromisse = queryDB(params,'MAIL-0');
+        myPromisse.then((resolve)=>{
+            
+        })
+    }
+
+    pageFunc.viewMail = ()=>{
+
+        const params = new Object;
+            params.hash = localStorage.getItem('hash')
+
+        const myPromisse = queryDB(params,'MAIL-1');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+            const mail = document.querySelector('#cmbMail')
+            mail.innerHTML = ''
             for(let i=0; i<json.length; i++){
-                const dt = new Date(json[i].data)
-                unread += parseInt(json[i].nao_lida)
-                const op = document.createElement('option')
-                op.value = json[i].id
-                op.innerHTML =`${dt.getFormatBR()} as ${dt.getFullHour()} (${json[i].remetente.substr(0,20).trim()}) -> ${json[i].txt.substr(0,40).trim()}`
-                op.style = json[i].nao_lida == '1' ? 'font-weight: 900;' : 'font-weight: 200;'
-                op.data = json[i]
-                sel.appendChild(op)
-            }     
-            document.querySelector('#badge').innerHTML = unread > 0 ? unread : ''            
+                const opt = document.createElement('option')
+                opt.data = json[i]
+                opt.innerHTML = json[i].data.date()+' '+json[i].sender + ' - ' + json[i].message.substring(0,20)
+                mail.appendChild(opt)
+            }
+
             console.log(json)
         })
     }
 
-    local_data.func.fillUsers()
-    local_data.func.fillMail()
+
+    pageFunc.fillUsers()
+    pageFunc.viewMail()
+
+
+
 
     document.querySelector('#btnEnviar').addEventListener('click',()=>{
-        const sel = document.querySelector('#cmbUser')
-        
-        if(sel.value != ''){
-            const params = new Object;
-                params.de = localStorage.getItem('id_user')
-                params.para = sel.value
-                params.txt = document.querySelector('#edtMail').value
-            const myPromisse = queryDB(params,54)
-            myPromisse.then(()=>{
-                alert('Mensagem enviada com sucesso')
-                closeModal('mail')
-            })
-
-        }else{
-            alert('Selecione um destinatário!')
-            sel.focus()
+        if(confirm('Enviar mensagem?')){
+            pageFunc.sendMail()
         }
-
     })
 
     function readMail(){
-        const sel = document.querySelector('#cmbMail')
-        if(sel.value != ''){
-            const data = sel.options[sel.selectedIndex].data     
-            alert(data.txt)
-            const params = new Object;
-                params.id = data.id
-            const myPromisse = queryDB(params,55)
-            myPromisse.then(()=>{
-                checkMail()
-            })
-        }else{
-            alert('Nenhuma mensagem foi selecionada!')
-        }
+
     }
 
     document.querySelector('#cmbMail').addEventListener('dblclick',()=>{
@@ -115,23 +123,9 @@
     })
 
     document.querySelector('#btnDel').addEventListener('click',()=>{
-        const sel = document.querySelector('#cmbMail')
-        if(sel.value != ''){
-            if (confirm('Após deletada, essa mensagem não poderá ser recuperada, deseja prosseguir?')) {
-                const params = new Object;
-                    params.para = localStorage.getItem('id_user')
-                    params.id = sel.value
-                    params.signal = '='
-                const myPromisse = queryDB(params,57)
-                myPromisse.then(()=>{
-                    main_data.mail.fillMail()
-                })
-            }
-        }else{
-            alert('Nenhuma mensagem foi selecionada!')
-        }
+
     })
 
-*/
+
 
 </script>

@@ -42,6 +42,11 @@ String.prototype.money = function(D=2){
     return ('R$'+ parseFloat(str).toFixed(D))
 }
 
+String.prototype.date = function(){
+    const str = this.valueOf()
+    return (str.substring(8,10)+'/'+str.substring(5,7)+'/'+str.substring(0,4))
+}
+
 /* DATE */
 Date.prototype.change = function(N=1){
     this.setDate(this.getDate()+N)

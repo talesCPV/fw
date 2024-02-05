@@ -80,6 +80,7 @@ CREATE TABLE tb_mail (
     id_from int(11) NOT NULL,
     id_to int(11) NOT NULL,
     message varchar(512),
+    looked boolean DEFAULT 0,
     FOREIGN KEY (id_from) REFERENCES tb_usuario(id),
     FOREIGN KEY (id_to) REFERENCES tb_usuario(id),
     PRIMARY KEY (data,id_from)
