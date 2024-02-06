@@ -205,30 +205,55 @@ DELIMITER ;
  DROP PROCEDURE sp_view_mail;
 DELIMITER $$
 	CREATE PROCEDURE sp_view_mail(	
-		IN Ihash varchar(64)
+		IN Ihash varchar(64),
+        IN Isend boolean
     )
 	BEGIN    
 		SET @id_call = (SELECT IFNULL(id,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
 		IF(@id_call > 0)THEN
-			SELECT MAIL.*, USR.email AS sender
-			FROM tb_mail AS MAIL 
-			INNER JOIN tb_usuario AS USR
-			ON MAIL.id_from = USR.id AND id_to = @id_call;
+			IF(Isend)THEN
+				SELECT MAIL.*, USR.email AS mail_from
+					FROM tb_mail AS MAIL 
+					INNER JOIN tb_usuario AS USR
+					ON MAIL.id_from = USR.id AND id_to = @id_call;            
+            ELSE
+				SELECT MAIL.*, USR.email AS mail_to
+					FROM tb_mail AS MAIL 
+					INNER JOIN tb_usuario AS USR
+					ON MAIL.id_to = USR.id AND id_from = @id_call;            
+            END IF;
         END IF;
 	END $$
 DELIMITER ;
 
- DROP PROCEDURE sp_read_mail;
+ DROP PROCEDURE sp_del_mail;
 DELIMITER $$
-	CREATE PROCEDURE sp_read_mail(	
+	CREATE PROCEDURE sp_del_mail(	
 		IN Ihash varchar(64),
         IN Idata datetime,
-        IN Iid_from int(11)
+        IN Iid_from int(11),
+        IN Iid_to int(11)
     )
-	BEGIN    
+	BEGIN        
 		SET @id_call = (SELECT IFNULL(id,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
-		IF(@id_call > 0)THEN
-			UPDATE tb_mail SET looked=1 WHERE data = Idata AND id_from = Iid_from AND id_to = @id_call;			
+		IF(@id_call = Iid_to OR @id_call = Iid_from)THEN
+			DELETE FROM tb_mail WHERE data = Idata AND id_from = Iid_from AND id_to = Iid_to;
+        END IF;
+	END $$
+DELIMITER ;
+
+ DROP PROCEDURE sp_mark_mail;
+DELIMITER $$
+	CREATE PROCEDURE sp_mark_mail(	
+		IN Ihash varchar(64),
+        IN Idata datetime,
+        IN Iid_from int(11),
+        IN Iid_to int(11)
+    )
+	BEGIN        
+		SET @id_call = (SELECT IFNULL(id,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+		IF(@id_call = Iid_to OR @id_call = Iid_from)THEN
+			UPDATE tb_mail SET looked=1 WHERE data = Idata AND id_from = Iid_from AND id_to = Iid_to;
         END IF;
 	END $$
 DELIMITER ;

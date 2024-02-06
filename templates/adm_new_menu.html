@@ -79,6 +79,8 @@
 
         obj.itens.push(menu)  
         saveMenu()
+        setLog(`Menu Incluído (${menu.modulo})`)
+
     })
 
     document.querySelector('#btnDelMenu').addEventListener('click',()=>{
@@ -90,9 +92,10 @@
             for(let i=0; i<index.length-1; i++){
                 obj = obj.itens[index[i]]        
             }
-
+            setLog(`Menu Deletado (${obj.modulo})`)
             obj.itens.splice(index[index.length-1],1)  
-            saveMenu()          
+            saveMenu()
+
         }
     })
 
@@ -113,6 +116,7 @@
             obj.modulo = modulo
             obj.script = link == '#' ? link : `javascript:openHTML('${link}','${janela}','${label}')`
             saveMenu()
+            setLog(`Menu Alterado (${modulo}, ${link}, ${janela}, ${label})`)
         }
     })
 

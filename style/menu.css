@@ -216,9 +216,9 @@ li > a:only-child:after { content: ''; }
 	/* Stylinf the toggle lable */
 	.toggle {
 		display: block;
-/*		background-color: #254441;*/
+		background-color: var(--top-bar);
 		padding:14px 20px;	
-		color:#FFF;
+/*		color: var(--top-bar-font);*/
 		font-size:14px;
 		text-decoration:none;
 		border:none;
@@ -237,7 +237,7 @@ li > a:only-child:after { content: ''; }
 	nav ul li {
 		display: block;
 		width: 100%;
-		}
+	}
 
 	nav ul ul .toggle,
 	nav ul ul a {
@@ -257,7 +257,7 @@ li > a:only-child:after { content: ''; }
 	nav ul ul a,
   nav ul ul ul a{
 		padding:14px 0 14px 100px;	
-		color:#FFF;
+/*		color:#FFF;*/
 		font-size:14px; 
 	}
   
@@ -272,7 +272,7 @@ li > a:only-child:after { content: ''; }
 	nav ul ul {
 		float: none;
 		position:static;
-		color: #ffffff;
+/*		color: #ffffff;*/
 		/* has to be the same number as the "line-height" of "nav a" */
 	}
 		

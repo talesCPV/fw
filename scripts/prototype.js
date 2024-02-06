@@ -47,6 +47,11 @@ String.prototype.date = function(){
     return (str.substring(8,10)+'/'+str.substring(5,7)+'/'+str.substring(0,4))
 }
 
+String.prototype.time = function(){
+    const str = this.valueOf()
+    return (str.substring(11,16))
+}
+
 /* DATE */
 Date.prototype.change = function(N=1){
     this.setDate(this.getDate()+N)

@@ -99,8 +99,7 @@
         const perm = [0]
         for(let i=0; i<allow.options.length; i++){
             perm.push(parseInt(allow.options[i].value))
-        }
-
+        }        
         main_data.adm_perm.func.setAccess(pageData.index,perm)
         closeModal('adm_view_perm')
     })
