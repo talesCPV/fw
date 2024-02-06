@@ -149,6 +149,19 @@ function pictab(e){
         }
     }
 }
+ /* CHECK USER MAIL */
+
+    function checkUserMail(){
+        const params = new Object;
+            params.hash = localStorage.getItem('hash')
+
+        const myPromisse = queryDB(params,'USR-3');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)[0]
+            const unread = json.new_mail
+            document.querySelector('#mail-badge').innerHTML = unread!='0' ? unread : ''
+        })
+    }
 
  /*  MENU  */ 
 function openMenu(){
@@ -167,9 +180,9 @@ function openMenu(){
         fetch(myRequest)
         .then(function (response){        
             if (response.status === 200) { 
-                document.querySelector('#usr-name').innerHTML = ''+localStorage.getItem('nome').toUpperCase()
+                document.querySelector('#usr-name').innerHTML = '<span id="mail-badge" class="badge"></span>'+localStorage.getItem('nome').toUpperCase()
                 resolve(response.text()); 
-//                checkMail()                   
+                checkUserMail()                  
             } else { 
                 reject(new Error("Houve algum erro na comunicação com o servidor"));                    
             } 

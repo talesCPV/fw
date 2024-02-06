@@ -80,6 +80,21 @@ DELIMITER $$
 	END $$
 DELIMITER ;
 
+ DROP PROCEDURE sp_check_usr_mail;
+DELIMITER $$
+	CREATE PROCEDURE sp_check_usr_mail(	
+		IN Ihash varchar(64)
+    )
+	BEGIN        
+		SET @id_call = (SELECT IFNULL(id,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
+		IF(@id_call>0)THEN
+			SELECT COUNT(*) AS new_mail FROM tb_mail WHERE id_to = @id_call AND looked=0;
+        END IF;
+	END $$
+DELIMITER ;
+
+	/* PERMISSÂO */
+
  DROP PROCEDURE sp_set_usr_perm_perf;
 DELIMITER $$
 	CREATE PROCEDURE sp_set_usr_perm_perf(	

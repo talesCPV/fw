@@ -184,8 +184,10 @@
         const myPromisse = queryDB(params,'MAIL-1');
         myPromisse.then((resolve)=>{
             const json = JSON.parse(resolve)
+
             const mail = send ? document.querySelector('#cmbEntrada') : document.querySelector('#cmbSaida')
             mail.innerHTML = ''
+
             for(let i=0; i<json.length; i++){
                 const opt = document.createElement('option')
                 opt.data = json[i]
@@ -193,12 +195,13 @@
                 opt.innerHTML = json[i].data.date()+' '+json[i].data.time()+' '+(send ? json[i].mail_from : json[i].mail_to) + ' - ' + json[i].message.substring(0,60)
                 mail.appendChild(opt)
             }
+            send ? checkUserMail() : null
         })
     }
 
     pageFunc.refreshMail = ()=>{
         pageFunc.viewEntrada()
-        pageFunc.viewEnviados()
+        pageFunc.viewEnviados()        
     }
 
     pageFunc.fillUsers = ()=>{
