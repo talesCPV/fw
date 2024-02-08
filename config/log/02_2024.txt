@@ -243,3 +243,13 @@
 07/02/2024 23:47 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Fiscal, Acesso:[[0]])
 07/02/2024 23:49 admin@fwtecnologia.com.br : Insercao de novo usuarios, email:undefined -> joao@fwtecnologia.com.br, acesso:undefined -> 8
 07/02/2024 23:50 admin@fwtecnologia.com.br : Menu Alterado (APONTAMENTO, blank.html, pop-up, Tela de Apontamento)
+08/02/2024 11:56 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Engenharia, Acesso:[[0,5]])
+08/02/2024 11:56 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Admin, Acesso:[[0,3]])
+08/02/2024 11:56 admin@fwtecnologia.com.br : Permissao alterada, Modulo: RH, Acesso:[[0]])
+08/02/2024 11:56 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Banco, Acesso:[[0,3]])
+08/02/2024 11:56 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Cadastros, Acesso:[[0,3]])
+08/02/2024 11:56 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Comercial, Acesso:[[0,7]])
+08/02/2024 11:56 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Gerenciamento, Acesso:[[0]])
+08/02/2024 11:56 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Financeiro, Acesso:[[0,3]])
+08/02/2024 11:56 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Producao, Acesso:[[0,1,2,5,7,8]])
+08/02/2024 11:56 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Fiscal, Acesso:[[0]])

@@ -20,7 +20,7 @@
                     <option value="setor" signal="LIKE">Setor</option>
                     <option value="mensal" signal="=" val="0">Horista</option>
                     <option value="mensal" signal="=" val="1">Mensalista</option>
--->                    
+-->
                 </select>
                 <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
                 <button id="btnBusca" class="btn-round" ><span class="mdi mdi-magnify"></span></button>
@@ -29,7 +29,7 @@
         </fieldset>
 
         <table id="tblFunc"></table>
-<!--        
+<!--
     </div>
 -->
 
@@ -61,13 +61,17 @@
 
 
     document.querySelector('#btnNovo').addEventListener('click',()=>{
-        openHTML('adm_view_func.html','pop-up')
+        openHTML('adm_view_func.html','pop-up','Cadastro de Funcionário')
     })
 
     document.querySelector('#btnBusca').addEventListener('click',()=>{
         pageFunc.fillFunc()
     })
 
+    document.querySelector('#tblFunc').addEventListener('click',(e)=>{
+        data = e.target.parentNode.data
+        openHTML('adm_view_func.html','pop-up',`Edição de dados - ${data.nome.toUpperCase()}`,data)
+    })
 
 
 

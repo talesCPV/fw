@@ -159,12 +159,38 @@
 
     const pageData = main_data.adm_view_func.data
     const pageFunc = main_data.adm_view_func.func
-    const newFunc = Object.keys(pageData).length
+    const newFunc = Object.keys(pageData).length == 0
 
-//    document.querySelector('#up_file').disabled = !newFunc
+    console.log(teste)
+
+    function fillData(){
+        if(newFunc){
+            document.querySelector('#btnDel').disabled = true
+            document.querySelector('#up_file').disabled = true
+        }else{
+            document.querySelector('#edtNome').value = pageData.nome
+            document.querySelector('#edtNasc').value = pageData.nasc
+            document.querySelector('#edtRG').value = pageData.rg
+            document.querySelector('#edtCPF').value = pageData.cpf
+            document.querySelector('#edtPIS').value = pageData.pis
+            document.querySelector('#edtEnd').value = pageData.end
+            document.querySelector('#edtNum').value = pageData.num
+            document.querySelector('#edtCidade').value = pageData.cidade
+            document.querySelector('#edtBairro').value = pageData.bairro
+            document.querySelector('#cmbUF').value = pageData.uf
+            document.querySelector('#edtCEP').value = pageData.cep
+            document.querySelector('#edtAdm').value = pageData.data_adm
+            document.querySelector('#edtDem').value = pageData.data_dem
+            document.querySelector('#edtFone').value = pageData.tel
+            document.querySelector('#edtCel').value = pageData.cel
+            document.querySelector('#cmbAtivo').value = pageData.ativo
+            document.querySelector('#edtObs').value = pageData.obs
+        }
+    }
+
     pageFunc.setFun = ()=>{
         const params = new Object;
-            params.id = !newFunc ? 0 : pageData.id
+            params.id = newFunc ? 0 : pageData.id
             params.nome = document.querySelector('#edtNome').value.trim()
             params.nasc = document.querySelector('#edtNasc').value.trim()
             params.rg = document.querySelector('#edtRG').value.trim()
@@ -187,9 +213,23 @@
           
         const myPromisse = queryDB(params,'FUN-0');
         myPromisse.then((resolve)=>{
-            alert('Funcionário cadastrado!')
+            main_data.adm_funcionarios.func.fillFunc()
+            alert('Cadastrado efetuado!')
             closeModal('adm_view_func')
         })
+    }
+
+    pageFunc.delFun = ()=>{
+        if(confirm('Deseja realmente deletar este registro?')){
+            const params = new Object;
+                params.id = pageData.id
+            
+            const myPromisse = queryDB(params,'FUN-2');
+            myPromisse.then((resolve)=>{
+                main_data.adm_funcionarios.func.fillFunc()
+                closeModal('adm_view_func')
+            })
+        }
     }
 
     pageFunc.fillCargo = ()=>{
@@ -206,6 +246,9 @@
                 const opt = document.createElement('option')
                 opt.value = json[i].id
                 opt.innerHTML = json[i].cargo
+                if(!newFunc){
+                    opt.selected =  json[i].id == pageData.id_cargo ? 1 : 0
+                }
                 cmb.appendChild(opt)
             }            
         });
@@ -225,6 +268,9 @@
                 const opt = document.createElement('option')
                 opt.value = json[i].id
                 opt.innerHTML = json[i].nome
+                if(!newFunc){
+                    opt.selected =  json[i].id == pageData.id_setor ? 1 : 0
+                }
                 cmb.appendChild(opt)
             }            
         });
@@ -238,8 +284,13 @@
         pageFunc.setFun()
     })
 
+    document.querySelector('#btnDel').addEventListener('click',()=>{
+        pageFunc.delFun()
+    })
+
     pageFunc.fillCargo()
     pageFunc.fillSetor()
+    fillData()
 
 
 </script>
