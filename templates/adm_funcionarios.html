@@ -3,41 +3,71 @@
 
      
     </style>
-
+<!--
     <div class="form-base">
         <h1>Funcionários</h1>
-
+-->
         <fieldset>
             <legend>Busca</legend>
             <div class="inline">
                 <label for="cmbBusca">Pesquisa</label>
                 <select id="cmbBusca">
-                    <option value="true" signal="=" val="true">Todos</option>
-                    <option value="FUNC.status" signal="=" val="ATIVO" selected>Ativos</option>
-                    <option value="FUNC.status" signal="=" val="DEMIT" >Inativos</option>
-                    <option value="FUNC.nome" signal="LIKE">Nome</option>
-                    <option value="CAR.cargo" signal="LIKE">Cargo</option>
-                    <option value="SET.nome" signal="LIKE">Setor</option>
-                    <option value="CAR.tipo" signal="=" val="HORA">Horista</option>
-                    <option value="CAR.tipo" signal="=" val="MENSAL">Mensalista</option>
+                    <option value="nome" signal="LIKE">Nome</option>
+                    <option value="ativo" signal="=" val="1" selected>Ativos</option>
+                    <option value="ativo" signal="=" val="0" >Inativos</option>
+<!--
+                    <option value="cargo" signal="LIKE">Cargo</option>
+                    <option value="setor" signal="LIKE">Setor</option>
+                    <option value="mensal" signal="=" val="0">Horista</option>
+                    <option value="mensal" signal="=" val="1">Mensalista</option>
+-->                    
                 </select>
                 <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
-                <button id="btnBusca" class="btn-round" onclick="main_data.funcionarios.data.query()"><span class="mdi mdi-magnify"></span></button>
+                <button id="btnBusca" class="btn-round" ><span class="mdi mdi-magnify"></span></button>
                 <button id="btnNovo" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
             </div>
         </fieldset>
 
         <table id="tblFunc"></table>
+<!--        
     </div>
-
+-->
 
 
 </template>
 <script>
 
+    const pageData = main_data.adm_funcionarios.data
+    const pageFunc = main_data.adm_funcionarios.func
+
+    pageFunc.fillFunc = ()=>{      
+        const tbl = document.getElementById('tblFunc')
+        tbl.innerHTML = ''
+        const query = getVal()
+        const params = new Object;
+            params.field = query[0]
+            params.signal = query[1]
+            params.value = query[2]
+        const myPromisse = queryDB(params,'FUN-1');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+            tbl.style.display = json.length > 0 ? 'inline-table' : 'none'
+            tbl.head('Nome,Cargo,Setor')
+            for(let i=0; i<json.length;i++){
+                tbl.plot(json[i],'nome,cargo,setor','str,Upp,Upp')
+            }         
+        });
+    }
+
+
     document.querySelector('#btnNovo').addEventListener('click',()=>{
         openHTML('adm_view_func.html','pop-up')
     })
+
+    document.querySelector('#btnBusca').addEventListener('click',()=>{
+        pageFunc.fillFunc()
+    })
+
 
 
 

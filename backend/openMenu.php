@@ -12,16 +12,14 @@ function addItem($access,$obj){
       $item->script = $obj[$i]->script;
       $item->class = $obj[$i]->class;
       $item->icone = $obj[$i]->icone;
+      $item->access = crip(json_encode($obj[$i]->access));
       $item->itens = [];
 
       if(count($obj[$i]->itens) > 0){
           array_push($item->itens, addItem($access, $obj[$i]->itens));          
       } 
-
       array_push($menu, $item);
-
     }       
-
   }
 
   return $menu;
@@ -34,7 +32,8 @@ function addItem($access,$obj){
 	  $hash = $_POST["hash"];
     $access = -1;
     
-    include "connect.php";        
+    include "connect.php";
+    include "crip.php";
 
     $query = "SELECT access FROM tb_usuario WHERE hash=\"$hash\";";
 

@@ -86,8 +86,10 @@
 			}
 		}
 
+		return($word);
 
-		return trim($word);
+
+//		return trim($word);
 
 	};
 
@@ -137,8 +139,8 @@
 
 		}
 
-
-		return trim($word);
+		return($word);
+//		return trim($word);
 		
 
 	};

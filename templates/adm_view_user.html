@@ -75,7 +75,6 @@
         const message = email=='' ? 'Deleção de usuário' : id>0 ? 'Alteração de usuário' : 'Inserção de novo usuários' 
 
         const params = new Object
-                params.hash = localStorage.getItem('hash')
                 params.id = id
                 params.email = email
                 params.pass = document.querySelector('#edtPass').value.trim()
@@ -94,7 +93,6 @@
         const cmb = document.querySelector('#cmbPerfil')
         cmb.innerHTML = ''
         const params = new Object;
-            params.hash = localStorage.getItem('hash');
             params.field = 'nome'
             params.signal = 'LIKE'
             params.value = "'%%'"

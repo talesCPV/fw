@@ -50,6 +50,10 @@
         padding: 10px;
     }
 
+    textarea{
+        resize: none;
+    }
+
     table {
         margin: 10px;
         font-family: arial, sans-serif;
@@ -306,15 +310,7 @@
     .control-size *{
         min-width: auto !important;
     }
-/*
-    .path:nth-child(even) {
-        background-color: #79a04779 !important;
-    }    
 
-    .path:nth-child(odd) {
-        background-color: #a3d66179 !important;
-    }    
-*/
 /*  MOBILE  */
 
     @media all and (max-width : 768px) {

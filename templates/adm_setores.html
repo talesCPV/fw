@@ -40,7 +40,6 @@
         tbl.innerHTML = ''
         const query = getVal()
         const params = new Object;
-            params.hash = localStorage.getItem('hash');
             params.field = query[0]
             params.signal = query[1]
             params.value = query[2]
@@ -64,7 +63,6 @@
 
         try{
             const params = new Object
-                params.hash = localStorage.getItem('hash')
                 params.id = 0
                 params.nome = prompt('Digite o nome do setor:').toUpperCase()
 
@@ -85,7 +83,6 @@
      
         try{
             const params = new Object
-            params.hash = localStorage.getItem('hash')
             params.id = data.id
             params.nome = prompt('Digite o nome do setor:',data.nome).toUpperCase().trim()
 

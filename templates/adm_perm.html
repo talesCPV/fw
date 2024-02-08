@@ -135,7 +135,6 @@
         tbl.innerHTML = ''
         const query = getVal()
         const params = new Object;
-            params.hash = localStorage.getItem('hash');
             params.field = query[0]
             params.signal = query[1]
             params.value = query[2]
@@ -203,7 +202,6 @@
     document.querySelector('#btnNovoPerfil').addEventListener('click',()=>{
         try{
             const params = new Object
-                params.hash = localStorage.getItem('hash')
                 params.id = 0
                 params.nome = prompt('Digite o nome do Perfil:').toUpperCase()
 
@@ -222,7 +220,6 @@
         data = e.target.parentNode.data                
         try{
             const params = new Object
-                params.hash = localStorage.getItem('hash')
                 params.id = data.id
                 params.nome = prompt('Digite o nome do Perfil:',data.nome).toUpperCase().trim()
 

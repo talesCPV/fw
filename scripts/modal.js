@@ -26,9 +26,11 @@ async function openHTML(template,where="content-screen",label="", data="",width=
                     document.getElementById(where).innerHTML = cont;                    
                 }
 
-                main_data[page_name] = new Object
-                main_data[page_name].data = typeof(data) != 'object' ? new Object : data
-                main_data[page_name].func = new Object
+                const new_obj = page_name == 'login' ? 'dashboard' : page_name
+
+                main_data[new_obj] = new Object
+                main_data[new_obj].data = typeof(data) != 'object' ? new Object : data
+                main_data[new_obj].func = new Object
 
                 eval(script.innerHTML);
                 resolve = body

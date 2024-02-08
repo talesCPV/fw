@@ -66,6 +66,7 @@ nav {
 	gap: 5px;
 	padding: 14px 20px;
 	cursor: pointer;
+	min-width: 100px;
 }
 
 #usr-name:hover{

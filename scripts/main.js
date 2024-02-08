@@ -12,10 +12,15 @@ var semana = ['Dom','Seg','Ter','Qua','Qui','Sex','Sab']
 
 /*  DATABASE  */
 function queryDB(params,cod){
-    const data = new URLSearchParams();        
-        data.append("cod", cod);
-        data.append("params", JSON.stringify(params));
-        data.append("storage", localStorage.getItem("storage"));
+
+    const access = main_data.dashboard.data.access == undefined ? '^k^ax^(cybp`wz^lb)^_d`p) ^qs/m%hrg`Pd^!ao^uQ^"TT' : main_data.dashboard.data.access
+    const hash = localStorage.getItem('hash') == undefined ? 0 : localStorage.getItem('hash')
+
+    const data = new URLSearchParams()
+        data.append("access", access)
+        data.append("hash", hash)
+        data.append("cod", cod)
+        data.append("params", JSON.stringify(params))
 
     const myRequest = new Request("backend/query_db.php",{
         method : "POST",
@@ -26,41 +31,13 @@ function queryDB(params,cod){
         fetch(myRequest)
         .then(function (response){
             if (response.status === 200) { 
-                resolve(response.text());                    
+                resolve(response.text())        
             } else { 
                 reject(new Error("Houve algum erro na comunicação com o servidor"));
 //                alert('Houve um erro na comunicação com o servidor, favor verificar sua conexão com a internet.')
             } 
         });
     });      
-}
-
-function NFeConf(dados='',file='NFe.json'){
-    const data = new URLSearchParams();
-    if(dados == ''){
-        data.append("data", dados);
-        data.append("file", file);
-    }else{
-        data.append("data", JSON.stringify(dados));
-        data.append("file", file);
-    }        
-
-    const myRequest = new Request("backend/setFile.php",{
-        method : "POST",
-        body : data
-    });
-
-    return new Promise((resolve,reject) =>{
-        fetch(myRequest)
-        .then(function (response){
-            if (response.status === 200) {                 
-                resolve(response.text());                    
-            } else { 
-                reject(new Error("Houve algum erro na comunicação com o servidor"));                    
-            } 
-        });
-    }); 
-
 }
 
 function getConfig(field,file='config.json',order='read',value=0){
@@ -194,7 +171,6 @@ function openMenu(){
         const menu_data = JSON.parse(resolve)
         const menu = document.querySelector('.menu')
         pushMenu(menu, menu_data)
-
     });
 
     function pushMenu(menu, obj){
@@ -207,7 +183,10 @@ function openMenu(){
             const a = document.createElement('a')
 
             a.href = obj[i].script
-            a.innerHTML = obj[i].modulo 
+            a.innerHTML = obj[i].modulo            
+            a.addEventListener('click',()=>{
+                main_data.dashboard.data.access = obj[i].access
+            })
             if (obj[i].itens.length > 0 ){
                 const lbl = document.createElement('label')
                 lbl.htmlFor = `drop-${drop}`
@@ -240,7 +219,6 @@ function openMenu(){
 
             menu.appendChild(li)
         }
-//        setBarStyle()
     }
 }
 
@@ -461,6 +439,6 @@ function getVal(){
     const field = sel.value
     const signal = sel.options[sel.selectedIndex].getAttribute('signal')
     let value = sel.options[sel.selectedIndex].hasAttribute('val') ? sel.options[sel.selectedIndex].getAttribute('val') : document.querySelector('#edtBusca').value.trim()
-        value = signal=='LIKE' ? `'%${value}%'` : signal=='IN' ? `(${value})` : parseInt(value)? value : `"${value}"`
+        value = signal=='LIKE' ? `'%${value}%'` : signal=='IN' ? `(${value})` : parseInt(value)? value : `${value}`
     return [field,signal,value]
 }

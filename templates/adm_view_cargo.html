@@ -65,7 +65,6 @@
 
     document.querySelector('#btnSaveCargo').addEventListener('click',()=>{
         const params = new Object
-            params.hash = localStorage.getItem('hash')
             params.id = pageData.id
             params.cargo = document.querySelector('#edtCargo').value.trim()
             params.sal = document.querySelector('#edtSal').value.trim()

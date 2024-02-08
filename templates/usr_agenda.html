@@ -175,7 +175,6 @@
     function busca(start,end){
       
         const params = new Object;
-        params.hash = localStorage.getItem('hash');
         params.dt_ini = start.getFormatDate();
         params.dt_fin = end.getFormatDate();
         const myPromisse = queryDB(params,'CAL-0');

@@ -50,7 +50,6 @@
             const newusr = pageData.mode == 'new'
             const pass = document.querySelector('#edtPass').value.trim()
             const params = new Object;                
-                params.hash = localStorage.getItem('hash')
                 params.pass = pass
             const myPromisse = queryDB(params,'USR-2');
 

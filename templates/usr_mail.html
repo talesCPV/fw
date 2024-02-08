@@ -163,7 +163,6 @@
             if(data.looked == '0' && send){
 
                 const params = new Object;
-                    params.hash = localStorage.getItem('hash')
                     params.data = data.data
                     params.id_from = data.id_from
                     params.id_to = data.id_to
@@ -178,7 +177,6 @@
 
     function loadMail(send=1){
         const params = new Object;
-            params.hash = localStorage.getItem('hash')
             params.I_send = send
 
         const myPromisse = queryDB(params,'MAIL-1');
@@ -188,7 +186,7 @@
             const mail = send ? document.querySelector('#cmbEntrada') : document.querySelector('#cmbSaida')
             mail.innerHTML = ''
 
-            for(let i=0; i<json.length; i++){
+            for(let i=0; i<json.length; i++){        
                 const opt = document.createElement('option')
                 opt.data = json[i]
                 opt.style["font-weight"] = json[i].looked=='1' ? 'lighter' : 'bold'
@@ -232,7 +230,6 @@
     pageFunc.sendMail = ()=>{
         if(confirm('Enviar mensagem?')){
             const params = new Object;
-                params.hash = localStorage.getItem('hash')
                 params.id_to = document.querySelector('#cmbUser').value
                 params.message =  document.querySelector('#edtMail').value.trim()
 
@@ -257,7 +254,6 @@
             if(confirm('Deletar esta mensagem?')){
                 const data = cmb.options[cmb.selectedIndex].data
                 const params = new Object;
-                    params.hash = localStorage.getItem('hash')
                     params.data = data.data
                     params.id_from = data.id_from
                     params.id_to = data.id_to
@@ -265,6 +261,7 @@
                 const myPromisse = queryDB(params,'MAIL-3');
                 myPromisse.then((resolve)=>{
                     pageFunc.refreshMail()
+                    document.querySelector('#edtViewEntrada').value = ''
                 })
             }
         }

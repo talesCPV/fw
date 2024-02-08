@@ -67,13 +67,13 @@
                     <select id="cmbCargo"></select>      
                     <label for="cmbSetor">Setor</label>
                     <select id="cmbSetor"></select>      
-                </div>
-                <div class="inline">
-                    <label for="edtStatus">Status</label>
-                    <select id="edtStatus">
+                    <label for="cmbAtivo">Status</label>
+                    <select id="cmbAtivo">
                         <option value="1">Ativo</option>
                         <option value="0">Inativo</option>
                     </select>
+                </div>
+                <div class="inline">
                     <label for="edtAdm">Admissão</label>
                     <input type="date" id="edtAdm">          
                     <label for="edtDem">Desligamento</label>
@@ -96,8 +96,8 @@
             <label for="edtCidade">Cidade</label>
             <input type="text" id="edtCidade" maxlength="30">
             <div class="control-size" style="width: 40%;">
-                <label for="cmbEstado">Estado</label>
-                <select id="cmbEstado">
+                <label for="cmbUF">Estado</label>
+                <select id="cmbUF">
                     <option value="AC">Acre</option>
                     <option value="AL">Alagoas</option>
                     <option value="AP">Amapa</option>
@@ -142,6 +142,10 @@
             <input type="text" id="edtCel" maxlength="15" onkeyup="return phone(this)">   
         </div>
         <div class="inline">
+            <label for="edtObs">Obs.</label>
+            <textarea id="edtObs" cols="30" rows="10"></textarea>
+        </div>
+        <div class="inline">
             <button id="btnDel" class="btn">Deletar</button>
             <button id="btnSalvar" class="btn">Salvar</button>
         </div>
@@ -153,19 +157,89 @@
 </template>
 <script>
 
+    const pageData = main_data.adm_view_func.data
+    const pageFunc = main_data.adm_view_func.func
+    const newFunc = Object.keys(pageData).length
+
+//    document.querySelector('#up_file').disabled = !newFunc
+    pageFunc.setFun = ()=>{
+        const params = new Object;
+            params.id = !newFunc ? 0 : pageData.id
+            params.nome = document.querySelector('#edtNome').value.trim()
+            params.nasc = document.querySelector('#edtNasc').value.trim()
+            params.rg = document.querySelector('#edtRG').value.trim()
+            params.cpf = document.querySelector('#edtCPF').value.trim()
+            params.pis = document.querySelector('#edtPIS').value.trim()
+            params.end = document.querySelector('#edtEnd').value.trim()
+            params.num = document.querySelector('#edtNum').value.trim()
+            params.cidade = document.querySelector('#edtCidade').value.trim()
+            params.bairro = document.querySelector('#edtBairro').value.trim()
+            params.uf = document.querySelector('#cmbUF').value.trim()
+            params.cep = document.querySelector('#edtCEP').value.trim()
+            params.data_adm = document.querySelector('#edtAdm').value.trim()
+            params.data_dem = document.querySelector('#edtDem').value.trim()
+            params.id_cargo = document.querySelector('#cmbCargo').value.trim()
+            params.id_setor = document.querySelector('#cmbSetor').value.trim()
+            params.tel = document.querySelector('#edtFone').value.trim()
+            params.cel = document.querySelector('#edtCel').value.trim()
+            params.ativo = document.querySelector('#cmbAtivo').value.trim()
+            params.obs = document.querySelector('#edtObs').value.trim()
+          
+        const myPromisse = queryDB(params,'FUN-0');
+        myPromisse.then((resolve)=>{
+            alert('Funcionário cadastrado!')
+            closeModal('adm_view_func')
+        })
+    }
+
+    pageFunc.fillCargo = ()=>{
+        const params = new Object;
+            params.field = 'cargo'
+            params.signal = 'LIKE'
+            params.value = "'%%'"
+        const myPromisse = queryDB(params,'ADM-3');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+            const cmb = document.querySelector('#cmbCargo')
+            cmb.innerHTML=''
+            for(let i=0; i<json.length; i++){
+                const opt = document.createElement('option')
+                opt.value = json[i].id
+                opt.innerHTML = json[i].cargo
+                cmb.appendChild(opt)
+            }            
+        });
+    }
+
+    pageFunc.fillSetor = ()=>{
+        const params = new Object;
+            params.field = 'nome'
+            params.signal = 'LIKE'
+            params.value = "'%%'"
+        const myPromisse = queryDB(params,'ADM-1');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+            const cmb = document.querySelector('#cmbSetor')
+            cmb.innerHTML=''
+            for(let i=0; i<json.length; i++){
+                const opt = document.createElement('option')
+                opt.value = json[i].id
+                opt.innerHTML = json[i].nome
+                cmb.appendChild(opt)
+            }            
+        });
+    }
+
     document.querySelector('#up_file').addEventListener('change',()=>{        
         showFile()
-
-/*        
-        const up = uploadImage('up_file',`assets/users/${localStorage.getItem('id_user')}/`,'wallpaper')
-        up.then((resp)=>{
-            dashboard.wallpaper = `assets/users/${localStorage.getItem('id_user')}/${resp}`
-            main_data.dashboard.func.wallpaper()
-            setConfig(localStorage.getItem('id_user'),'wallpaper',`assets/users/${localStorage.getItem('id_user')}/${resp}`)
-            loadImg(`assets/users/${localStorage.getItem('id_user')}/${resp}`)
-        })
-*/
     })
+
+    document.querySelector('#btnSalvar').addEventListener('click',()=>{
+        pageFunc.setFun()
+    })
+
+    pageFunc.fillCargo()
+    pageFunc.fillSetor()
 
 
 </script>
