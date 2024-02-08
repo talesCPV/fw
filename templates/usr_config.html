@@ -112,20 +112,14 @@
         setConfig(localStorage.getItem('id_user'),'wallpaper',dashboard.wallpaper)
     }
 
-
     document.querySelector('#up_file').addEventListener('change',()=>{
-//        showFile('up_file','cnvImg')
-
         const up = uploadImage('up_file',`assets/users/${localStorage.getItem('id_user')}/`,'wallpaper')
         up.then((resp)=>{
             dashboard.wallpaper = `assets/users/${localStorage.getItem('id_user')}/${resp}`
             main_data.dashboard.func.wallpaper()
-            dashboard.wallpaper = `assets/users/${localStorage.getItem('id_user')}/${resp}`
             saveConfig()
-//            setConfig(localStorage.getItem('id_user'),'wallpaper',`assets/users/${localStorage.getItem('id_user')}/${resp}`)
             loadImg(`assets/users/${localStorage.getItem('id_user')}/${resp}`)
         })
-
     })
 
     document.querySelector('#cmbWallpaper').addEventListener('change',()=>{

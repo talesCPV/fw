@@ -161,8 +161,6 @@
     const pageFunc = main_data.adm_view_func.func
     const newFunc = Object.keys(pageData).length == 0
 
-    console.log(teste)
-
     function fillData(){
         if(newFunc){
             document.querySelector('#btnDel').disabled = true
@@ -185,6 +183,12 @@
             document.querySelector('#edtCel').value = pageData.cel
             document.querySelector('#cmbAtivo').value = pageData.ativo
             document.querySelector('#edtObs').value = pageData.obs
+
+            const back = backFunc({'filename':`../assets/func/${pageData.id}/foto.jpg`},1)
+            back.then((resp)=>{
+                const imgExist = JSON.parse(resp)    
+                imgExist ? loadImg(`assets/func/${pageData.id}/foto.jpg`) : null
+            })
         }
     }
 
@@ -278,6 +282,13 @@
 
     document.querySelector('#up_file').addEventListener('change',()=>{        
         showFile()
+
+        const up = uploadImage('up_file',`assets/func/${pageData.id}/`,'foto')
+/*
+        up.then((resp)=>{
+        })
+*/        
+
     })
 
     document.querySelector('#btnSalvar').addEventListener('click',()=>{

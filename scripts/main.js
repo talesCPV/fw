@@ -296,35 +296,6 @@ function showFile(idFile='up_file',idCanvas='cnvImg'){
     }
 }
 
-/*
-
-        if (document.querySelector('#up_file').files && document.querySelector('#up_file').files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-
-                var ctx = document.getElementById('cnvImg');
-                if (ctx.getContext) {
-
-                    ctx = ctx.getContext('2d');
-                    let preview = new Image();
-                    preview.onload = function () {
-                        ar = aspect_ratio(preview)
-                        ctx.drawImage(preview, 0, 0,preview.width,preview.height,ar[0],ar[1],ar[2],ar[3]);
-                    };
-
-                    preview.src = e.target.result
-              
-                }
-
-            }
-
-            reader.readAsDataURL(document.querySelector('#up_file').files[0]);
-        }
-
-*/
-
-
 function loadImg(filename, id='#cnvImg') {
     var ctx = document.querySelector(id); 
     try{
@@ -343,32 +314,6 @@ function loadImg(filename, id='#cnvImg') {
         console.error('Imagem não existe!')
     }
 
-}
-
-function uploadImage(fileID,path,filename){
-
-    const up_data = new FormData();        
-        up_data.append("up_file",  document.getElementById(fileID).files[0]);
-        up_data.append("path", path);
-        up_data.append("filename", filename);
-
-    const myRequest = new Request("backend/upload.php",{
-        method : "POST",
-        body : up_data
-    });
-
-    const myPromisse = new Promise((resolve,reject) =>{
-        fetch(myRequest)
-        .then(function (response){
-            if (response.status === 200) { 
-                resolve(response.text());             
-            } else { 
-                reject(new Error("Houve algum erro na comunicação com o servidor"));                    
-            } 
-        });
-    }); 
-
-    return myPromisse
 }
 
 function listNF(dir,ext='txt'){
