@@ -146,7 +146,6 @@ function openMenu(){
     var drop = 0
     const data = new URLSearchParams();        
         data.append("hash", localStorage.getItem('hash'));
-//        data.append("storage", localStorage.getItem("storage"));
 
     const myRequest = new Request("backend/openMenu.php",{
         method : "POST",
@@ -176,16 +175,14 @@ function openMenu(){
     function pushMenu(menu, obj){
         menu.innerHTML = ''
         for( let i=0; i<obj.length; i++){
-            const li = document.createElement('li') 
-            if(obj[i].class.trim().length>0){
-                li.classList = obj[i].class
-            }           
+            const li = document.createElement('li')                 
             const a = document.createElement('a')
 
-            a.href = obj[i].script
+//            a.href = obj[i].script
             a.innerHTML = obj[i].modulo            
             a.addEventListener('click',()=>{
-                main_data.dashboard.data.access = obj[i].access
+                main_data.dashboard.data.access = obj[i].access                              
+                openHTML(obj[i].link,obj[i].janela,obj[i].label,{},obj[i].width)
             })
             if (obj[i].itens.length > 0 ){
                 const lbl = document.createElement('label')
@@ -193,10 +190,6 @@ function openMenu(){
                 lbl.classList = 'toggle'
                 lbl.innerHTML = obj[i].modulo + ' ▸'  
                 li.appendChild(lbl)
-//                const span = document.createElement("span");
-//                span.innerHTML = '▸'
-//                span.classList = 'toggle'
-//                lbl.after(span)
                 li.appendChild(a)
 
                 const ckb = document.createElement('input')
@@ -212,11 +205,9 @@ function openMenu(){
                     }                                         
                     li.appendChild(ul)
                 }
-
             }else{
                 li.appendChild(a)
             }
-
             menu.appendChild(li)
         }
     }

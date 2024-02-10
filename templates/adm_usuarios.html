@@ -72,8 +72,12 @@
 
     document.querySelector('#tblUser').addEventListener('click',(e)=>{
         data = e.target.parentNode.data
-        data.mode = 'edit'
-        openHTML('adm_view_user.html','pop-up','Editar Usuario',data)
+        try{
+            data.mode = 'edit'
+            data != undefined ? openHTML('adm_view_user.html','pop-up','Editar Usuario',data) : null
+        }catch{
+            null
+        }
     })
 
 </script>

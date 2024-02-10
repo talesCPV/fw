@@ -9,9 +9,12 @@ function addItem($access,$obj){
 
       $item = new stdClass();
       $item->modulo = $obj[$i]->modulo;
-      $item->script = $obj[$i]->script;
-      $item->class = $obj[$i]->class;
+//      $item->script = $obj[$i]->script;
       $item->icone = $obj[$i]->icone;
+      $item->link = $obj[$i]->link;
+      $item->janela = $obj[$i]->janela;
+      $item->label = $obj[$i]->label;
+      $item->width = $obj[$i]->width;
       $item->access = crip(json_encode($obj[$i]->access));
       $item->itens = [];
 

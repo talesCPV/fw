@@ -1,4 +1,5 @@
 async function openHTML(template,where="content-screen",label="", data="",width='auto'){
+
     if(template.trim() != ""){
         const page_name = template.split('.')[0]
         return await new Promise((resolve,reject) =>{
@@ -60,7 +61,7 @@ function newModal(title, content, width, id){
         mod_card.style.position = 'absolute'
         mod_card.style.zIndex = 3+index
         mod_card.style.margin = '0 auto'
-        mod_card.style.width = parseInt(width) ? width+'px' : width
+        mod_card.style.width = parseInt(width) ? parseInt(width)+'px' : width
         mod_card.style.top = 80 + index*offset+'px'
         mod_card.style.left = 30 + index*offset+'px'
         mod_card.style.right = 30 - index*offset+'px'

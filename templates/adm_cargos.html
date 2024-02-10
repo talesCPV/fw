@@ -65,8 +65,12 @@
     })
 
     document.querySelector('#tblCargo').addEventListener('click',(e)=>{
-        data = e.target.parentNode.data
-        openHTML('adm_view_cargo.html','pop-up','Edição de Cargo',data,800)
+        try{
+            data = e.target.parentNode.data            
+            data != undefined ? openHTML('adm_view_cargo.html','pop-up','Edição de Cargo',data,800) : null
+        }catch{
+            null
+        }
     })
 
 

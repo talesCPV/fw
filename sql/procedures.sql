@@ -480,3 +480,62 @@ DELIMITER $$
         END IF;	
 	END $$
 DELIMITER ;
+
+/* EMPRESAS */
+
+ DROP PROCEDURE sp_view_emp;
+DELIMITER $$
+	CREATE PROCEDURE sp_view_emp(	
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Ifield varchar(30),
+        IN Isignal varchar(4),
+		IN Ivalue varchar(50)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			SET @quer =CONCAT('SELECT * FROM tb_empresa WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
+            
+			PREPARE stmt1 FROM @quer;
+			EXECUTE stmt1;
+		ELSE 
+			SELECT 0 AS id, "" AS nome;
+        END IF;
+	END $$
+DELIMITER ;
+
+ DROP PROCEDURE sp_set_empresa;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_empresa(	
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+        IN Iid int(11),
+		IN Irazao_social varchar(80),    
+		IN Ifant varchar(40),
+		IN Icnpj varchar(14),
+		IN Iie varchar(14),
+		IN Iim varchar(14),
+		IN Iend varchar(60),
+		IN Inum varchar(6),
+		IN Icomp varchar(20),
+		IN Ibairro varchar(60),
+		IN Icidade varchar(30),
+		IN Iuf varchar(2),
+		IN Icep varchar(10),
+		IN Icliente BOOLEAN,
+		IN Iramo varchar(15),
+		IN Itel varchar(15),
+		IN Iemail varchar(80)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			INSERT INTO tb_empresa (id,razao_social,fant,cnpj,ie,im,end,num,comp,bairro,cidade,uf,cep,cliente,ramo,tel,email) 
+				VALUES (Iid,Irazao_social,Ifant,Icnpj,Iie,Iim,Iend,Inum,Icomp,Ibairro,Icidade,Iuf,Icep,Icliente,Iramo,Itel,Iemail) 
+				ON DUPLICATE KEY UPDATE
+				razao_social=Irazao_social,fant=Ifant,cnpj=Icnpj,ie=Iie,im=Iim,end=Iend,num=Inum,comp=Icomp,bairro=Ibairro,
+                cidade=Icidade,uf=Iuf,cep=Icep,cliente=Icliente,ramo=Iramo,tel=Itel,email=Iemail ;
+        END IF;
+	END $$
+DELIMITER ;

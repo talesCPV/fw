@@ -86,3 +86,25 @@ CREATE TABLE tb_mail (
     FOREIGN KEY (id_to) REFERENCES tb_usuario(id),
     PRIMARY KEY (data,id_from)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+DROP TABLE tb_empresa;
+CREATE TABLE tb_empresa(
+    id int(11) NOT NULL AUTO_INCREMENT,
+    razao_social varchar(80) NOT NULL,
+    fantasia varchar(40) DEFAULT null,
+    cnpj varchar(14) DEFAULT NULL,
+    ie varchar(14) DEFAULT NULL,
+    im varchar(14) DEFAULT NULL,
+    end varchar(60) DEFAULT NULL,
+	num varchar(6) DEFAULT NULL,
+    comp varchar(20) DEFAULT NULL,
+    bairro varchar(60) DEFAULT NULL,
+    cidade varchar(30) DEFAULT NULL,
+    uf varchar(2) DEFAULT NULL,
+    cep varchar(10) DEFAULT NULL,
+    cliente BOOLEAN DEFAULT 1,
+    ramo varchar(15) DEFAULT NULL,
+    tel varchar(15) DEFAULT NULL,
+    email varchar(80) DEFAULT NULL,
+    PRIMARY KEY (id)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;

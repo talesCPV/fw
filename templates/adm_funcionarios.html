@@ -62,8 +62,12 @@
     })
 
     document.querySelector('#tblFunc').addEventListener('click',(e)=>{
-        data = e.target.parentNode.data
-        openHTML('adm_view_func.html','pop-up',`Edição de dados - ${data.nome.toUpperCase()}`,data)
+        try{
+            data = e.target.parentNode.data
+            data != undefined ? openHTML('adm_view_func.html','pop-up',`Edição de dados - ${data.nome.toUpperCase()}`,data) : null
+        }catch{
+            null
+        }
     })
 
 

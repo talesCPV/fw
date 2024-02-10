@@ -191,7 +191,14 @@ HTMLTableElement.prototype.plot = function(obj, fields,type='',file=false, mark=
                     break; 
                 case 'ckb':                            
                     html = `<input type="checkbox" id="tblCkb_${this.rows.length-1}" class="tbl-ckb" ${parseInt(obj[arr[0]])? '' : 'checked'}>`
+                    break;
+                case 'cnp':
+                    html = obj[arr[0]] != null ? getCNPJ(obj[arr[0]].trim()) : ''
+                    break;
+                case 'ie.':
+                    html = obj[arr[0]] != null ? getIE(obj[arr[0]].trim()) : ''
                     break;                    
+    
                 default:
                   html = obj[arr[0]] != null ? obj[arr[0]] :''
             }            

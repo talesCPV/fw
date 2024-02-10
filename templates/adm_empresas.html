@@ -1,0 +1,77 @@
+
+<template>
+    <style>
+        #btnRelat{
+            display: none;
+        }
+    </style>
+
+
+        <fieldset class="fds-busca">
+            <legend>Busca</legend>
+            <div class="inline">
+                <label for="edtBusca">por:</label>
+                <select id="cmbBusca">
+                    <option value="id" signal="IN">Código</option>
+                    <option value="razao_social" signal="LIKE" selected>Razão Social</option>
+                    <option value="fantasia" signal="LIKE">Nome Fantasia</option>
+                    <option value="cnpj" signal="LIKE" >CNPJ</option>
+                    <option value="ie" signal="LIKE">Insc. Estadual</option>
+                    <option value="cliente" signal="=" val="1">Clientes</option>
+                    <option value="cliente" signal="=" val="0">Fornecedores</option>
+                    <option value="ramo" signal="LIKE" >Ramo de Atuação</option>
+                </select>
+                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
+                <button id="btnBusca" class="btn-round" ><span class="mdi mdi-magnify"></span></button>
+                <button id="btnNovo" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
+
+            </div>
+
+            <table id="tblEmp"></table>
+        </fieldset>
+    
+
+</template>
+<script>
+  
+    const pageData = main_data.adm_empresas.data
+    const pageFunc = main_data.adm_empresas.func
+
+    pageFunc.fillEmp = ()=>{      
+        const tbl = document.getElementById('tblEmp')
+        tbl.innerHTML = ''
+        const query = getVal()
+        const params = new Object;
+            params.field = query[0]
+            params.signal = query[1]
+            params.value = query[2]
+        const myPromisse = queryDB(params,'EMP-0');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+            tbl.style.display = json.length > 0 ? 'inline-table' : 'none'
+            tbl.head('Razao Social,CNPJ,Tipo')
+            for(let i=0; i<json.length;i++){
+                tbl.plot(json[i],'razao_social,cnpj,cliente','str,cnp,cha 1=CLIENTE 0=FORNECEDOR')
+            }         
+        });
+    }
+
+
+    document.querySelector('#btnBusca').addEventListener('click',()=>{
+        pageFunc.fillEmp()
+    })
+
+    document.querySelector('#btnNovo').addEventListener('click',()=>{
+        openHTML('adm_view_emp.html','pop-up','Cadastro de Empresas')
+    })
+
+    document.querySelector('#tblEmp').addEventListener('click',(e)=>{
+        try{
+            data = e.target.parentNode.data
+            data != undefined ? openHTML('adm_view_emp.html','pop-up',`Edição de dados - ${data.razao_social.toUpperCase()}`,data) : null
+        }catch{
+
+        }
+    })
+
+</script>

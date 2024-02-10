@@ -41,7 +41,6 @@
                 <ul class="tree">
                     <li>
                     <details open class="menu-data">
-                        <summary id="menu-raiz">RAIZ</summary>
                     </details>
                     </li>
                 </ul>         
@@ -58,7 +57,7 @@
 
     function createTree(data,index){
         const ul = document.createElement('ul')
-        for(let i=0; i<data.length; i++){
+        for(let i=0; i<data.length; i++){          
             const li = document.createElement('li')
             const details = document.createElement('details')
             const summary = document.createElement('summary')
@@ -66,7 +65,10 @@
             summary.innerHTML = data[i].modulo
             summary.itens = data[i].itens
             summary.index = index.concat(i)
-            summary.script = data[i].script
+            summary.link = data[i].link
+            summary.janela = data[i].janela
+            summary.width = data[i].width
+            summary.label = data[i].label
             if(data[i].itens.length == 0){
                 summary.className = 'last'
             }
@@ -126,7 +128,22 @@
 
     pageFunc.refreshMenu = ()=>{       
         const ul_menu = document.querySelector('.menu-data')
-        ul_menu.innerHTML = '<summary id="menu-raiz">RAIZ</summary>'
+        ul_menu.innerHTML = ''
+        const sum = document.createElement('summary')
+        sum.id = 'menu-raiz'
+        sum.innerHTML = 'RAIZ'
+        sum.access = '[0]'
+        sum.itens = '[]'
+        sum.index = 0
+        sum.link = 'menu'
+        sum.janela = 'pop-up'
+        sum.label = ''
+        sum.width = 'auto'
+        sum.addEventListener('contextmenu',(e)=>{
+            e.preventDefault();
+            openHTML('adm_new_menu.html','pop-up',`Novo Módulo Raíz`,sum,600)
+        })
+        ul_menu.appendChild(sum)
         ul_menu.appendChild(createTree(pageData.json.itens,[]))
     }
 
@@ -185,7 +202,6 @@
                 setPerm(arr.itens[i])
             }
         }
-
         target =  getTarget(pageData.json)
         target.access = access 
         setPerm(pageData.json)
@@ -215,7 +231,6 @@
         }
     })
 
-
     document.querySelector('#tblPerfil').addEventListener('click',(e)=>{
         data = e.target.parentNode.data                
         try{
@@ -231,9 +246,7 @@
         }catch{
             console.error('Cancelado pelo usuário!')
         }
-
     })
-
     pageFunc.getMenu()
     
 </script>

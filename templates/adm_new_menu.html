@@ -37,6 +37,19 @@
             <input type="text" id="edtLabel">
         </div>
 
+        <div class="inline">
+            <label for="cmbLargura">Largura</label>
+            <select id="cmbLargura">
+                <option value="auto">Auto</option>
+                <option value="300px">300px</option>
+                <option value="400px">400px</option>
+                <option value="500px">500px</option>
+                <option value="600px">600px</option>
+                <option value="700px">700px</option>
+                <option value="800px">800px</option>
+            </select>
+        </div>
+
         <div class="line">
             <button id="btnDelMenu" class="btn">Deletar</button>
             <button id="btnAddItem" class="btn">Novo Ítem</button>
@@ -50,7 +63,7 @@
 
     const pageData = main_data.adm_new_menu.data
     const pageFunc = main_data.adm_new_menu.func
-    const link = pageData.script.split("'")[1]
+    const link = pageData.link
 
     function saveMenu(){
         main_data.adm_perm.func.refreshMenu()
@@ -59,15 +72,20 @@
     }
 
     document.querySelector('#edtMod').value = pageData.innerHTML
-    document.querySelector('#edtLink').value = link === undefined ? '#' :link 
+    document.querySelector('#edtLink').value = pageData.link
+    document.querySelector('#edtLabel').value = pageData.label
+    document.querySelector('#cmbLargura').value = pageData.width 
 
     document.querySelector('#btnAddItem').addEventListener('click',()=>{
         const menu = new Object
-            menu.modulo = prompt('Digite o nome do ítem:').toUpperCase()
-            menu.script = '#'
+            menu.modulo = prompt('Digite o nome do ítem:')
+            menu.link = 'menu'
             menu.access = [0]
             menu.class = ''
             menu.icone = ''
+            menu.janela = 'pop-up'
+            menu.label = ''
+            menu.width = 'auto'
             menu.itens = []
         
         const index = pageData.index
@@ -80,22 +98,23 @@
         obj.itens.push(menu)  
         saveMenu()
         setLog(`Menu Incluído (${menu.modulo})`)
-
     })
 
     document.querySelector('#btnDelMenu').addEventListener('click',()=>{
-        if(confirm(`Deseja realmente deletar o menu ${pageData.innerHTML.toUpperCase()} e todos seus ítens?`)){
-            
-            const index = pageData.index
-            let obj = main_data.adm_perm.data.json
+        if(pageData.id != 'menu-raiz'){
+            if(confirm(`Deseja realmente deletar o menu ${pageData.innerHTML.toUpperCase()} e todos seus ítens?`)){
+                const index = pageData.index
+                let obj = main_data.adm_perm.data.json
 
-            for(let i=0; i<index.length-1; i++){
-                obj = obj.itens[index[i]]        
+                for(let i=0; i<index.length-1; i++){
+                    obj = obj.itens[index[i]]        
+                }
+                setLog(`Menu Deletado (${obj.modulo})`)
+                obj.itens.splice(index[index.length-1],1)  
+                saveMenu()
             }
-            setLog(`Menu Deletado (${obj.modulo})`)
-            obj.itens.splice(index[index.length-1],1)  
-            saveMenu()
-
+        }else{
+            alert('O menu Raiz não pode ser deletado!')
         }
     })
 
@@ -106,6 +125,7 @@
             const link = document.querySelector('#edtLink').value.trim()
             const janela = document.querySelector('#cmbJanela').value
             const label = document.querySelector('#edtLabel').value
+            const width = document.querySelector('#cmbLargura').value
             
             let obj = main_data.adm_perm.data.json
 
@@ -114,7 +134,10 @@
             }
 
             obj.modulo = modulo
-            obj.script = link == '#' ? link : `javascript:openHTML('${link}','${janela}','${label}')`
+            obj.link = link == '' ? 'error.html' : link
+            obj.janela = janela
+            obj.label = label
+            obj.width = width
             saveMenu()
             setLog(`Menu Alterado (${modulo}, ${link}, ${janela}, ${label})`)
         }
