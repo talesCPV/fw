@@ -148,7 +148,7 @@
     }
 
     pageFunc.setEmp = ()=>{
-            const fant = document.querySelector('#edtFant').value.trim()
+        const fant = document.querySelector('#edtFant').value.trim()
         const params = new Object;
             params.id = newEmp ? 0 : pageData.id
             params.razao_social = document.querySelector('#edtRazSoc').value.trim()
@@ -176,8 +176,26 @@
         })
     }
 
+    pageFunc.delEmp = ()=>{
+        if(confirm('Deseja realmente deletar esta empresa?')){
+            const params = new Object;
+                params.id = pageData.id
+            
+            const myPromisse = queryDB(params,'EMP-2');
+            myPromisse.then((resolve)=>{
+                main_data.adm_empresas.func.fillEmp()
+                closeModal('adm_view_emp')
+            })
+        }
+
+    }
+
     document.querySelector('#btnSave').addEventListener('click',()=>{
         pageFunc.setEmp()
+    })
+
+    document.querySelector('#btnDel').addEventListener('click',()=>{
+        pageFunc.delEmp()
     })
 
     document.querySelector('#btnCNPJ').addEventListener('click',()=>{

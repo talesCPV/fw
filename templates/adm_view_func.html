@@ -215,7 +215,7 @@
             params.ativo = document.querySelector('#cmbAtivo').value.trim()
             params.obs = document.querySelector('#edtObs').value.trim()
           
-        const myPromisse = queryDB(params,'FUN-0');
+        const myPromisse = queryDB(params,'FUN-1');
         myPromisse.then((resolve)=>{
             main_data.adm_funcionarios.func.fillFunc()
             alert('Cadastrado efetuado!')

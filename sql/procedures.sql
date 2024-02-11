@@ -495,8 +495,7 @@ DELIMITER $$
 	BEGIN    
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
-			SET @quer =CONCAT('SELECT * FROM tb_empresa WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
-            
+			SET @quer =CONCAT('SELECT * FROM tb_empresa WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');            
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
 		ELSE 
@@ -505,9 +504,9 @@ DELIMITER $$
 	END $$
 DELIMITER ;
 
- DROP PROCEDURE sp_set_empresa;
+ DROP PROCEDURE sp_set_emp;
 DELIMITER $$
-	CREATE PROCEDURE sp_set_empresa(	
+	CREATE PROCEDURE sp_set_emp(	
 		IN Iallow varchar(80),
 		IN Ihash varchar(64),
         IN Iid int(11),
@@ -518,24 +517,115 @@ DELIMITER $$
 		IN Iim varchar(14),
 		IN Iend varchar(60),
 		IN Inum varchar(6),
-		IN Icomp varchar(20),
+		IN Icomp varchar(50),
 		IN Ibairro varchar(60),
 		IN Icidade varchar(30),
 		IN Iuf varchar(2),
 		IN Icep varchar(10),
 		IN Icliente BOOLEAN,
-		IN Iramo varchar(15),
+		IN Iramo varchar(80),
 		IN Itel varchar(15),
 		IN Iemail varchar(80)
     )
 	BEGIN    
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
-			INSERT INTO tb_empresa (id,razao_social,fant,cnpj,ie,im,end,num,comp,bairro,cidade,uf,cep,cliente,ramo,tel,email) 
+			INSERT INTO tb_empresa (id,razao_social,fantasia,cnpj,ie,im,end,num,comp,bairro,cidade,uf,cep,cliente,ramo,tel,email) 
 				VALUES (Iid,Irazao_social,Ifant,Icnpj,Iie,Iim,Iend,Inum,Icomp,Ibairro,Icidade,Iuf,Icep,Icliente,Iramo,Itel,Iemail) 
 				ON DUPLICATE KEY UPDATE
-				razao_social=Irazao_social,fant=Ifant,cnpj=Icnpj,ie=Iie,im=Iim,end=Iend,num=Inum,comp=Icomp,bairro=Ibairro,
+				razao_social=Irazao_social,fantasia=Ifant,cnpj=Icnpj,ie=Iie,im=Iim,end=Iend,num=Inum,comp=Icomp,bairro=Ibairro,
                 cidade=Icidade,uf=Iuf,cep=Icep,cliente=Icliente,ramo=Iramo,tel=Itel,email=Iemail ;
         END IF;
+	END $$
+DELIMITER ;
+
+ DROP PROCEDURE sp_del_emp;
+DELIMITER $$ 
+	CREATE PROCEDURE sp_del_emp(	
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid int(11)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			DELETE FROM tb_empresa WHERE id=Iid;
+            UPDATE tb_produto SET id_emp=NULL WHERE id_emp=Iid;
+            SELECT 1 AS ok;
+		ELSE 
+			SELECT 0 AS ok;
+        END IF;	
+	END $$
+DELIMITER ;
+
+/* PRODUTO */
+
+ DROP PROCEDURE sp_set_produto;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_produto(	
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+        IN Iid int(11),
+		IN Iid_emp int(11),
+		IN Idescricao varchar(80),
+		IN Iestoque double,
+		IN Iestq_min double,
+		IN Iunidade varchar(10),
+		IN Incm varchar(8),
+		IN Icod_int int(11),
+		IN Icod_bar varchar(15),
+		IN Icod_forn varchar(20),
+		IN Iconsumo BOOLEAN,
+		IN Imarkup double,
+        IN Ilocal varchar(20)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			INSERT INTO tb_produto (id,id_emp,descricao,estoque,estq_min,unidade,ncm,cod_int,cod_bar,cod_forn,consumo,markup,local)
+				VALUES (Iid,Iid_emp,Idescricao,Iestoque,Iestq_min,Iunidade,Incm,Icod_int,Icod_bar,Icod_forn,Iconsumo,Imarkup,Ilocal)
+				ON DUPLICATE KEY UPDATE
+				id_emp=Iid_emp,descricao=Idescricao,estoque=Iestoque,estq_min=Iestq_min,unidade=Iunidade,ncm=Incm,
+                cod_int=Icod_int,cod_bar=Icod_bar,cod_forn=Icod_forn,consumo=Iconsumo,markup=Imarkup,local=Ilocal;
+        END IF;
+	END $$
+
+ DROP PROCEDURE sp_view_prod;
+DELIMITER $$
+	CREATE PROCEDURE sp_view_prod(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Ifield varchar(30),
+        IN Isignal varchar(4),
+		IN Ivalue varchar(50)
+    )
+	BEGIN
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			SET @quer =CONCAT('SELECT * FROM tb_produto WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
+			PREPARE stmt1 FROM @quer;
+			EXECUTE stmt1;
+		ELSE
+			SELECT 0 AS id, "" AS nome;
+        END IF;
+	END $$
+DELIMITER ;
+
+ DROP PROCEDURE sp_del_prod;
+DELIMITER $$ 
+	CREATE PROCEDURE sp_del_prod(	
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Iid int(11)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			DELETE FROM tb_produto WHERE id=Iid;
+/*           UPDATE ou DELETE tudo que linkar o produto  */
+            SELECT 1 AS ok;
+		ELSE 
+			SELECT 0 AS ok;
+        END IF;	
 	END $$
 DELIMITER ;

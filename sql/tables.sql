@@ -97,14 +97,48 @@ CREATE TABLE tb_empresa(
     im varchar(14) DEFAULT NULL,
     end varchar(60) DEFAULT NULL,
 	num varchar(6) DEFAULT NULL,
-    comp varchar(20) DEFAULT NULL,
+    comp varchar(50) DEFAULT NULL,
     bairro varchar(60) DEFAULT NULL,
     cidade varchar(30) DEFAULT NULL,
     uf varchar(2) DEFAULT NULL,
     cep varchar(10) DEFAULT NULL,
     cliente BOOLEAN DEFAULT 1,
-    ramo varchar(15) DEFAULT NULL,
+    ramo varchar(80) DEFAULT NULL,
     tel varchar(15) DEFAULT NULL,
     email varchar(80) DEFAULT NULL,
     PRIMARY KEY (id)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+DROP TABLE tb_produto;
+CREATE TABLE tb_produto(
+    id int(11) NOT NULL AUTO_INCREMENT,
+    id_emp int(11) DEFAULT NULL,
+    descricao varchar(80) NOT NULL,
+    estoque double DEFAULT 0,
+    estq_min double DEFAULT 0,
+    unidade varchar(10) DEFAULT "UND",
+    ncm varchar(8) DEFAULT NULL,
+	cod_int int(11) DEFAULT NULL,
+    cod_bar varchar(15) DEFAULT NULL,
+    cod_forn varchar(20) DEFAULT NULL,
+    consumo BOOLEAN DEFAULT 0,
+    markup double DEFAULT 0,
+    local varchar(20),
+    UNIQUE KEY (descricao),
+    FOREIGN KEY (id_emp) REFERENCES tb_empresa(id),
+    PRIMARY KEY (id)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+DROP TABLE tb_prod_reserva;
+CREATE TABLE tb_prod_reserva(
+    id_prod int(11) NOT NULL AUTO_INCREMENT,
+    id_proj int(11) NOT NULL,
+    id_user int(11) NOT NULL,
+    qtd double DEFAULT 0,
+    data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    pago BOOLEAN DEFAULT 0,
+    FOREIGN KEY (id_prod) REFERENCES tb_produto(id),
+    FOREIGN KEY (id_proj) REFERENCES tb_projeto(id),
+    FOREIGN KEY (id_user) REFERENCES tb_usuario(id),
+    PRIMARY KEY (id_prod,id_proj)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
