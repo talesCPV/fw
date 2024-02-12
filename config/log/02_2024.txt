@@ -386,3 +386,4 @@
 10/02/2024 00:27 admin@fwtecnologia.com.br : Permissao alterada, Modulo: RH, Acesso:[[0]])
 10/02/2024 23:02 admin@fwtecnologia.com.br : Menu Alterado (Log do sistema, adm_log.html, pop-up, Log do Sistema)
 10/02/2024 23:03 admin@fwtecnologia.com.br : Menu Alterado (Produtos, adm_produtos.html, pop-up, teste)
+11/02/2024 23:43 admin@fwtecnologia.com.br : Menu Alterado (Produtos, adm_produtos.html, pop-up, Produtos)

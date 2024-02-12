@@ -560,9 +560,9 @@ DELIMITER ;
 
 /* PRODUTO */
 
- DROP PROCEDURE sp_set_produto;
+ DROP PROCEDURE sp_set_prod;
 DELIMITER $$
-	CREATE PROCEDURE sp_set_produto(	
+	CREATE PROCEDURE sp_set_prod(
 		IN Iallow varchar(80),
 		IN Ihash varchar(64),
         IN Iid int(11),
@@ -570,23 +570,24 @@ DELIMITER $$
 		IN Idescricao varchar(80),
 		IN Iestoque double,
 		IN Iestq_min double,
-		IN Iunidade varchar(10),
+		IN Iund varchar(10),
 		IN Incm varchar(8),
 		IN Icod_int int(11),
 		IN Icod_bar varchar(15),
 		IN Icod_forn varchar(20),
 		IN Iconsumo BOOLEAN,
+        IN Icusto double,
 		IN Imarkup double,
         IN Ilocal varchar(20)
     )
-	BEGIN    
+	BEGIN
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
-			INSERT INTO tb_produto (id,id_emp,descricao,estoque,estq_min,unidade,ncm,cod_int,cod_bar,cod_forn,consumo,markup,local)
-				VALUES (Iid,Iid_emp,Idescricao,Iestoque,Iestq_min,Iunidade,Incm,Icod_int,Icod_bar,Icod_forn,Iconsumo,Imarkup,Ilocal)
+			INSERT INTO tb_produto (id,id_emp,descricao,estoque,estq_min,und,ncm,cod_int,cod_bar,cod_forn,consumo,custo,markup,local)
+				VALUES (Iid,Iid_emp,Idescricao,Iestoque,Iestq_min,Iund,Incm,Icod_int,Icod_bar,Icod_forn,Iconsumo,Icusto,Imarkup,Ilocal)
 				ON DUPLICATE KEY UPDATE
-				id_emp=Iid_emp,descricao=Idescricao,estoque=Iestoque,estq_min=Iestq_min,unidade=Iunidade,ncm=Incm,
-                cod_int=Icod_int,cod_bar=Icod_bar,cod_forn=Icod_forn,consumo=Iconsumo,markup=Imarkup,local=Ilocal;
+				id_emp=Iid_emp,descricao=Idescricao,estoque=Iestoque,estq_min=Iestq_min,und=Iund,ncm=Incm,cod_int=Icod_int,
+                cod_bar=Icod_bar,cod_forn=Icod_forn,consumo=Iconsumo,custo=Icusto,markup=Imarkup,local=Ilocal;
         END IF;
 	END $$
 

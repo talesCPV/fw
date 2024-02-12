@@ -43,41 +43,41 @@
 
             <div class="pic">
                 <canvas width="300" height="300" id="cnvImg"></canvas>
-                <input  name="up_file" id="up_file" type="file" accept=".jpg,.jpeg">            
+                <input  name="up_file" id="up_file" type="file" accept=".jpg,.jpeg" class="only-view" disabled>            
             </div>
             <div class="side-pic">
                 <div class="inline">
                     <label for="edtNome">Nome *</label>
-                    <input type="text" id="edtNome" maxlength="30">
+                    <input type="text" id="edtNome" maxlength="30" class="only-view" disabled>
                 </div>
                 <div class="inline">
                     <label for="edtNasc">Nascimento</label>
-                    <input type="date" id="edtNasc">
+                    <input type="date" id="edtNasc" class="only-view" disabled>
                     <label for="edtPIS">PIS</label>
-                    <input type="text" id="edtPIS" maxlength="16" onkeyup="return valPIS(this)">        
+                    <input type="text" id="edtPIS" maxlength="16" onkeyup="return valPIS(this)" class="only-view" disabled>        
                 </div>
                 <div class="inline">
                     <label for="edtRG">RG</label>
-                    <input type="text" id="edtRG" maxlength="12" onkeyup="return valRG(this)">
+                    <input type="text" id="edtRG" maxlength="12" onkeyup="return valRG(this)" class="only-view" disabled>
                     <label for="edtCPF">CPF</label>
-                    <input type="text" id="edtCPF" maxlength="14" onkeyup="return valCPF(this)">
+                    <input type="text" id="edtCPF" maxlength="14" onkeyup="return valCPF(this)" class="only-view" disabled>
                 </div>
                 <div class="inline">
                     <label for="cmbCargo">Cargo</label>
-                    <select id="cmbCargo"></select>      
+                    <select id="cmbCargo" class="only-view" disabled></select>      
                     <label for="cmbSetor">Setor</label>
-                    <select id="cmbSetor"></select>      
+                    <select id="cmbSetor" class="only-view" disabled></select>      
                     <label for="cmbAtivo">Status</label>
-                    <select id="cmbAtivo">
+                    <select id="cmbAtivo" class="only-view" disabled>
                         <option value="1">Ativo</option>
                         <option value="0">Inativo</option>
                     </select>
                 </div>
                 <div class="inline">
                     <label for="edtAdm">Admissão</label>
-                    <input type="date" id="edtAdm">          
+                    <input type="date" id="edtAdm" class="only-view" disabled>          
                     <label for="edtDem">Desligamento</label>
-                    <input type="date" id="edtDem">
+                    <input type="date" id="edtDem" class="only-view" disabled>
                 </div>
                 
             </div>
@@ -85,19 +85,19 @@
 
         <div class="inline">
             <label for="edtEnd">Endereço</label>
-            <input type="text" id="edtEnd" maxlength="60"> 
+            <input type="text" id="edtEnd" maxlength="60" class="only-view" disabled> 
             <div class="control-size" style="width: 40%;">
                 <label for="edtNum">Num.</label>
-                <input type="text" id="edtNum" maxlength="6"> 
+                <input type="text" id="edtNum" maxlength="6" class="only-view" disabled> 
             </div>
 
         </div>       
         <div class="inline">
             <label for="edtCidade">Cidade</label>
-            <input type="text" id="edtCidade" maxlength="30">
+            <input type="text" id="edtCidade" maxlength="30" class="only-view" disabled>
             <div class="control-size" style="width: 40%;">
                 <label for="cmbUF">Estado</label>
-                <select id="cmbUF">
+                <select id="cmbUF" class="only-view" disabled>
                     <option value="AC">Acre</option>
                     <option value="AL">Alagoas</option>
                     <option value="AP">Amapa</option>
@@ -129,25 +129,26 @@
         </div>
         <div class="inline">
             <label for="edtBairro">Bairro</label>
-            <input type="text" id="edtBairro" maxlength="40">
+            <input type="text" id="edtBairro" maxlength="40" class="only-view" disabled>
             <div class="control-size" style="width: 40%;">
                 <label for="edtCEP">CEP</label>
-                <input type="text" id="edtCEP" maxlength="10" onkeyup="return valCEP(this)">        
+                <input type="text" id="edtCEP" maxlength="10" onkeyup="return valCEP(this)" class="only-view" disabled>        
             </div>
         </div>
         <div class="inline">
             <label for="edtFone">Fone</label>
-            <input type="text" id="edtFone" maxlength="15" onkeyup="return phone(this)">
+            <input type="text" id="edtFone" maxlength="15" onkeyup="return phone(this)" class="only-view" disabled>
             <label for="edtCel">Cel</label>
-            <input type="text" id="edtCel" maxlength="15" onkeyup="return phone(this)">   
+            <input type="text" id="edtCel" maxlength="15" onkeyup="return phone(this)" class="only-view" disabled>   
         </div>
         <div class="inline">
             <label for="edtObs">Obs.</label>
-            <textarea id="edtObs" cols="30" rows="10"></textarea>
+            <textarea id="edtObs" cols="30" rows="10" class="only-view" disabled></textarea>
         </div>
         <div class="inline">
-            <button id="btnDel" class="btn">Deletar</button>
-            <button id="btnSalvar" class="btn">Salvar</button>
+            <button id="btnDel" class="only-view" disabled>Deletar</button>
+            <button id="btnEdit">Editar</button>
+            <button id="btnSalvar" class="only-view" disabled>Salvar</button>
         </div>
     
       </fieldset>    
@@ -161,10 +162,19 @@
     const pageFunc = main_data.adm_view_func.func
     const newFunc = Object.keys(pageData).length == 0
 
-    function fillData(){
+    function openFields(open=1){
+        const view = document.querySelectorAll('.only-view')
+        for(let i=0; i<view.length; i++){
+            view[i].disabled = !open
+        }
+    }
+
+    function startPage(){
         if(newFunc){
-            document.querySelector('#btnDel').disabled = true
-            document.querySelector('#up_file').disabled = true
+            openFields(1)
+            document.querySelector('#btnDel').disabled = 1
+            document.querySelector('#btnEdit').disabled = 1
+            document.querySelector('#up_file').disabled = 1
         }else{
             document.querySelector('#edtNome').value = pageData.nome
             document.querySelector('#edtNasc').value = pageData.nasc
@@ -183,6 +193,7 @@
             document.querySelector('#edtCel').value = pageData.cel
             document.querySelector('#cmbAtivo').value = pageData.ativo
             document.querySelector('#edtObs').value = pageData.obs
+            document.querySelector('#btnEdit').disabled = 0
 
             const back = backFunc({'filename':`../assets/func/${pageData.id}/foto.jpg`},1)
             back.then((resp)=>{
@@ -282,13 +293,11 @@
 
     document.querySelector('#up_file').addEventListener('change',()=>{        
         showFile()
-
         const up = uploadImage('up_file',`assets/func/${pageData.id}/`,'foto')
 /*
         up.then((resp)=>{
         })
-*/        
-
+*/
     })
 
     document.querySelector('#btnSalvar').addEventListener('click',()=>{
@@ -299,9 +308,19 @@
         pageFunc.delFun()
     })
 
+    document.querySelector('#btnEdit').addEventListener('click',()=>{
+        if(document.querySelector('#btnSalvar').disabled){
+            if(confirm('Abrir registro para edição?')){
+                openFields(1)
+            }
+        }else{
+            openFields(0)
+        }
+    })
+
     pageFunc.fillCargo()
     pageFunc.fillSetor()
-    fillData()
+    startPage()
 
 
 </script>

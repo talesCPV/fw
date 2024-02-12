@@ -3,11 +3,72 @@
 
      
     </style>
-  
+
+    <fieldset class="fds-busca">
+        <legend>Busca</legend>
+        <div class="inline">
+            <label for="edtBusca">por:</label>
+            <select id="cmbBusca">
+                <option value="cod_int" signal="IN">Código FW</option>
+                <option value="descricao" signal="LIKE" selected>Descrição</option>
+                <option value="cod_forn" signal="LIKE">Código Forn.</option>
+                <option value="cod_bar" signal="LIKE" >Código de Barras</option>
+                <option value="consumo" signal="=" val="1">Consumo</option>
+                <option value="estoque" signal="<=" val="estq_min">Estoque Baixo</option>
+                <option value="ramo" signal="LIKE" >Fornecedor</option>
+            </select>
+            <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
+            <button id="btnBusca" class="btn-round" ><span class="mdi mdi-magnify"></span></button>
+            <button id="btnNovo" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
+
+        </div>
+
+        <table id="tblProd"></table>
+    </fieldset>  
 
 </template>
 <script>
 
+    const pageData = main_data.adm_produtos.data
+    const pageFunc = main_data.adm_produtos.func
+
+    pageFunc.fillProd = ()=>{      
+        const tbl = document.getElementById('tblProd')
+        tbl.innerHTML = ''
+        const query = getVal()
+        const params = new Object;
+            params.field = query[0]
+            params.signal = query[1]
+            params.value = query[2]
+        const myPromisse = queryDB(params,'PROD-0');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+            tbl.style.display = json.length > 0 ? 'inline-table' : 'none'
+            tbl.head('Descrição,Und.,Reserva,Estoque')
+            for(let i=0; i<json.length;i++){
+                tbl.plot(json[i],'descricao,und,reserva,ETQ','str,Upp,str,str')
+            }         
+        });
+    }
+
+    document.querySelector('#btnBusca').addEventListener('click',()=>{
+        pageFunc.fillProd()
+    })
+
+    document.querySelector('#btnNovo').addEventListener('click',()=>{
+        openHTML('adm_view_prod.html','pop-up','Cadastro de Produtos')
+    })
+
+    document.querySelector('#tblProd').addEventListener('click',(e)=>{
+        
+        try{
+            data = e.target.parentNode.data
+            data != undefined ? openHTML('adm_view_prod.html','pop-up',`Edição de dados - ${data.descricao.toUpperCase()}`,data) : null
+        }catch{
+
+        }
+       
+    })
 
 
 </script>

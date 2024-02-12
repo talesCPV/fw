@@ -1,0 +1,197 @@
+
+<template>
+    <style>
+        .frm{
+            padding: 10px;
+        }
+
+        @media all and (max-width : 768px) {
+            .frm input, .frm select{
+                width: 98% !important;
+            }
+        }
+
+    </style>
+  
+    <fieldset class="frm" >
+        <legend>Produto</legend>
+
+        <div class="inline">
+            <label for="edtDesc">Descrição *</label>
+            <input type="text" class="only-view" id="edtDesc" maxlength="80" disabled>
+        </div>
+        <div class="inline">
+        <label for="edtCodFW">Código FW</label>
+        <input type="text" class="only-view" id="edtCodFW" maxlength="20" disabled>
+        <label for="edtCodForn">Código Forn.</label>
+        <input type="text" class="only-view" id="edtCodForn" maxlength="20" disabled>
+        <label for="edtCodBar">Código de Barras</label>
+        <input type="text" class="only-view" id="edtCodBar" maxlength="20" disabled>
+
+        </div>
+        <div class="inline">
+            <label for="cmdUnd">Unidade</label>
+            <select id="cmdUnd" class="only-view" disabled>
+                <option value="UND">Unidade</option>
+                <option value="M.LIN.">Metro Linear</option>
+                <option value="M2">Metro Quadrado</option>
+                <option value="LITRO">Litro</option>
+                <option value="LATA">Lata</option>
+                <option value="GL">Galão</option>
+                <option value="1/2">Meio Galão</option>
+                <option value="1/4">Quarto de Galão</option>
+            </select>
+            <label for="edtEtq">Estoque</label>
+            <input type="text" class="only-view" id="edtEtq" maxlength="10" onkeyup="valFloat(this)" disabled>
+            <label for="edtEtqMin">Estq. Min.</label>
+            <input type="text" class="only-view" id="edtEtqMin" maxlength="10" onkeyup="valFloat(this)" disabled>              
+        </div>
+        <div class="inline">
+            <label for="cmbCons">Consumo</label>
+            <select id="cmbCons" class="only-view" disabled>
+                <option value="1">SIM</option>
+                <option value="0">NÃO</option>
+            </select>
+            <label for="edtCusto">Custo (R$)</label>
+            <input type="text" class="only-view" id="edtCusto" onkeyup="valFloat(this)" disabled>
+            <label for="edtMarkup">Markup (%)</label>
+            <input type="text" class="only-view" id="edtMarkup" onkeyup="valFloat(this)" disabled>    
+        </div>
+        <div class="inline">
+            <label for="edtLocal">Local Estoque</label>
+            <input type="text" class="only-view" id="edtLocal" maxlength="20" disabled>
+            <label for="edtNCM">NCM</label>
+            <input type="text" class="only-view" id="edtNCM" maxlength="8" onkeyup="valInt(this)" disabled>
+        </div>
+        <div class="inline">
+            <label for="cmbForn">Fornecedor</label>
+            <select id="cmbForn" class="only-view" disabled></select>   
+        </div>
+
+        <div class="inline">
+            <button id="btnDel" class="only-view" disabled>Deletar</button>
+            <button id="btnEdit">Editar</button>
+            <button id="btnSave" class="only-view" disabled>Salvar</button>
+        </div>
+    </fieldset>
+
+</template>
+<script>
+    
+    const pageData = main_data.adm_view_prod.data
+    const pageFunc = main_data.adm_view_prod.func
+    const newProd = Object.keys(pageData).length == 0
+
+    function fillEmp(){
+        const params = new Object;
+            params.field = 'id'
+            params.signal = '>='
+            params.value = '1'
+        const myPromisse = queryDB(params,'EMP-0');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+            const cmb = document.querySelector('#cmbForn')
+            cmb.innerHTML=''
+            for(let i=0; i<json.length; i++){
+                const opt = document.createElement('option')
+                opt.value = json[i].id
+                opt.innerHTML = json[i].fantasia
+                if(!newProd){
+                    opt.selected =  json[i].id == pageData.id_emp ? 1 : 0
+                }
+                cmb.appendChild(opt)
+            }            
+        })
+    }
+
+    function startPage(){
+        fillEmp()
+        if(newProd){
+            openFields(1)
+            document.querySelector('#btnDel').disabled = 1
+            document.querySelector('#btnEdit').disabled = 1
+        }else{
+            document.querySelector('#edtDesc').value = pageData.descricao
+            document.querySelector('#edtCodFW').value = pageData.cod_int
+            document.querySelector('#edtCodForn').value = pageData.cod_forn
+            document.querySelector('#edtCodBar').value = pageData.cod_bar
+            document.querySelector('#cmdUnd').value = pageData.und
+            document.querySelector('#edtEtq').value = pageData.estoque
+            document.querySelector('#edtEtqMin').value = pageData.estq_min
+            document.querySelector('#cmbCons').value = pageData.consumo
+            document.querySelector('#edtCusto').value = pageData.custo
+            document.querySelector('#edtMarkup').value = pageData.markup
+            document.querySelector('#edtLocal').value = pageData.local
+            document.querySelector('#edtNCM').value = pageData.ncm
+//            document.querySelector('#cmbForn').value = pageData.id_emp
+            document.querySelector('#btnEdit').disabled = 0
+        }
+    }
+
+    function openFields(open=1){
+        const view = document.querySelectorAll('.only-view')
+        for(let i=0; i<view.length; i++){
+            view[i].disabled = !open
+        }
+    }
+
+    pageFunc.setProd = ()=>{
+        const params = new Object;
+            params.id = newProd ? 0 : pageData.id
+            params.id_emp = document.querySelector('#cmbForn').value
+            params.descricao = document.querySelector('#edtDesc').value.trim()
+            params.estoque = document.querySelector('#edtEtq').value.trim()
+            params.estq_min = document.querySelector('#edtEtqMin').value.trim()
+            params.und = document.querySelector('#cmdUnd').value
+            params.ncm = document.querySelector('#edtNCM').value.trim()
+            params.cod_int = document.querySelector('#edtCodFW').value.trim()
+            params.cod_bar = document.querySelector('#edtCodBar').value.trim()
+            params.cod_forn = document.querySelector('#edtCodForn').value.trim()
+            params.consumo = document.querySelector('#cmbCons').value
+            params.custo = document.querySelector('#edtCusto').value.trim()
+            params.markup = document.querySelector('#edtMarkup').value.trim()
+            params.local = document.querySelector('#edtLocal').value.trim()
+          
+        const myPromisse = queryDB(params,'PROD-1');
+        myPromisse.then((resolve)=>{
+            main_data.adm_produtos.func.fillProd()
+            alert('Cadastrado efetuado!')
+            closeModal('adm_view_prod')
+        })
+    }
+
+    pageFunc.delProd = ()=>{
+        if(confirm('Deseja realmente deletar este produto?')){
+            const params = new Object;
+                params.id = pageData.id
+            
+            const myPromisse = queryDB(params,'PROD-2');
+            myPromisse.then((resolve)=>{
+                main_data.adm_empresas.func.fillProd()
+                closeModal('adm_view_prod')
+            })
+        }
+
+    }
+
+    document.querySelector('#btnSave').addEventListener('click',()=>{
+        pageFunc.setProd()
+    })
+
+    document.querySelector('#btnDel').addEventListener('click',()=>{
+        pageFunc.delProd()
+    })
+
+    document.querySelector('#btnEdit').addEventListener('click',()=>{
+        if(document.querySelector('#btnSave').disabled){
+            if(confirm('Abrir registro para edição?')){
+                openFields(1)
+            }
+        }else{
+            openFields(0)
+        }
+    })
+
+    startPage()    
+
+</script>

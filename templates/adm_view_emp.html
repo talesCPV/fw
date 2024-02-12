@@ -94,9 +94,8 @@
         </div>
         <div class="inline">
             <label for="edtMail">Email</label>
-            <input type="email" class="only-view" id="edtMail" maxlength="80" disabled>
+            <input type="email" class="only-view" id="edtMail" maxlength="80" onkeyup="validaEmail(this)" disabled>
         </div>
-
 
         <div class="inline">
             <button id="btnCNPJ">Pesquisar Cartão CNPJ</button>            
@@ -203,8 +202,12 @@
     })
 
     document.querySelector('#btnEdit').addEventListener('click',()=>{
-        if(confirm('Abrir registro para edição?')){
-            openFields(1)
+        if(document.querySelector('#btnSave').disabled){
+            if(confirm('Abrir registro para edição?')){
+                openFields(1)
+            }
+        }else{
+            openFields(0)
         }
     })
 
