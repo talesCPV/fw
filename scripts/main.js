@@ -5,9 +5,11 @@ var main_data = new Object
 var today = new Date()
 var meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
 var semana = ['Dom','Seg','Ter','Qua','Qui','Sex','Sab']
-
 /*  FUNCTIONS  */
 
+function forceHTTPS(){
+    location.protocol !== 'https:' ? location.replace(`https:${location.href.substring(location.protocol.length)}`) : null
+}
 
 
 /*  DATABASE  */
@@ -34,7 +36,6 @@ function queryDB(params,cod){
                 resolve(response.text())        
             } else { 
                 reject(new Error("Houve algum erro na comunicação com o servidor"));
-//                alert('Houve um erro na comunicação com o servidor, favor verificar sua conexão com a internet.')
             } 
         });
     });      
@@ -115,14 +116,10 @@ function pictab(e){
 
         if(content[i].id == tab.split('-')[1]){
             content[i].style.display = "block"
-//            sel_tab.style.background = "#3F5954";
-//            sel_tab.style.color = "#FFF8DC";
             sel_tab.classList.add("check-tab")
         }else{
             content[i].style.display = "none"
             sel_tab.classList.remove("check-tab")
-//            sel_tab.style.background = "#00000000";
-//            sel_tab.style.color = "#3F5954";
         }
     }
 }
@@ -166,7 +163,6 @@ function openMenu(){
     }); 
 
     myPromisse.then((resolve)=>{
-        localStorage.setItem("menu",resolve);
         const menu_data = JSON.parse(resolve)
         const menu = document.querySelector('.menu')
         pushMenu(menu, menu_data)
@@ -180,10 +176,6 @@ function openMenu(){
 
 //            a.href = obj[i].script
             a.innerHTML = obj[i].modulo            
-            a.addEventListener('click',()=>{
-                main_data.dashboard.data.access = obj[i].access                              
-                openHTML(obj[i].link,obj[i].janela,obj[i].label,{},obj[i].width)
-            })
             if (obj[i].itens.length > 0 ){
                 const lbl = document.createElement('label')
                 lbl.htmlFor = `drop-${drop}`
@@ -206,48 +198,15 @@ function openMenu(){
                     li.appendChild(ul)
                 }
             }else{
-                li.appendChild(a)
+                a.addEventListener('click',()=>{
+                    main_data.dashboard.data.access = obj[i].access                              
+                    openHTML(obj[i].link,obj[i].janela,obj[i].label,{},obj[i].width)
+                })    
+                li.appendChild(a)                
             }
             menu.appendChild(li)
         }
     }
-}
-
-/*  FILL COMBOS  */
-
-function fillCombo(combo, params, cod, fields, value=''){
-
-    combo = document.getElementById(combo)
-    combo.innerHTML = ''
-    const myPromisse = queryDB(params,cod);
-    myPromisse.then((resolve)=>{
-        const json = JSON.parse(resolve)
-        for(let i=0; i<json.length; i++){
-            const opt = document.createElement('option')
-            opt.value = json[i][fields[0]]
-            opt.innerHTML = json[i][fields[1]].toUpperCase()
-            combo.appendChild(opt)
-        }
-        if(value != ''){
-            combo.value = value
-        }
-    })
-
-}
-
-function checkMail(){
-    const params = new Object;
-        params.id_user = localStorage.getItem('id_user')
-    const myPromisse = queryDB(params,53)
-    myPromisse.then((txt)=>{
-        const json = JSON.parse(txt)
-        let unread = 0
-        for(let i=0; i<json.length; i++){
-            unread += parseInt(json[i].nao_lida)
-        }     
-        document.querySelector('#badge').innerHTML = unread > 0 ? unread : '' 
-        document.querySelector('#badge_mobile').innerHTML = unread > 0 ? unread : ''                   
-    })
 }
 
 /* IMAGE */
@@ -277,8 +236,11 @@ function showFile(idFile='up_file',idCanvas='cnvImg'){
                 ctx = ctx.getContext('2d');
                 let preview = new Image();
                 preview.onload = function () {
-                    ar = aspect_ratio(preview)
-                    ctx.drawImage(preview, 0, 0,preview.width,preview.height,ar[0],ar[1],ar[2],ar[3]);
+                    ar = aspect_ratio(preview,ctx.width,ctx.height) 
+                    ctx.canvas.width = ar[2]
+                    ctx.canvas.height = ar[3]
+                    ctx.clearRect(0, 0, 300,300);
+                    ctx.drawImage(preview, 0, 0,preview.width,preview.height,0,0,ar[2],ar[3]);
                 };
                 preview.src = e.target.result
             }
@@ -289,15 +251,17 @@ function showFile(idFile='up_file',idCanvas='cnvImg'){
 
 function loadImg(filename, id='#cnvImg') {
     var ctx = document.querySelector(id); 
+    console.log(ctx)
     try{
-        const size = {w:ctx.width, h:ctx.height}
         if (ctx.getContext) {
             ctx = ctx.getContext('2d');
-            ctx.clearRect(0, 0, size.w, size.h);
+            ctx.clearRect(0, 0, ctx.width, ctx.height);
             var img = new Image();
             img.onload = function () {
-                ar = aspect_ratio(img)
-                ctx.drawImage(img, 0, 0,img.width,img.height,ar[0],ar[1],ar[2],ar[3]);
+                ar = aspect_ratio(img,ctx.width,ctx.height)                
+                ctx.canvas.width = ar[2]
+                ctx.canvas.height = ar[3]
+                ctx.drawImage(img, 0, 0,img.width,img.height,0,0,ar[2],ar[3]);
             };        
             img.src = filename+'?'+new Date().getTime()
         }
@@ -307,33 +271,7 @@ function loadImg(filename, id='#cnvImg') {
 
 }
 
-function listNF(dir,ext='txt'){
-
-    const data = new URLSearchParams();        
-        data.append("dir",'assets/'+dir);
-    const myRequest = new Request("backend/lookDir.php",{
-        method : "POST",
-        body : data
-    });
-    const myPromisse = new Promise((resolve,reject) =>{
-        fetch(myRequest)
-        .then(function (response){
-            if (response.status === 200) { 
-                resolve(response.text());             
-            } else { 
-                reject(new Error("Houve algum erro na comunicação com o servidor"));                    
-            } 
-        });
-    });        
-    myPromisse.then((txt)=>{
-        const list = JSON.parse(txt)
-        const sel = document.querySelector(`#${ext}Files`)
-        sel.innerHTML=''
-        for(let i=list.length-1; i>1;  i--){
-            sel.innerHTML += `<option value="${list[i]}">${list[i]}</option>`
-        }
-    })
-}
+/* ARQUIVO DE LOG */
 
 function setLog(line){
     const now = new Date
@@ -359,7 +297,6 @@ function setLog(line){
 
     })    
 }
-
 
 function logout(){
     if(confirm(`Encerrar login de ${localStorage.getItem('email')}?`)){

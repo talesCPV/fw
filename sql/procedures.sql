@@ -590,6 +590,8 @@ DELIMITER $$
                 cod_bar=Icod_bar,cod_forn=Icod_forn,consumo=Iconsumo,custo=Icusto,markup=Imarkup,local=Ilocal;
         END IF;
 	END $$
+DELIMITER ;
+
 
  DROP PROCEDURE sp_view_prod;
 DELIMITER $$
@@ -603,7 +605,7 @@ DELIMITER $$
 	BEGIN
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
-			SET @quer =CONCAT('SELECT * FROM tb_produto WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
+			SET @quer =CONCAT('SELECT * FROM vw_prod WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
 		ELSE
@@ -628,5 +630,27 @@ DELIMITER $$
 		ELSE 
 			SELECT 0 AS ok;
         END IF;	
+	END $$
+DELIMITER ;
+
+ DROP PROCEDURE sp_set_reserv_prod;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_reserv_prod(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+        IN Iid_prod int(11),
+		IN Iid_proj int(11),
+		IN Iid_user int(11),
+		IN Iqtd double,
+		IN Ipago BOOLEAN
+    )
+	BEGIN
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			INSERT INTO tb_prod_reserva (id_prod,id_proj,id_user,qtd,pago)
+				VALUES (Iid_prod,Iid_proj,Iid_user,Iqtd,Ipago)
+				ON DUPLICATE KEY UPDATE
+				qtd=Iqtd, pago=Ipago;
+        END IF;
 	END $$
 DELIMITER ;

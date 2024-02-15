@@ -12,16 +12,14 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 370px;
-            min-width: 320px;
-            width: 20%;
             border: solid 1px;
             border-radius: 10px;
+            padding: 5px;
         }
-
         .side-pic{
             display: flex;
             flex-direction: column;
+            justify-content: center;
             width: 100%;
         }
 
@@ -31,6 +29,12 @@
      
         #up_file{
             max-width: 300px;
+        }
+
+        @media all and (max-width : 1000px) {
+            .top-form{
+                flex-direction: column;
+            }
         }
 
     </style>
@@ -198,7 +202,7 @@
             const back = backFunc({'filename':`../assets/func/${pageData.id}/foto.jpg`},1)
             back.then((resp)=>{
                 const imgExist = JSON.parse(resp)    
-                imgExist ? loadImg(`assets/func/${pageData.id}/foto.jpg`) : null
+                loadImg(imgExist ? `assets/func/${pageData.id}/foto.jpg` : 'assets/func/noimage.png')
             })
         }
     }
@@ -229,6 +233,7 @@
         const myPromisse = queryDB(params,'FUN-1');
         myPromisse.then((resolve)=>{
             main_data.adm_funcionarios.func.fillFunc()
+            setLog(`Funcionário ${newFunc?'Cadastrado':'Editado'} ${ !newFunc ? pageData.nome :''} -> ${params.nome}`)
             alert('Cadastrado efetuado!')
             closeModal('adm_view_func')
         })
@@ -241,6 +246,7 @@
             
             const myPromisse = queryDB(params,'FUN-2');
             myPromisse.then((resolve)=>{
+                setLog(`Funcionário Deletado -> ${pageData.nome}`)
                 main_data.adm_funcionarios.func.fillFunc()
                 closeModal('adm_view_func')
             })

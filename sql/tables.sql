@@ -136,7 +136,7 @@ CREATE TABLE tb_prod_reserva(
     id_proj int(11) NOT NULL,
     id_user int(11) NOT NULL,
     qtd double DEFAULT 0,
-    data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    data TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     pago BOOLEAN DEFAULT 0,
     FOREIGN KEY (id_prod) REFERENCES tb_produto(id),
     FOREIGN KEY (id_proj) REFERENCES tb_projeto(id),

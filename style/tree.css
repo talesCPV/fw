@@ -78,23 +78,23 @@
 
 .tree .last::before{
     z-index    : 1;
-    background :  url('../assets/edit.svg') 0 0;
+    background :  url('../assets/icons/edit.svg') 0 0;
     background-size: 20px;
 }
 
 .tree .new-mail::before{   
     z-index: 1;         
-    background :  url('../assets/new_mail.svg') 0 0;
+    background :  url('../assets/icons/new_mail.svg') 0 0;
     background-size: 20px;
 }
 
 .tree .inbox::before{       
-    background :  url('../assets/inbox.svg') 0 0;
+    background :  url('../assets/icons/inbox.svg') 0 0;
     background-size: 20px;
 }
 
 .tree .send::before{       
-    background :  url('../assets/send_mail.svg') 0 0;
+    background :  url('../assets/icons/send_mail.svg') 0 0;
     background-size: 20px;
 }
 

@@ -1,6 +1,9 @@
 <template>
     <style>
 
+        .w70{
+            width: 70%;
+        }
      
     </style>
 
@@ -44,9 +47,9 @@
         myPromisse.then((resolve)=>{
             const json = JSON.parse(resolve)
             tbl.style.display = json.length > 0 ? 'inline-table' : 'none'
-            tbl.head('Descrição,Und.,Reserva,Estoque')
+            tbl.head('Descrição|w70,Und.,Reserv.,Estq.,Disp.')
             for(let i=0; i<json.length;i++){
-                tbl.plot(json[i],'descricao,und,reserva,ETQ','str,Upp,str,str')
+                tbl.plot(json[i],'descricao,und,reserva,estoque,disponivel','str,Upp,str,str,str')
             }         
         });
     }
@@ -63,12 +66,35 @@
         
         try{
             data = e.target.parentNode.data
-            data != undefined ? openHTML('adm_view_prod.html','pop-up',`Edição de dados - ${data.descricao.toUpperCase()}`,data) : null
-        }catch{
-
-        }
-       
+            data != undefined ? openHTML('adm_view_prod.html','pop-up',`Edição de Produtos - ${data.descricao.toUpperCase()}`,data) : null
+        }catch{}
     })
+
+    document.querySelector('#tblProd').addEventListener('contextmenu',(e)=>{
+        e.preventDefault();
+        try{
+            data = e.target.parentNode.data
+            const val = prompt('Quantidade a ser reservada?','0,1')
+            const reserva = parseInt(val.split(',')[0])
+            const proj = val.split(',')[1] == undefined ? 1 : val.split(',')[1].trim()
+            const pago = val.split(',')[2] == undefined ? 0 : val.split(',')[2].trim() == '0' ? 0 : 1
+            if(reserva > 0){
+                const params = new Object;
+                    params.id_prod = data.id
+                    params.id_proj = proj
+                    params.id_user = localStorage.getItem('id_user')
+                    params.qtd = reserva
+                    params.pago = pago
+                
+                const myPromisse = queryDB(params,'PROD-3');
+                myPromisse.then((resolve)=>{
+                    pageFunc.fillProd()
+                    setLog(`Produto RESERVADO -> ${data.descricao} : ${reserva} ${data.und}`)
+                    alert('Produto RESERVADO!')
+                })
+            }
+        }catch{}
+    })    
 
 
 </script>

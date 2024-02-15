@@ -387,3 +387,55 @@
 10/02/2024 23:02 admin@fwtecnologia.com.br : Menu Alterado (Log do sistema, adm_log.html, pop-up, Log do Sistema)
 10/02/2024 23:03 admin@fwtecnologia.com.br : Menu Alterado (Produtos, adm_produtos.html, pop-up, teste)
 11/02/2024 23:43 admin@fwtecnologia.com.br : Menu Alterado (Produtos, adm_produtos.html, pop-up, Produtos)
+14/02/2024 11:12 admin@fwtecnologia.com.br : Menu Alterado (Admin, none, pop-up, )
+14/02/2024 11:16 admin@fwtecnologia.com.br : Menu Incluido (kjsahsk)
+14/02/2024 11:17 admin@fwtecnologia.com.br : Menu Deletado (Engenharia)
+14/02/2024 11:42 admin@fwtecnologia.com.br : Produto RESERVADO -> copo d'agua
+14/02/2024 14:58 admin@fwtecnologia.com.br : Produto RESERVADO -> teste 2
+14/02/2024 15:00 admin@fwtecnologia.com.br : Produto RESERVADO -> teste 2 : 3
+14/02/2024 15:01 admin@fwtecnologia.com.br : Produto RESERVADO -> copo d'agua : 450 UND
+14/02/2024 15:04 admin@fwtecnologia.com.br : Produto Cadastrado  -> Trevira
+14/02/2024 15:05 admin@fwtecnologia.com.br : Produto Editado Trevira -> Trevira
+14/02/2024 15:10 admin@fwtecnologia.com.br : Produto Editado copo d'agua -> copo d'agua
+14/02/2024 15:10 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: copo d'agua
+14/02/2024 15:11 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: copo d'agua
+14/02/2024 15:14 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: copo d'agua
+14/02/2024 15:14 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: copo d'agua
+14/02/2024 15:16 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: copo d'agua
+14/02/2024 15:16 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: copo d'agua
+14/02/2024 15:17 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: copo d'agua
+14/02/2024 15:17 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: copo d'agua
+14/02/2024 15:18 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: copo d'agua
+14/02/2024 15:18 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: copo d'agua
+14/02/2024 15:21 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Cadastros, Acesso:[[0,3,9]])
+14/02/2024 15:21 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Engenharia, Acesso:[[0,1]])
+14/02/2024 15:21 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Gerenciamento, Acesso:[[0,1]])
+14/02/2024 15:21 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Admin, Acesso:[[0,1,3,9]])
+14/02/2024 15:21 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Qualidade, Acesso:[[0]])
+14/02/2024 15:21 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Comercial, Acesso:[[0]])
+14/02/2024 15:21 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Producao, Acesso:[[0]])
+14/02/2024 15:21 admin@fwtecnologia.com.br : Permissao alterada, Modulo: RH, Acesso:[[0]])
+14/02/2024 16:11 admin@fwtecnologia.com.br : Menu Alterado (Usuarios, adm_usuarios.html, pop-up, Usuarios)
+14/02/2024 16:23 admin@fwtecnologia.com.br : Produto RESERVADO -> Trevira : 150 M2
+14/02/2024 16:29 admin@fwtecnologia.com.br : Produto RESERVADO -> teste 2 : 1 UND
+14/02/2024 16:29 admin@fwtecnologia.com.br : Produto RESERVADO -> Trevira : 125 M2
+14/02/2024 16:35 admin@fwtecnologia.com.br : Produto RESERVADO -> teste 2 : 5 UND
+14/02/2024 16:59 admin@fwtecnologia.com.br : Produto RESERVADO -> copo d'agua : 10 UND
+14/02/2024 17:00 admin@fwtecnologia.com.br : Produto RESERVADO -> copo d'agua : 15 UND
+14/02/2024 23:24 admin@fwtecnologia.com.br : Produto RESERVADO -> Trevira : 10 M2
+14/02/2024 23:24 admin@fwtecnologia.com.br : Produto RESERVADO -> Trevira : 10 M2
+14/02/2024 23:24 admin@fwtecnologia.com.br : Produto RESERVADO -> Trevira : 10 M2
+14/02/2024 23:25 admin@fwtecnologia.com.br : Produto RESERVADO -> Trevira : 20 M2
+14/02/2024 23:54 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
+14/02/2024 23:54 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
+15/02/2024 00:04 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
+15/02/2024 00:17 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
+15/02/2024 00:17 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
+15/02/2024 00:18 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
+15/02/2024 00:19 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
+15/02/2024 00:19 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
+15/02/2024 00:19 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
+15/02/2024 00:19 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
+15/02/2024 00:19 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
+15/02/2024 00:19 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
+15/02/2024 00:20 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2

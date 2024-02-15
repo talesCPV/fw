@@ -170,6 +170,7 @@
         const myPromisse = queryDB(params,'EMP-1');
         myPromisse.then((resolve)=>{
             main_data.adm_empresas.func.fillEmp()
+            setLog(`Empresa ${newEmp?'Cadastrada':'Editada'} ${ !newEmp ? pageData.razao_social :''} -> ${params.razao_social}`)
             alert('Cadastrado efetuado!')
             closeModal('adm_view_emp')
         })
@@ -183,6 +184,7 @@
             const myPromisse = queryDB(params,'EMP-2');
             myPromisse.then((resolve)=>{
                 main_data.adm_empresas.func.fillEmp()
+                setLog(`Empresa Deletada -> ${pageData.razao_social}`)
                 closeModal('adm_view_emp')
             })
         }

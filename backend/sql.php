@@ -13,7 +13,7 @@
         /* CALENDAR */
         "CAL-0"  => 'CALL sp_view_calendar(@hash,"x00","x01");', // DT_INI, DT_FIN
         "CAL-1"  => 'CALL sp_set_calendar(@hash,"x00","x01");', // DT_AGD, OBS
-        
+
         /* MAIL */
         "MAIL-0"  => 'CALL sp_set_mail(@hash,"x00","x01");', // ID_TO, MESSAGE
         "MAIL-1"  => 'CALL sp_view_mail(@hash,x00);', // I_SEND
@@ -30,11 +30,12 @@
         "EMP-0"  => 'CALL sp_view_emp(@access,@hash,"x00","x01","x02");', // FIELD,SIGNAL, VALUE
         "EMP-1"  => 'CALL sp_set_emp(@access,@hash,x00,"x01","x02","x03","x04","x05","x06","x07","x08","x09","x10","x11","x12","x13","x14","x15","x16");', // id,razao_social,fant,cnpj,ie,im,end,num,comp,bairro,cidade,uf,cep,cliente,ramo,tel,email
         "EMP-2"  => 'CALL sp_del_emp(@access,@hash,x00);', // ID
-        
+
         /* PRODUTOS */
         "PROD-0" => 'CALL sp_view_prod(@access,@hash,"x00","x01","x02");', // FIELD,SIGNAL, VALUE
         "PROD-1" => 'CALL sp_set_prod(@access,@hash,x00,x01,"x02","x03","x04","x05","x06","x07","x08","x09",x10,"x11","x12","x13");',
         "PROD-2" => 'CALL sp_del_prod(@access,@hash,x00);', // ID
+        "PROD-3" => 'CALL sp_set_reserv_prod(@access,@hash,x00,x01,x02,"x03",x04);', // ID_PROD, ID_PROJ,ID_USER,QTD,PAGO      
 
         /* ADMIN */
         "ADM-0"  => 'CALL sp_set_setor(@access,@hash,x00,"x01");', // ID_SETOR, NOME

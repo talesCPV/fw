@@ -1,15 +1,18 @@
 <?php   
 
+ini_set('display_errors','Off');
+ini_set('error_reporting', E_ALL );
+define('WP_DEBUG', false);
+define('WP_DEBUG_DISPLAY', false);
+
 function addItem($access,$obj){
   $menu = [];
 
   for($i = 0; $i< count($obj); $i++){  
 
     if (in_array($access,$obj[$i]->access )) {
-
       $item = new stdClass();
       $item->modulo = $obj[$i]->modulo;
-//      $item->script = $obj[$i]->script;
       $item->icone = $obj[$i]->icone;
       $item->link = $obj[$i]->link;
       $item->janela = $obj[$i]->janela;
