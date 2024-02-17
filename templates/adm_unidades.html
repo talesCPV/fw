@@ -1,0 +1,70 @@
+
+<template>
+    <style>
+
+        #fdsUND{
+            display: none;
+        }
+
+
+    </style>
+        
+        <fieldset class="fds-busca">
+            <legend>Busca</legend>
+            <div class="inline">                
+                <select id="cmbBusca">
+                    <option value="nome" signal="LIKE">Nome</option>
+                    <option value="sigla" signal="LIKE">Sigla</option>
+                </select>
+                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
+                <button id="btnBusca" class="btn-round"><span class="mdi mdi-magnify"></span></button>
+                <button id="btnNovaUND" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
+            </div>
+        </fieldset>
+
+
+        <fieldset id="fdsUND">
+            <legend>Unidades</legend>
+            <table id="tblUND"></table>            
+        </fieldset>
+
+</template>
+<script>
+
+    const pageData = main_data.adm_unidades.data
+    const pageFunc = main_data.adm_unidades.func
+  
+    pageFunc.fillUnd = ()=>{
+        const tbl = document.getElementById('tblUND')
+        tbl.innerHTML = ''
+        const query = getVal()
+        const params = new Object;
+            params.field = query[0]
+            params.signal = query[1]
+            params.value = query[2]
+        const myPromisse = queryDB(params,'ADM-7');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+            document.querySelector('#fdsUND').style.display = json.length > 0 ? 'block' : 'none'
+
+            tbl.head('Nome,Sigla')
+            for(let i=0; i<json.length;i++){
+                tbl.plot(json[i],'nome,sigla','str,Upp')                
+            }         
+        });
+    }
+
+    document.querySelector('#btnBusca').addEventListener('click',()=>{
+        pageFunc.fillUnd()
+    })
+
+    document.querySelector('#btnNovaUND').addEventListener('click',()=>{
+        openHTML('adm_view_und.html','pop-up','Nova Unidade',{'id':'0'},500)
+    })
+
+    document.querySelector('#tblUND').addEventListener('click',(e)=>{
+        data = e.target.parentNode.data
+        data != undefined ? openHTML('adm_view_und.html','pop-up',`Unidades - ${data.nome.toUpperCase()}`,data,500) : null
+    })
+
+</script>

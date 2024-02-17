@@ -64,17 +64,14 @@ Date.prototype.addMin = function(N=1){
 Date.prototype.iniMonth = function(){
     const day = this.getDate() -1
     this.change(-day)
-    const out = this.getFormatDate()
+    const out = this.getFormatDate()    
     this.change (day)
     return out
 }
 
 Date.prototype.finMonth = function(){
-    const day = this.getDate() -1
-    this.change(30-day)
-    const out = this.getFormatDate()
-    this.change (-30+day)
-    return out
+    const last_day = new Date(this.getFullYear(), this.getMonth()+1, 0).getDate()
+    return new Date(`${this.getFullYear()}-${this.getMonth()+1}-${last_day}`).getFormatDate()
 }
 
 Date.prototype.getFormatDate = function(N=''){

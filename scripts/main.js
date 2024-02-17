@@ -153,7 +153,7 @@ function openMenu(){
         fetch(myRequest)
         .then(function (response){        
             if (response.status === 200) { 
-                document.querySelector('#usr-name').innerHTML = '<span id="mail-badge" class="badge"></span>'+localStorage.getItem('nome').toUpperCase()
+                document.querySelector('#usr-name').innerHTML = '<span id="mail-badge" class="badge"></span> @'+localStorage.getItem('nome').toLowerCase()
                 resolve(response.text()); 
                 checkUserMail()                  
             } else { 
@@ -250,8 +250,7 @@ function showFile(idFile='up_file',idCanvas='cnvImg'){
 }
 
 function loadImg(filename, id='#cnvImg') {
-    var ctx = document.querySelector(id); 
-    console.log(ctx)
+    var ctx = document.querySelector(id);     
     try{
         if (ctx.getContext) {
             ctx = ctx.getContext('2d');

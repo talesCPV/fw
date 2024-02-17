@@ -22,7 +22,6 @@ CREATE TABLE tb_usr_perm_perfil (
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 
-
  DROP TABLE tb_funcionario;
 CREATE TABLE tb_funcionario (
     id int(11) NOT NULL AUTO_INCREMENT,
@@ -50,6 +49,16 @@ CREATE TABLE tb_funcionario (
     FOREIGN KEY (id_cargo) REFERENCES tb_cargos(id)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8; 
  
+--  DROP TABLE tb_relogio_ponto;
+CREATE TABLE tb_relogio_ponto (
+	id int(11) NOT NULL AUTO_INCREMENT,
+    id_func int(11) NOT NULL,
+    entrada datetime NOT NULL,
+    saida datetime NOT NULL,
+    FOREIGN KEY (id_func) REFERENCES tb_funcionario(id),
+    PRIMARY KEY (id)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+ 
 -- DROP TABLE tb_setores;
 CREATE TABLE tb_setores (
     id int(11) NOT NULL AUTO_INCREMENT,
@@ -64,6 +73,14 @@ CREATE TABLE tb_cargos (
     salario double NOT NULL DEFAULT 0,
     mensal boolean NOT NULL DEFAULT 0,
     cbo varchar(8) DEFAULT NULL,
+    PRIMARY KEY (id)
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+-- DROP TABLE tb_und;
+CREATE TABLE tb_und (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    nome varchar(30) NOT NULL,
+    sigla varchar(8) DEFAULT NULL,
     PRIMARY KEY (id)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 

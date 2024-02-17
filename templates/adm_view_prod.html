@@ -78,16 +78,7 @@
                 </div>
                 <div class="inline">
                     <label for="cmdUnd">Unidade</label>
-                    <select id="cmdUnd" class="only-view" disabled>
-                        <option value="UND">Unidade</option>
-                        <option value="M.LIN.">Metro Linear</option>
-                        <option value="M2">Metro Quadrado</option>
-                        <option value="LITRO">Litro</option>
-                        <option value="LATA">Lata</option>
-                        <option value="GL">Galão</option>
-                        <option value="1/2">Meio Galão</option>
-                        <option value="1/4">Quarto de Galão</option>
-                    </select>
+                    <select id="cmdUnd" class="only-view" disabled></select>
                     <label for="edtEtq">Estoque</label>
                     <input type="text" class="only-view" id="edtEtq" maxlength="10" onkeyup="valFloat(this)" disabled>
                     <label for="edtEtqMin">Estq. Min.</label>
@@ -151,8 +142,31 @@
         })
     }
 
+    function fillUnd(){
+        const params = new Object;
+            params.field = 'id'
+            params.signal = '>='
+            params.value = '1'
+        const myPromisse = queryDB(params,'ADM-7');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+            const cmb = document.querySelector('#cmdUnd')
+            cmb.innerHTML=''
+            for(let i=0; i<json.length; i++){
+                const opt = document.createElement('option')
+                opt.value = json[i].sigla
+                opt.innerHTML = json[i].nome
+                if(!newProd){
+                    opt.selected =  json[i].sigla == pageData.und ? 1 : 0
+                }
+                cmb.appendChild(opt)
+            }            
+        })
+    }
+
     function startPage(){
         fillEmp()
+        fillUnd()
         if(newProd){
             openFields(1)
             document.querySelector('#btnDel').disabled = 1
@@ -170,7 +184,6 @@
             document.querySelector('#edtMarkup').value = pageData.markup
             document.querySelector('#edtLocal').value = pageData.local
             document.querySelector('#edtNCM').value = pageData.ncm
-//            document.querySelector('#cmbForn').value = pageData.id_emp
             document.querySelector('#btnEdit').disabled = 0
 
             const back = backFunc({'filename':`../assets/prod/prod_${pageData.id}.jpg`},1)
@@ -207,8 +220,8 @@
           
         const myPromisse = queryDB(params,'PROD-1');
         myPromisse.then((resolve)=>{
-            main_data.adm_produtos.func.fillProd()
             setLog(`Produto ${newProd?'Cadastrado':'Editado'} ${ !newProd ? pageData.descricao :''} -> ${params.descricao}`)
+            main_data.adm_produtos.func.fillProd()
             alert('Cadastrado efetuado!')
             closeModal('adm_view_prod')
         })
@@ -222,11 +235,10 @@
             const myPromisse = queryDB(params,'PROD-2');
             myPromisse.then((resolve)=>{
                 setLog(`Produto Deletado -> ${pageData.descricao}`)
-                main_data.adm_empresas.func.fillProd()
+                main_data.adm_produtos.func.fillProd()
                 closeModal('adm_view_prod')
             })
         }
-
     }
 
     document.querySelector('#btnSave').addEventListener('click',()=>{
@@ -253,7 +265,6 @@
         up.then((resp)=>{
             setLog(` Imagem Alterada -> Produto: ${pageData.descricao}`)
         })
-
     })
 
     startPage()    

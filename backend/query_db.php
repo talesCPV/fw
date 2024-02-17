@@ -16,7 +16,7 @@
         foreach($l_access as $val){
             $access = $access. ','.$val;
         }
-        
+
         include "connect.php";        
         include "sql.php"; 
 
@@ -28,7 +28,7 @@
         foreach($params as $key => $val ){
             $y = 'y'.str_pad(strval($i), 2, "0", STR_PAD_LEFT);
             $x = 'x'.str_pad(strval($i), 2, "0", STR_PAD_LEFT);
-        
+
             $query = str_replace($y, $key,$query); // fields
             $query = str_replace($x, $val,$query); // values
             $i++;

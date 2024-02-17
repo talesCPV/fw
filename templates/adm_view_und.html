@@ -1,0 +1,81 @@
+<template>
+    <style>
+
+        .linCKB{
+            display: flex;
+            flex-direction: row;
+        }
+
+        .linCKB label {
+            text-align: right;
+            width: auto;
+            min-width: 120px;
+            align-self: flex-end;
+            padding: 10px;
+            white-space: nowrap;
+        }
+
+        .linCKB input[type=checkbox]{
+            margin: 30px 10px 10px 0 !important;
+
+        }
+
+    </style>
+    
+    <fieldset>
+        <legend>Registro de Unidade</legend>
+
+        <div class="inline">
+            <label for="edtUnd">Unidade</label>
+            <input type="text" id="edtUnd" maxlength="30">
+        </div>
+
+        <div class="inline">
+            <label for="edtSigla">Sigla</label>
+            <input type="text" id="edtSigla" maxlength="8">
+        </div>
+
+        <div class="inline">
+            <button id="btnSaveUnd">Salvar</button>
+        </div>
+    
+      </fieldset>    
+
+
+
+</template>
+<script>
+
+    const pageData = main_data.adm_view_und.data
+    const pageFunc = main_data.adm_view_und.func
+
+    pageFunc.fill = ()=>{
+        if(parseInt(pageData.id)>0){
+            document.querySelector('#edtUnd').value = pageData.nome
+            document.querySelector('#edtSigla').value = pageData.sigla
+        }
+    }
+
+    document.querySelector('#btnSaveUnd').addEventListener('click',()=>{
+        const params = new Object
+            params.id = pageData.id
+            params.nome = document.querySelector('#edtUnd').value.trim()
+            params.sigla = document.querySelector('#edtSigla').value.trim()
+
+        const myPromisse = queryDB(params,'ADM-6');
+        myPromisse.then((resolve)=>{
+            if(params.id == '0'){
+                setLog(`Inclusão de Unidade (${params.nome})`)
+            }else if(params.nome==''){
+                setLog(`Deleção de Unidade (${pageData.nome})`)
+            }else{
+                setLog(`Edição de Unidade (${pageData.nome} -> ${params.nome}, ${pageData.sigla} -> ${params.sigla})`)
+            }
+            main_data.adm_unidades.func.fillUnd()
+            closeModal('adm_view_und')
+        })
+    })
+
+    pageFunc.fill()
+
+</script>

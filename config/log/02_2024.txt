@@ -439,3 +439,69 @@
 15/02/2024 00:19 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
 15/02/2024 00:19 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
 15/02/2024 00:20 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: teste 2
+15/02/2024 10:43 admin@fwtecnologia.com.br : Produto RESERVADO -> copo d'agua : 10 UND
+15/02/2024 10:43 admin@fwtecnologia.com.br : Produto RESERVADO -> copo d'agua : 20 UND
+15/02/2024 10:43 admin@fwtecnologia.com.br : Produto RESERVADO -> copo d'agua : 20 UND
+15/02/2024 10:43 admin@fwtecnologia.com.br : Produto RESERVADO -> copo d'agua : 20 UND
+15/02/2024 10:43 admin@fwtecnologia.com.br : Produto RESERVADO -> copo d'agua : 20 UND
+15/02/2024 11:12 financeiro@fwtecnologia.com.br : Empresa Editada Empresa Teste -> Empresa Teste 2
+15/02/2024 11:24 admin@fwtecnologia.com.br : Menu Incluido (Configuracao)
+15/02/2024 11:24 admin@fwtecnologia.com.br : Menu Incluido (Setor)
+15/02/2024 11:24 admin@fwtecnologia.com.br : Menu Incluido (Cargos)
+15/02/2024 11:25 admin@fwtecnologia.com.br : Menu Incluido (Unidades)
+15/02/2024 11:25 admin@fwtecnologia.com.br : Menu Alterado (Setores, adm_setores.html, pop-up, Setores)
+15/02/2024 11:26 admin@fwtecnologia.com.br : Menu Alterado (Cargos, adm_cargos, pop-up, Cargos)
+15/02/2024 11:27 admin@fwtecnologia.com.br : Menu Alterado (Unidades, adm_unidades, pop-up, Unidades)
+15/02/2024 11:27 admin@fwtecnologia.com.br : Menu Deletado (Cadastros)
+15/02/2024 11:27 admin@fwtecnologia.com.br : Menu Deletado (Cadastros)
+15/02/2024 11:28 admin@fwtecnologia.com.br : Menu Alterado (Cargos, adm_cargos.html, pop-up, Cargos)
+15/02/2024 11:28 admin@fwtecnologia.com.br : Menu Alterado (Unidades, adm_unidades.html, pop-up, Unidades)
+15/02/2024 11:29 admin@fwtecnologia.com.br : Menu Alterado (Setores, adm_setores.html, pop-up, Setores)
+15/02/2024 11:51 admin@fwtecnologia.com.br : Inclusao de novo Setor (METRO QUADRADO)
+15/02/2024 12:00 admin@fwtecnologia.com.br : Edicao de nova Unidade (METO - M)
+15/02/2024 12:01 admin@fwtecnologia.com.br : Edicao de nova Unidade (METRO - M)
+15/02/2024 12:01 admin@fwtecnologia.com.br : Delecao de nova Unidade ( - undefined)
+15/02/2024 12:02 admin@fwtecnologia.com.br : Menu Alterado (Unidades, adm_unidades.html, pop-up, Unidades)
+15/02/2024 16:23 admin@fwtecnologia.com.br : Delecao de Unidade ()
+15/02/2024 16:25 admin@fwtecnologia.com.br : Delecao de Unidade (METO)
+15/02/2024 16:27 admin@fwtecnologia.com.br : Delecao de Unidade (METRO)
+15/02/2024 16:33 admin@fwtecnologia.com.br : Edicao de Unidade (METRO -> undefined)
+15/02/2024 16:34 admin@fwtecnologia.com.br : Edicao de Unidade (METRO -> undefined)
+15/02/2024 16:39 admin@fwtecnologia.com.br : Edicao de Unidade (METRO -> undefined)
+15/02/2024 16:39 admin@fwtecnologia.com.br : Edicao de Unidade (METRO -> undefined)
+16/02/2024 10:02 admin@fwtecnologia.com.br : Edicao de Unidade (METRO -> undefined)
+16/02/2024 10:06 admin@fwtecnologia.com.br : Inclusao de Unidade (undefined)
+16/02/2024 10:12 admin@fwtecnologia.com.br : Inclusao de Unidade (undefined)
+16/02/2024 10:12 admin@fwtecnologia.com.br : Edicao de Unidade (teste -> undefined)
+16/02/2024 10:12 admin@fwtecnologia.com.br : Edicao de Unidade (teste 2 -> undefined)
+16/02/2024 10:12 admin@fwtecnologia.com.br : Inclusao de Unidade (undefined)
+16/02/2024 10:12 admin@fwtecnologia.com.br : Edicao de Unidade (METRO QUADRADO -> undefined)
+16/02/2024 10:16 admin@fwtecnologia.com.br : Edicao de Unidade (Litro -> undefined)
+16/02/2024 10:16 admin@fwtecnologia.com.br : Edicao de Unidade (Litro -> undefined)
+16/02/2024 10:16 admin@fwtecnologia.com.br : Edicao de Unidade (METRO Linear -> undefined)
+16/02/2024 10:19 admin@fwtecnologia.com.br : Alteracao de Cargo (Tecnico de Seguranca do Trabal, R$12.80, 0, 65498732) -> (Tecnico de Seguranca do Trabal,R$12.80,0,05498732)
+16/02/2024 10:30 admin@fwtecnologia.com.br : Inclusao de novo Cargo (Gerente Financeiro)
+16/02/2024 10:31 admin@fwtecnologia.com.br : Funcionario Editado Genilsom de Prado Golveia -> Genilsom de Prado Golveia
+16/02/2024 10:31 admin@fwtecnologia.com.br : Funcionario Editado Joaquim Silverio -> Joaquim Silverio
+16/02/2024 10:32 admin@fwtecnologia.com.br : Alteracao de Cargo (Gerente Financeiro, R$5000.00, 1, 54326987) -> (Gerente 1,R$5000.00,1,54326987)
+16/02/2024 10:38 admin@fwtecnologia.com.br : Produto Editado teste 3 -> teste 3
+16/02/2024 10:40 admin@fwtecnologia.com.br : Produto RESERVADO -> teste 2 : 10 UND
+16/02/2024 10:44 admin@fwtecnologia.com.br : Alteracao de Cargo (Gerente 1, R$5000.00, MENSALISTA, 54326987) -> (Gerente 1,R$5000.00,0,54326987)
+16/02/2024 10:44 admin@fwtecnologia.com.br : Alteracao de Cargo (Gerente 1, R$5000.00, HORISTA, 54326987) -> (Gerente 1,R$5000.00,1,54326987)
+16/02/2024 10:46 admin@fwtecnologia.com.br : Alteracao de Cargo (Tecnico de Seguranca do Trabal, R$12.80, HORISTA, 05498732) -> (Tecnico de Seguranca do Trabal,R$12.80,MENSALISTA ,05498732)
+16/02/2024 10:46 admin@fwtecnologia.com.br : Alteracao de Cargo (Tecnico de Seguranca do Trabal, R$12.80, MENSALISTA, 05498732) -> (Tecnico de Seguranca do Trabal,R$12.80,HORISTA ,05498732)
+16/02/2024 10:50 admin@fwtecnologia.com.br : Edicao de Unidade (Litro -> Litro)
+16/02/2024 10:50 admin@fwtecnologia.com.br : Edicao de Unidade (Litro -> Litro)
+16/02/2024 10:50 admin@fwtecnologia.com.br : Inclusao de Unidade (teste)
+16/02/2024 10:50 admin@fwtecnologia.com.br : Edicao de Unidade (teste -> teste 11)
+16/02/2024 10:50 admin@fwtecnologia.com.br : Delecao de Unidade (teste 11)
+16/02/2024 10:52 admin@fwtecnologia.com.br : Edicao de Unidade (Litro -> Litro, L -> Li)
+16/02/2024 10:52 admin@fwtecnologia.com.br : Edicao de Unidade (Litro -> Litro, Li -> L)
+16/02/2024 11:10 admin@fwtecnologia.com.br : Menu Alterado (Parametros Internos, menu, pop-up, )
+16/02/2024 11:10 admin@fwtecnologia.com.br : Menu Alterado (Parametros, menu, pop-up, )
+16/02/2024 11:12 admin@fwtecnologia.com.br : Menu Alterado (Gerencia, undefined, pop-up, undefined)
+16/02/2024 15:11 admin@fwtecnologia.com.br : Menu Deletado (RH)
+16/02/2024 21:35 admin@fwtecnologia.com.br : Produto Cadastrado  -> teste 4
+16/02/2024 21:35 admin@fwtecnologia.com.br : Produto RESERVADO -> teste 4 : 15 M2
+16/02/2024 21:37 admin@fwtecnologia.com.br : Produto Deletado -> teste 4
+16/02/2024 23:07 admin@fwtecnologia.com.br : Menu Alterado (Relogio de Ponto, rh_relogio_ponto.html, pop-up, Relogio de Ponto)

@@ -15,6 +15,7 @@
             border: solid 1px;
             border-radius: 10px;
             padding: 5px;
+            margin: 10px;
         }
         .side-pic{
             display: flex;
@@ -34,6 +35,8 @@
         @media all and (max-width : 1000px) {
             .top-form{
                 flex-direction: column;
+                margin: 0;
+                padding: 0;
             }
         }
 
@@ -90,54 +93,48 @@
         <div class="inline">
             <label for="edtEnd">Endereço</label>
             <input type="text" id="edtEnd" maxlength="60" class="only-view" disabled> 
-            <div class="control-size" style="width: 40%;">
-                <label for="edtNum">Num.</label>
-                <input type="text" id="edtNum" maxlength="6" class="only-view" disabled> 
-            </div>
+            <label for="edtNum">Num.</label>
+            <input type="text" id="edtNum" maxlength="6" class="only-view control-size" style="width: 160px;" disabled> 
 
         </div>       
         <div class="inline">
             <label for="edtCidade">Cidade</label>
             <input type="text" id="edtCidade" maxlength="30" class="only-view" disabled>
-            <div class="control-size" style="width: 40%;">
-                <label for="cmbUF">Estado</label>
-                <select id="cmbUF" class="only-view" disabled>
-                    <option value="AC">Acre</option>
-                    <option value="AL">Alagoas</option>
-                    <option value="AP">Amapa</option>
-                    <option value="AM">Amazonas</option>
-                    <option value="BA">Bahia</option>
-                    <option value="CE">Ceara</option>
-                    <option value="ES">Espirito Santo</option>
-                    <option value="DF">Distrito Federal</option>
-                    <option value="MA">Maranhao</option>
-                    <option value="MT">Mato Grosso</option>
-                    <option value="MS">Mato Grosso do Sul</option>
-                    <option value="MG">Minas Gerais</option>
-                    <option value="PA">Para</option>
-                    <option value="PB">Paraiba</option>
-                    <option value="PR">Parana</option>
-                    <option value="PE">Pernambuco</option>
-                    <option value="PI">Piaui</option>
-                    <option value="RJ">Rio de Janeiro</option>
-                    <option value="RN">Rio Grande do Norte</option>
-                    <option value="RS">Rio Grande do Sul</option>
-                    <option value="RO">Rondonia</option>
-                    <option value="RR">Roraima</option>
-                    <option value="SC">Santa Catarina</option>
-                    <option selected="selected" value="SP">Sao Paulo</option>
-                    <option value="SE">Sergipe</option>
-                    <option value="TO">Tocantins</option>              
-                </select>    
-            </div>
+            <label for="cmbUF">Estado</label>
+            <select id="cmbUF" class="only-view control-size" style="width: 260px;"disabled>
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapa</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceara</option>
+                <option value="ES">Espirito Santo</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="MA">Maranhao</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Para</option>
+                <option value="PB">Paraiba</option>
+                <option value="PR">Parana</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piaui</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondonia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option selected="selected" value="SP">Sao Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>              
+            </select>    
         </div>
         <div class="inline">
             <label for="edtBairro">Bairro</label>
             <input type="text" id="edtBairro" maxlength="40" class="only-view" disabled>
-            <div class="control-size" style="width: 40%;">
-                <label for="edtCEP">CEP</label>
-                <input type="text" id="edtCEP" maxlength="10" onkeyup="return valCEP(this)" class="only-view" disabled>        
-            </div>
+            <label for="edtCEP">CEP</label>
+            <input type="text" id="edtCEP" maxlength="10" onkeyup="return valCEP(this)" class="only-view control-size" style="width: 160px;" disabled>        
         </div>
         <div class="inline">
             <label for="edtFone">Fone</label>

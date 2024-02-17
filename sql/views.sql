@@ -11,11 +11,12 @@
 
  	DROP VIEW vw_prod_reserva;
 	CREATE VIEW vw_prod_reserva AS
-		SELECT PROD.id, COALESCE(RES.qtd,0) AS reserva
+		SELECT PROD.id, SUM(COALESCE(RES.qtd,0)) AS reserva
 			FROM tb_produto AS PROD
 			LEFT JOIN tb_prod_reserva AS RES
 			ON RES.id_prod = PROD.id
-            AND RES.pago = 0;
+            AND RES.pago = 0
+            GROUP BY PROD.id;
 
  SELECT * FROM vw_prod_reserva;
  
@@ -30,4 +31,45 @@
 
  SELECT * FROM vw_prod;
  
- /* */
+ /* FUNCIONÁRIOS */
+ 
+-- 	DROP VIEW vw_func_setor;
+ 	CREATE VIEW vw_func_setor AS
+ SELECT FUNC.id, COALESCE(STR.nome,"") AS setor
+	FROM tb_funcionario AS FUNC
+	LEFT JOIN tb_setores AS STR
+	ON FUNC.id_setor = STR.id;
+
+SELECT * FROM vw_func_setor;
+    
+-- 	DROP VIEW vw_func_cargo;
+-- 	CREATE VIEW vw_func_cargo AS
+ SELECT FUNC.id, COALESCE(CRG.cargo,"") AS cargo, CRG.mensal
+	FROM tb_funcionario AS FUNC
+	LEFT JOIN tb_cargos AS CRG
+	ON FUNC.id_cargo = CRG.id;
+
+SELECT * FROM vw_func_cargo;
+    
+-- 	DROP VIEW vw_func;
+-- 	CREATE VIEW vw_func AS
+		SELECT FUNC.*, CRG.cargo, STR.setor, CRG.mensal
+		FROM tb_funcionario AS FUNC
+		INNER JOIN vw_func_setor AS STR
+		INNER JOIN vw_func_cargo AS CRG
+		ON  FUNC.id = STR.id
+		AND FUNC.id = CRG.id;
+    
+SELECT * FROM vw_func;    
+
+-- 	DROP VIEW vw_date_range;
+-- 	CREATE VIEW vw_date_range AS
+SELECT * FROM 
+(SELECT adddate('2020-01-01',t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 + t0.i) date from
+ (SELECT 0 i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) t0,
+ (SELECT 0 i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) t1,
+ (SELECT 0 i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) t2,
+ (SELECT 0 i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) t3,
+ (SELECT 0 i UNION SELECT 1 UNION SELECT 2 UNION SELECT 3 UNION SELECT 4 UNION SELECT 5 UNION SELECT 6 UNION SELECT 7 UNION SELECT 8 UNION SELECT 9) t4) v;
+ 
+ SELECT * FROM vw_date_range WHERE date BETWEEN '2024-02-01' AND '2024-02-29';

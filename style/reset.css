@@ -301,6 +301,7 @@
         color: rgb(224, 77, 77);
     }    
 
+/*    
     .control-size{
         display: flex;
         flex-direction: row;
@@ -310,7 +311,7 @@
     .control-size *{
         min-width: auto !important;
     }
-
+*/
 /*  MOBILE  */
 
     @media all and (max-width : 768px) {

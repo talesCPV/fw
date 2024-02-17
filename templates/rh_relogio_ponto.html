@@ -1,0 +1,90 @@
+<template>
+    <style>
+
+        .busca-data input[type=date]{
+            max-width: 150px;
+        }
+     
+    </style>
+  
+    <fieldset class="fds-busca">
+        <legend>Busca</legend>
+        <div class="inline">
+            <select id="cmbBusca">                      
+                <option value="nome" signal="LIKE">Funcionário</option>
+                <option value="cargo" signal="LIKE">Cargo</option>
+                <option value="setor" signal="LIKE">Setor</option>
+                <option value="mensal" signal="=" val="0" selected>Horista</option>
+                <option value="mensal" signal="=" val="1" >Mensalista</option>
+                <option value="ativo" signal="=" val="1">Ativos</option>                    
+                <option value="ativo" signal="=" val="0">Inativos</option>                    
+            </select>
+            <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
+            <button id="btnBusca" class="btn-round" ><span class="mdi mdi-magnify"></span></button>
+        </div>
+        <div class="inline center-itens busca-data">
+            <label for="edtIni">Intervalo</label>
+            <input type="date" id="edtIni" onkeypress="return getEnter(event, 'btnBusca')">
+            <input type="date" id="edtFin" onkeypress="return getEnter(event, 'btnBusca')">
+        </div>        
+    </fieldset>
+    <fieldset class="calendar">
+        <legend>Dias</legend>
+    </fieldset>
+
+</template>
+<script>
+
+
+    const pageData = main_data.rh_relogio_ponto.data
+    const pageFunc = main_data.rh_relogio_ponto.func
+
+    pageFunc.fillFunc = ()=>{      
+        const query = getVal()
+        const params = new Object;
+            params.field = query[0]
+            params.signal = query[1]
+            params.value = query[2]
+        const myPromisse = queryDB(params,'FUN-0');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)            
+            makeCalendar()
+            for(let i=0; i<json.length;i++){
+//                console.log(json[i])
+            }         
+        });
+    }
+
+    function startPage(){
+        const td = new Date;
+        document.querySelector('#edtIni').value = td.iniMonth()
+        document.querySelector('#edtFin').value = td.finMonth()
+    }
+
+    function makeCalendar(){
+        const td_ini = new Date(document.querySelector('#edtIni').value)
+        td_ini.change()
+        const td_fin = new Date(document.querySelector('#edtFin').value)
+        td_fin.change()
+
+        const range = ((td_fin - td_ini) / 86400000) +1
+
+
+        for(let i=0; i<range; i++){
+
+            
+
+            td_ini.change()
+        }
+
+    }
+
+
+    document.querySelector('#btnBusca').addEventListener('click',()=>{
+        pageFunc.fillFunc()
+    })
+
+
+    startPage()
+
+</script>

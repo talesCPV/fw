@@ -35,12 +35,12 @@
   .modal-title{
       display: flex;
       font-weight: 600;
-        border-bottom: solid 2px ;
+      border-bottom: solid 2px ;
       color: black;
       /*padding-left: 30px;*/
       align-items: center;
       width: 100%;
-      height: 40px;
+      height: auto;
       align-items: center;       
       justify-content: space-between;
   }
@@ -62,5 +62,10 @@
     cursor: pointer;
   }
 
+  @media all and (max-width : 768px) {
+    .modal-content {
+      width: auto !important;
+    }
+  }
 
 /* FIM MODAL */

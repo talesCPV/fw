@@ -94,7 +94,7 @@ DELIMITER $$
 	BEGIN    
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
-			SET @quer =CONCAT('SELECT id,email,id_func,access, IF(access=0,"ROOT",IFNULL((SELECT nome FROM tb_usr_perm_perfil WHERE USR.access = id),"DESCONHECIDO")) AS perfil FROM tb_usuario AS USR WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
+			SET @quer =CONCAT('SELECT id,email,id_func,access, IF(access=0,"ROOT",IFNULL((SELECT nome FROM tb_usr_perm_perfil WHERE USR.access = id),"DESCONHECIDO")) AS perfil FROM tb_usuario AS USR WHERE ',Ifield,' ',Isignal,' ',Ivalue,' ORDER BY ',Ifield,';');
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
 		ELSE 
@@ -172,7 +172,7 @@ DELIMITER $$
 	BEGIN    
 		SET @access = (SELECT IFNULL(access,-1) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
 		IF(@access IN (0))THEN
-			SET @quer = CONCAT('SELECT * FROM tb_usr_perm_perfil WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
+			SET @quer = CONCAT('SELECT * FROM tb_usr_perm_perfil WHERE ',Ifield,' ',Isignal,' ',Ivalue,' ORDER BY ',Ifield,';');
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
 		ELSE 
@@ -339,7 +339,7 @@ DELIMITER $$
 	BEGIN    
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
-			SET @quer =CONCAT('SELECT * FROM tb_setores WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
+			SET @quer =CONCAT('SELECT * FROM tb_setores WHERE ',Ifield,' ',Isignal,' ',Ivalue,' ORDER BY ',Ifield,';');
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
 		ELSE 
@@ -388,7 +388,7 @@ DELIMITER $$
 	BEGIN    
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
-			SET @quer = CONCAT('SELECT * FROM tb_cargos WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
+			SET @quer = CONCAT('SELECT * FROM tb_cargos WHERE ',Ifield,' ',Isignal,' ',Ivalue,' ORDER BY ',Ifield,';');
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
 		ELSE 
@@ -396,6 +396,55 @@ DELIMITER $$
         END IF;
 	END $$
 DELIMITER ;
+
+ DROP PROCEDURE sp_set_und;
+DELIMITER $$
+	CREATE PROCEDURE sp_set_und(	
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+        In Iid_und int(11),
+		IN Inome varchar(30),
+		IN Isigla varchar(8)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			IF(Iid_und = 0)THEN
+				INSERT INTO tb_und (nome,sigla) VALUES (Inome,Isigla);
+            ELSE
+				IF(Inome = "")THEN
+					DELETE FROM tb_und WHERE id=Iid_und;
+				ELSE
+					UPDATE tb_und SET nome=Inome, sigla=Isigla WHERE id=Iid_und;
+				END IF;
+            END IF;			
+			SELECT * FROM tb_und;
+        END IF;
+	END $$
+DELIMITER ;
+
+ DROP PROCEDURE sp_view_und;
+DELIMITER $$
+	CREATE PROCEDURE sp_view_und(	
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+		IN Ifield varchar(30),
+        IN Isignal varchar(4),
+		IN Ivalue varchar(50)
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			SET @quer =CONCAT('SELECT * FROM tb_und WHERE ',Ifield,' ',Isignal,' ',Ivalue,' ORDER BY ',Ifield,';');
+			PREPARE stmt1 FROM @quer;
+			EXECUTE stmt1;
+		ELSE 
+			SELECT 0 AS id, "" AS nome;
+        END IF;
+	END $$
+DELIMITER ;
+
+/* FUNCIONÁRIO */
 
  DROP PROCEDURE sp_set_funcionario;
 DELIMITER $$
@@ -447,13 +496,7 @@ DELIMITER $$
 	BEGIN    
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
-			SET @quer =CONCAT('SELECT FUN.*,
-				IFNULL((SELECT cargo FROM tb_cargos  WHERE id=FUN.id_cargo),"NÃO CADASTRADO") AS cargo,
-				IFNULL((SELECT nome  FROM tb_setores WHERE id=FUN.id_setor),"NAO CADASTRADO") AS setor,
-				IFNULL((SELECT mensal FROM tb_cargos WHERE id=FUN.id_cargo),0) AS mensal
-				FROM tb_funcionario AS FUN 
-				WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
-            
+			SET @quer =CONCAT('SELECT * FROM vw_func WHERE ',Ifield,' ',Isignal,' ',Ivalue,' ORDER BY ',Ifield,';');
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
 		ELSE 
@@ -461,7 +504,6 @@ DELIMITER $$
         END IF;
 	END $$
 DELIMITER ;
-
 
  DROP PROCEDURE sp_del_func;
 DELIMITER $$ 
@@ -474,6 +516,28 @@ DELIMITER $$
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
 			DELETE FROM tb_funcionario WHERE id=Iid;
+            SELECT 1 AS ok;
+		ELSE 
+			SELECT 0 AS ok;
+        END IF;	
+	END $$
+DELIMITER ;
+
+ DROP PROCEDURE sp_set_func_ponto;
+DELIMITER $$ 
+	CREATE PROCEDURE sp_set_func_ponto(	
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+        IN Iid int(11),
+		IN Iid_func int(11),
+        IN Ientrada datetime,
+        IN Isaida datetime
+    )
+	BEGIN    
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN
+			INSERT INTO tb_relogio_ponto(id,id_func,entrada,saida) VALUES (Iid,Iid_func,Ientrada,Isaida)
+			ON DUPLICATE KEY UPDATE entrada=Ientrada, saida=Isaida;			
             SELECT 1 AS ok;
 		ELSE 
 			SELECT 0 AS ok;
@@ -495,7 +559,7 @@ DELIMITER $$
 	BEGIN    
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
-			SET @quer =CONCAT('SELECT * FROM tb_empresa WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');            
+			SET @quer =CONCAT('SELECT * FROM tb_empresa WHERE ',Ifield,' ',Isignal,' ',Ivalue,' ORDER BY ',Ifield,';');
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
 		ELSE 
@@ -605,7 +669,7 @@ DELIMITER $$
 	BEGIN
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
-			SET @quer =CONCAT('SELECT * FROM vw_prod WHERE ',Ifield,' ',Isignal,' ',Ivalue,';');
+			SET @quer =CONCAT('SELECT * FROM vw_prod WHERE ',Ifield,' ',Isignal,' ',Ivalue,' ORDER BY ',Ifield,';');
 			PREPARE stmt1 FROM @quer;
 			EXECUTE stmt1;
 		ELSE
@@ -624,8 +688,8 @@ DELIMITER $$
 	BEGIN    
 		CALL sp_allow(Iallow,Ihash);
 		IF(@allow)THEN
+			DELETE FROM tb_prod_reserva WHERE id_prod = Iid;
 			DELETE FROM tb_produto WHERE id=Iid;
-/*           UPDATE ou DELETE tudo que linkar o produto  */
             SELECT 1 AS ok;
 		ELSE 
 			SELECT 0 AS ok;

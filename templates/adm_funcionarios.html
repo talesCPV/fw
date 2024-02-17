@@ -1,7 +1,6 @@
 <template>
     <style>
 
-     
     </style>
 
         <fieldset class="fds-busca">
@@ -12,12 +11,10 @@
                     <option value="nome" signal="LIKE">Nome</option>
                     <option value="ativo" signal="=" val="1" selected>Ativos</option>
                     <option value="ativo" signal="=" val="0" >Inativos</option>
-<!--
                     <option value="cargo" signal="LIKE">Cargo</option>
                     <option value="setor" signal="LIKE">Setor</option>
                     <option value="mensal" signal="=" val="0">Horista</option>
                     <option value="mensal" signal="=" val="1">Mensalista</option>
--->
                 </select>
                 <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
                 <button id="btnBusca" class="btn-round" ><span class="mdi mdi-magnify"></span></button>
@@ -52,7 +49,6 @@
         });
     }
 
-
     document.querySelector('#btnNovo').addEventListener('click',()=>{
         openHTML('adm_view_func.html','pop-up','Cadastro de Funcionário')
     })
@@ -69,7 +65,5 @@
             null
         }
     })
-
-
 
 </script>

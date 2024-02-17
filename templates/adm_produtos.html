@@ -74,7 +74,7 @@
         e.preventDefault();
         try{
             data = e.target.parentNode.data
-            const val = prompt('Quantidade a ser reservada?','0,1')
+            const val = prompt('Quantidade a ser reservada? (qtd,projeto,pago)','0,1')
             const reserva = parseInt(val.split(',')[0])
             const proj = val.split(',')[1] == undefined ? 1 : val.split(',')[1].trim()
             const pago = val.split(',')[2] == undefined ? 0 : val.split(',')[2].trim() == '0' ? 0 : 1

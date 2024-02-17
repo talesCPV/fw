@@ -77,7 +77,7 @@
             }else if(params.cargo == ''){
                 setLog(`Deleção de Cargo (${pageData.cargo})`)
             }else{
-                setLog(`Alteração de Cargo (${pageData.cargo}, ${pageData.salario.money()}, ${pageData.mensal}, ${pageData.cbo}) -> (${params.cargo},${params.sal.money()},${params.mensal},${params.cbo})`)
+                setLog(`Alteração de Cargo (${pageData.cargo}, ${pageData.salario.money()}, ${parseInt(pageData.mensal) ? 'MENSALISTA' : 'HORISTA'}, ${pageData.cbo}) -> (${params.cargo},${params.sal.money()},${parseInt(params.mensal) ? 'MENSALISTA' : 'HORISTA'} ,${params.cbo})`)
             }
             main_data.adm_cargos.func.fillCargo()
             closeModal('adm_view_cargo')
