@@ -30,6 +30,7 @@
     </fieldset>
     <fieldset class="calendar">
         <legend>Dias</legend>
+        <table id="tblRelogio"></table>
     </fieldset>
 
 </template>
@@ -39,6 +40,23 @@
     const pageData = main_data.rh_relogio_ponto.data
     const pageFunc = main_data.rh_relogio_ponto.func
 
+    pageFunc.fillRelogio = (func)=>{      
+        const params = new Object;
+            params.inicio = document.querySelector('#edtIni').value
+            params.final = document.querySelector('#edtFin').value
+            params.func = func
+            
+        const myPromisse = queryDB(params,'REL-0');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)   
+console.log(json)         
+            makeCalendar()
+            for(let i=0; i<json.length;i++){
+//                console.log(json[i])
+            }         
+        });
+    }
+
     pageFunc.fillFunc = ()=>{      
         const query = getVal()
         const params = new Object;
@@ -47,11 +65,13 @@
             params.value = query[2]
         const myPromisse = queryDB(params,'FUN-0');
         myPromisse.then((resolve)=>{
-            const json = JSON.parse(resolve)            
-            makeCalendar()
+            const json = JSON.parse(resolve)
+console.log(json)
+            let func = ''
             for(let i=0; i<json.length;i++){
-//                console.log(json[i])
-            }         
+                func += (i!=0 ? ',' : '') + json[i].id
+            }   
+console.log(func)                  
         });
     }
 
@@ -81,6 +101,7 @@
 
 
     document.querySelector('#btnBusca').addEventListener('click',()=>{
+        pageFunc.fillRelogio()
         pageFunc.fillFunc()
     })
 

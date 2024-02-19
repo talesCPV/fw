@@ -1,5 +1,7 @@
-async function openHTML(template,where="content-screen",label="", data="",width='auto'){
+main_data.mouse_hold = 0
 
+async function openHTML(template,where="content-screen",label="", data="",width='auto'){
+    width = width == 'auto' ? (document.querySelector('#main-screen').offsetWidth - 60)+'px' : width
     if(template.trim() != ""){
         const page_name = template.split('.')[0]
         return await new Promise((resolve,reject) =>{
@@ -61,13 +63,36 @@ function newModal(title, content, width, id){
         mod_card.style.position = 'absolute'
         mod_card.style.zIndex = 3+index
         mod_card.style.margin = '0 auto'
-        mod_card.style.width = parseInt(width) ? parseInt(width)+'px' : width
+        mod_card.style.width = width //== 'auto' ? (document.querySelector('#main-screen').offsetWidth - 60)+'px' : width
         mod_card.style.top = 80 + index*offset+'px'
-        mod_card.style.left = 30 + index*offset+'px'
-        mod_card.style.right = 30 - index*offset+'px'
-    
+        mod_card.style.left = (document.querySelector('#main-screen').offsetWidth - parseInt(width))/2 + index*offset+'px'
+
     const mod_title = document.createElement('div')
     mod_title.className = 'modal-title'    
+    mod_title.id = 'head-'+id
+
+    mod_title.addEventListener('mousedown',(e)=>{
+        const x = parseInt(mod_card.style.left)
+        const y = parseInt(mod_card.style.top)
+        const pos = [(x - e.clientX),(y - e.clientY)]
+
+        document.onmousemove = (e,p=pos)=>{
+            e = e || window.event;
+            e.preventDefault();
+
+            const left = p[0]+e.clientX
+            const top = p[1]+e.clientY
+
+            left >= 0 ? mod_card.style.left =  left+'px' : null
+            top >= 0 ? mod_card.style.top = top +'px' : null
+        }
+
+        document.onmouseup = ()=>{
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
+
+    })
 
     const p = document.createElement('p')
     p.innerHTML = title
@@ -108,4 +133,3 @@ function closeModal(id='all'){
     }
     mod_main.style.display = (mod_main.querySelectorAll('.modal').length < 1) ? "none" : 'block'
 }
-

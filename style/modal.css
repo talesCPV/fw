@@ -62,6 +62,12 @@
     cursor: pointer;
   }
 
+  .modal-title:active{
+    cursor: grabbing;
+    background-color: var(--top-bar);
+    /*rgba(198, 235, 195, 0.8);*/
+  }
+
   @media all and (max-width : 768px) {
     .modal-content {
       width: auto !important;

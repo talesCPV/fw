@@ -718,3 +718,26 @@ DELIMITER $$
         END IF;
 	END $$
 DELIMITER ;
+
+
+/* RELOGIO DE PONTO */
+
+ DROP PROCEDURE sp_view_relogio_ponto;
+DELIMITER $$
+	CREATE PROCEDURE sp_view_relogio_ponto(
+		IN Iallow varchar(80),
+		IN Ihash varchar(64),
+        IN Iinicio date,
+        IN Ifinal date
+    )
+	BEGIN
+		CALL sp_allow(Iallow,Ihash);
+		IF(@allow)THEN							   
+			SET @quer =CONCAT('SELECT * FROM vw_relogio_ponto WHERE date BETWEEN "',Iinicio,'" AND "',Ifinal,'";');        
+            PREPARE stmt1 FROM @quer;
+			EXECUTE stmt1;          
+		ELSE
+			SELECT 0 AS ok;
+        END IF;
+	END $$
+DELIMITER ;

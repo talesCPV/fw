@@ -47,7 +47,8 @@
         "ADM-6"  => 'CALL sp_set_und(@access,@hash,x00,"x01","x02");', // ID,NOME, SIGLA
         "ADM-7"  => 'CALL sp_view_und(@access,@hash,"x00","x01","x02");', // FIELD,SIGNAL, VALUE
 
-        
+        /* RELOGIO DE PONTO */
+        "REL-0"  => 'CALL sp_view_relogio_ponto(@access,@hash,"x00","x01");', // DATA INICIO, DATA FINAL
 
     );
 
