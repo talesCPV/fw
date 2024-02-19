@@ -1,8 +1,7 @@
-main_data.mouse_hold = 0
 
-async function openHTML(template,where="content-screen",label="", data="",width='auto'){
+async function openHTML(template='',where="content-screen",label="", data="",width='auto'){
     width = width == 'auto' ? (document.querySelector('#main-screen').offsetWidth - 60)+'px' : width
-    if(template.trim() != ""){
+    if(template.trim() != "" && !main_data.hasOwnProperty(template.split('.')[0])){
         const page_name = template.split('.')[0]
         return await new Promise((resolve,reject) =>{
             fetch( "templates/"+template)
@@ -22,7 +21,7 @@ async function openHTML(template,where="content-screen",label="", data="",width=
                     label = 'ERRO 404!'
                 }
 
-                if(where == "pop-up" && !main_data.hasOwnProperty(page_name)){
+                if(where == "pop-up"){
                     newModal(label,body.innerHTML,width,page_name)
                 }else{
                     const cont = body.innerHTML.replace('<h1>', `<span id="close-screen" onclick="document.querySelector('#imgLogo').click()">&times;</span><h1>`)                    
@@ -63,7 +62,7 @@ function newModal(title, content, width, id){
         mod_card.style.position = 'absolute'
         mod_card.style.zIndex = 3+index
         mod_card.style.margin = '0 auto'
-        mod_card.style.width = width //== 'auto' ? (document.querySelector('#main-screen').offsetWidth - 60)+'px' : width
+        mod_card.style.width = width
         mod_card.style.top = 80 + index*offset+'px'
         mod_card.style.left = (document.querySelector('#main-screen').offsetWidth - parseInt(width))/2 + index*offset+'px'
 
@@ -77,12 +76,10 @@ function newModal(title, content, width, id){
         const pos = [(x - e.clientX),(y - e.clientY)]
 
         document.onmousemove = (e,p=pos)=>{
-            e = e || window.event;
+//            e = e || window.event
             e.preventDefault();
-
             const left = p[0]+e.clientX
             const top = p[1]+e.clientY
-
             left >= 0 ? mod_card.style.left =  left+'px' : null
             top >= 0 ? mod_card.style.top = top +'px' : null
         }
@@ -111,12 +108,13 @@ function newModal(title, content, width, id){
     mod_content.classList = 'modal-text'
     mod_content.innerHTML = content
     mod_card.appendChild(mod_content)
-
-
+/*
     backModal.appendChild(mod_card)
     mod_main.appendChild(backModal)
-    mod_main.style.display = "block"
+*/  
+    mod_main.appendChild(mod_card)
 
+    mod_main.style.display = "block"
 }
 
 function closeModal(id='all'){
@@ -128,8 +126,10 @@ function closeModal(id='all'){
         }
     }else{
         id = (id=='')? mod_main.querySelectorAll('.modal').length-1 : id
-        mod_main.querySelector('#modal-'+id).remove()
+console.log(`document.getElementById('card-'${id}).remove()`)        
+//        mod_main.querySelector('#modal-'+id).remove()
+        mod_main.querySelector('#card-'+id).remove()
         delete main_data[id]
     }
-    mod_main.style.display = (mod_main.querySelectorAll('.modal').length < 1) ? "none" : 'block'
+    mod_main.style.display = (document.querySelectorAll('.modal-content').length < 1) ? "none" : 'block'
 }
