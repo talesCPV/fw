@@ -9,15 +9,15 @@
 
     </style>
         
-        <fieldset class="fds-busca">
+        <fieldset class="fds-busca setor">
             <legend>Busca</legend>
             <div class="inline">                
                 <select id="cmbBusca">
                     <option value="nome" signal="LIKE">Setor</option>
                     <option value="id" signal="IN">Código</option>
                 </select>
-                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
-                <button id="btnBusca" class="btn-round"><span class="mdi mdi-magnify"></span></button>
+                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca-setor')">
+                <button id="btnBusca-setor" class="btn-round"><span class="mdi mdi-magnify"></span></button>
                 <button id="btnNovoSetor" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
             </div>
         </fieldset>
@@ -37,7 +37,7 @@
     pageFunc.fillSetor = ()=>{
         const tbl = document.getElementById('tblSetor')
         tbl.innerHTML = ''
-        const query = getVal()
+        const query = getVal('setor')
         const params = new Object;
             params.field = query[0]
             params.signal = query[1]
@@ -54,7 +54,7 @@
         });
     }
 
-    document.querySelector('#btnBusca').addEventListener('click',()=>{
+    document.querySelector('#btnBusca-setor').addEventListener('click',()=>{
         pageFunc.fillSetor()
     })
 

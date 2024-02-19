@@ -229,7 +229,11 @@
           
         const myPromisse = queryDB(params,'FUN-1');
         myPromisse.then((resolve)=>{
-            main_data.adm_funcionarios.func.fillFunc()
+            try{
+                main_data.adm_funcionarios.func.fillFunc()
+            }catch{
+                console.error('Tela fechada pelo usuário!')
+            }            
             setLog(`Funcionário ${newFunc?'Cadastrado':'Editado'} ${ !newFunc ? pageData.nome :''} -> ${params.nome}`)
             alert('Cadastrado efetuado!')
             closeModal('adm_view_func')
@@ -244,7 +248,11 @@
             const myPromisse = queryDB(params,'FUN-2');
             myPromisse.then((resolve)=>{
                 setLog(`Funcionário Deletado -> ${pageData.nome}`)
-                main_data.adm_funcionarios.func.fillFunc()
+                try{
+                    main_data.adm_funcionarios.func.fillFunc()
+                }catch{
+                    console.error('Tela fechada pelo usuário!')
+                }                  
                 closeModal('adm_view_func')
             })
         }

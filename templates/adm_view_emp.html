@@ -169,8 +169,12 @@
           
         const myPromisse = queryDB(params,'EMP-1');
         myPromisse.then((resolve)=>{
-            main_data.adm_empresas.func.fillEmp()
             setLog(`Empresa ${newEmp?'Cadastrada':'Editada'} ${ !newEmp ? pageData.razao_social :''} -> ${params.razao_social}`)
+            try{
+                main_data.adm_empresas.func.fillEmp()
+            }catch{
+                console.error('Tela fechada pelo usuário!')
+            }
             alert('Cadastrado efetuado!')
             closeModal('adm_view_emp')
         })
@@ -183,12 +187,15 @@
             
             const myPromisse = queryDB(params,'EMP-2');
             myPromisse.then((resolve)=>{
-                main_data.adm_empresas.func.fillEmp()
+                try{
+                    main_data.adm_empresas.func.fillEmp()
+                }catch{
+                    console.error('Tela fechada pelo usuário!')
+                }
                 setLog(`Empresa Deletada -> ${pageData.razao_social}`)
                 closeModal('adm_view_emp')
             })
         }
-
     }
 
     document.querySelector('#btnSave').addEventListener('click',()=>{

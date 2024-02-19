@@ -3,7 +3,7 @@
 
     </style>
 
-        <fieldset class="fds-busca">
+        <fieldset class="fds-busca func">
             <legend>Busca</legend>
             <div class="inline">
                 <label for="cmbBusca">Pesquisa</label>
@@ -16,8 +16,8 @@
                     <option value="mensal" signal="=" val="0">Horista</option>
                     <option value="mensal" signal="=" val="1">Mensalista</option>
                 </select>
-                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
-                <button id="btnBusca" class="btn-round" ><span class="mdi mdi-magnify"></span></button>
+                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca-func')">
+                <button id="btnBusca-func" class="btn-round" ><span class="mdi mdi-magnify"></span></button>
                 <button id="btnNovo" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
             </div>
         </fieldset>
@@ -33,7 +33,7 @@
     pageFunc.fillFunc = ()=>{      
         const tbl = document.getElementById('tblFunc')
         tbl.innerHTML = ''
-        const query = getVal()
+        const query = getVal('func')
         const params = new Object;
             params.field = query[0]
             params.signal = query[1]
@@ -53,7 +53,7 @@
         openHTML('adm_view_func.html','pop-up','Cadastro de Funcionário')
     })
 
-    document.querySelector('#btnBusca').addEventListener('click',()=>{
+    document.querySelector('#btnBusca-func').addEventListener('click',()=>{
         pageFunc.fillFunc()
     })
 

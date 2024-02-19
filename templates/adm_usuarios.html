@@ -7,7 +7,7 @@
         }
 
     </style>
-        <fieldset class="fds-busca">
+        <fieldset class="fds-busca usr">
             <legend>Busca</legend>
             <div class="inline">
                 <label for="cmbBusca">Pesquisa</label>
@@ -16,8 +16,8 @@
                     <option value="id" signal="IN">Código</option>
                     <option value="access" signal="IN">Acesso</option>
                 </select>
-                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
-                <button id="btnBusca" class="btn-round"><span class="mdi mdi-magnify"></span></button>
+                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca-usr')">
+                <button id="btnBusca-usr" class="btn-round"><span class="mdi mdi-magnify"></span></button>
                 <button id="btnNovoUser" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
             </div>
         </fieldset>
@@ -37,7 +37,7 @@
     pageFunc.fillUser = ()=>{      
         const tbl = document.getElementById('tblUser')
         tbl.innerHTML = ''
-        const query = getVal()
+        const query = getVal('usr')
         const params = new Object;
             params.field = query[0]
             params.signal = query[1]
@@ -54,7 +54,7 @@
         });
     }
 
-    document.querySelector('#btnBusca').addEventListener('click',()=>{
+    document.querySelector('#btnBusca-usr').addEventListener('click',()=>{
         pageFunc.fillUser()
     })
 

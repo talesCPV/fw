@@ -9,7 +9,7 @@
 
     </style>
 
-        <fieldset class="fds-busca">
+        <fieldset class="fds-busca cargo">
             <legend>Busca</legend>
             <div class="inline">
                 <label for="cmbBusca">Pesquisa</label>
@@ -19,8 +19,8 @@
                     <option value="mensal" signal="=" val="0">Horista</option>
                     <option value="mensal" signal="=" val="1">Mensalista</option>
                 </select>
-                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
-                <button id="btnBusca" class="btn-round"><span class="mdi mdi-magnify"></span></button>
+                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca-cargo')">
+                <button id="btnBusca-cargo" class="btn-round"><span class="mdi mdi-magnify"></span></button>
                 <button id="btnNovoCargo" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
             </div>
         </fieldset>
@@ -40,7 +40,7 @@
         const tbl = document.getElementById('tblCargo')
         tbl.innerHTML = ''
         const params = new Object;
-        const query = getVal()
+        const query = getVal('cargo')
             params.field = query[0]
             params.signal = query[1]
             params.value = query[2]
@@ -56,7 +56,7 @@
         });
     }
 
-    document.querySelector('#btnBusca').addEventListener('click',()=>{
+    document.querySelector('#btnBusca-cargo').addEventListener('click',()=>{
         pageFunc.fillCargo()
     })
 

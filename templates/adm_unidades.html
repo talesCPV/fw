@@ -9,15 +9,15 @@
 
     </style>
         
-        <fieldset class="fds-busca">
+        <fieldset class="fds-busca und">
             <legend>Busca</legend>
             <div class="inline">                
                 <select id="cmbBusca">
                     <option value="nome" signal="LIKE">Nome</option>
                     <option value="sigla" signal="LIKE">Sigla</option>
                 </select>
-                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
-                <button id="btnBusca" class="btn-round"><span class="mdi mdi-magnify"></span></button>
+                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca-und')">
+                <button id="btnBusca-und" class="btn-round"><span class="mdi mdi-magnify"></span></button>
                 <button id="btnNovaUND" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
             </div>
         </fieldset>
@@ -37,7 +37,7 @@
     pageFunc.fillUnd = ()=>{
         const tbl = document.getElementById('tblUND')
         tbl.innerHTML = ''
-        const query = getVal()
+        const query = getVal('und')
         const params = new Object;
             params.field = query[0]
             params.signal = query[1]
@@ -54,7 +54,7 @@
         });
     }
 
-    document.querySelector('#btnBusca').addEventListener('click',()=>{
+    document.querySelector('#btnBusca-und').addEventListener('click',()=>{
         pageFunc.fillUnd()
     })
 

@@ -306,11 +306,12 @@ function logout(){
 
 /* FRM BUSCA */
 
-function getVal(){
-    const sel = document.querySelector('#cmbBusca')
+function getVal(fds){
+    const doc = document.querySelector(`.${fds}`)
+    const sel = doc.querySelector('#cmbBusca')
     const field = sel.value
     const signal = sel.options[sel.selectedIndex].getAttribute('signal')
-    let value = sel.options[sel.selectedIndex].hasAttribute('val') ? sel.options[sel.selectedIndex].getAttribute('val') : document.querySelector('#edtBusca').value.trim()
+    let value = sel.options[sel.selectedIndex].hasAttribute('val') ? sel.options[sel.selectedIndex].getAttribute('val') : doc.querySelector('#edtBusca').value.trim()
         value = signal=='LIKE' ? `'%${value}%'` : signal=='IN' ? `(${value})` : value
     return [field,signal,value]
 }

@@ -19,7 +19,7 @@
   
     <div class="frm-perm">
         <div class="panel-left">
-            <fieldset class="fds-busca">
+            <fieldset class="fds-busca perm">
                 <legend>Perfis de usuário</legend>
                 <div class="inline">
                     <label for="cmbBusca">Pesquisa</label>
@@ -27,8 +27,8 @@
                         <option value="nome" signal="LIKE">Nome</option>
                         <option value="id" signal="IN">Código</option>
                     </select>
-                    <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
-                    <button id="btnBusca" class="btn-round"><span class="mdi mdi-magnify"></span></button>
+                    <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca-perfil')">
+                    <button id="btnBusca-perfil" class="btn-round"><span class="mdi mdi-magnify"></span></button>
                     <button id="btnNovoPerfil" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
                 </div>
                 <table id="tblPerfil"></table>
@@ -149,7 +149,7 @@
     pageFunc.fillPerfil = ()=>{      
         const tbl = document.getElementById('tblPerfil')
         tbl.innerHTML = ''
-        const query = getVal()
+        const query = getVal('perm')
         const params = new Object;
             params.field = query[0]
             params.signal = query[1]
@@ -210,7 +210,7 @@
     }
 
 
-    document.querySelector('#btnBusca').addEventListener('click',()=>{
+    document.querySelector('#btnBusca-perfil').addEventListener('click',()=>{
         pageFunc.fillPerfil()
     })
 

@@ -82,8 +82,12 @@
         
             const myPromisse = queryDB(params,'USR-1');
             myPromisse.then((resolve)=>{
-                setLog(`${message}, email:${pageData.email} -> ${params.email}, acesso:${pageData.access} -> ${params.acesso}`)
-                main_data.adm_usuarios.func.fillUser()
+                setLog(`${message}, email:${pageData.email} -> ${params.email}, acesso:${pageData.access} -> ${params.acesso}`)                
+                try{
+                    main_data.adm_usuarios.func.fillUser()
+                }catch{
+                    console.error('Tela fechada pelo usuário!')
+                }
                 closeModal('adm_view_user')
             })
     }

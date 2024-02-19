@@ -219,9 +219,13 @@
             params.local = document.querySelector('#edtLocal').value.trim()
           
         const myPromisse = queryDB(params,'PROD-1');
-        myPromisse.then((resolve)=>{
+        myPromisse.then((resolve)=>{            
             setLog(`Produto ${newProd?'Cadastrado':'Editado'} ${ !newProd ? pageData.descricao :''} -> ${params.descricao}`)
-            main_data.adm_produtos.func.fillProd()
+            try{
+                main_data.adm_produtos.func.fillProd()
+            }catch{
+                console.error('Tela fechada pelo usuário!')
+            }
             alert('Cadastrado efetuado!')
             closeModal('adm_view_prod')
         })
@@ -235,7 +239,11 @@
             const myPromisse = queryDB(params,'PROD-2');
             myPromisse.then((resolve)=>{
                 setLog(`Produto Deletado -> ${pageData.descricao}`)
-                main_data.adm_produtos.func.fillProd()
+                try{
+                    main_data.adm_produtos.func.fillProd()
+                }catch{
+                    console.error('Tela fechada pelo usuário!')
+                }
                 closeModal('adm_view_prod')
             })
         }

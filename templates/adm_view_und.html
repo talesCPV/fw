@@ -71,7 +71,12 @@
             }else{
                 setLog(`Edição de Unidade (${pageData.nome} -> ${params.nome}, ${pageData.sigla} -> ${params.sigla})`)
             }
-            main_data.adm_unidades.func.fillUnd()
+            
+            try{
+                main_data.adm_unidades.func.fillUnd()
+            }catch{
+                console.error('Tela fechada pelo usuário!')
+            }            
             closeModal('adm_view_und')
         })
     })

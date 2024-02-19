@@ -507,3 +507,4 @@
 16/02/2024 23:07 admin@fwtecnologia.com.br : Menu Alterado (Relogio de Ponto, rh_relogio_ponto.html, pop-up, Relogio de Ponto)
 18/02/2024 21:30 admin@fwtecnologia.com.br : Menu Alterado (Funcionarios, adm_funcionarios.html, pop-up, Funcionarios)
 18/02/2024 21:36 admin@fwtecnologia.com.br : Menu Deletado (RAIZera)
+18/02/2024 22:52 admin@fwtecnologia.com.br : Empresa Editada Empresa Teste 2 -> Empresa Teste 2

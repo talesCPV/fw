@@ -65,6 +65,31 @@ function newModal(title, content, width, id){
         mod_card.style.width = width
         mod_card.style.top = 80 + index*offset+'px'
         mod_card.style.left = (document.querySelector('#main-screen').offsetWidth - parseInt(width))/2 + index*offset+'px'
+        mod_card.style.overflow = 'auto'
+        mod_card.addEventListener('mousedown',(e)=>{
+            queueModal(id)
+        })
+
+    const resize = document.createElement('div')
+        resize.className = 'modal-resize'
+        resize.addEventListener('mousedown',(e)=>{
+            console.log(e)
+            document.onmousemove = (e)=>{
+                e.preventDefault();
+                mod_card.style.width = (e.clientX - parseInt(mod_card.style.left) )+'px'
+                mod_card.style.height = e.clientY - parseInt(mod_card.style.top)+'px' 
+                console.log(e.clientX - parseInt(mod_card.style.left))
+            }
+    
+            document.onmouseup = ()=>{
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+
+
+        })
+
+    mod_card.appendChild(resize)
 
     const mod_title = document.createElement('div')
     mod_title.className = 'modal-title'    
@@ -81,7 +106,7 @@ function newModal(title, content, width, id){
             const left = p[0]+e.clientX
             const top = p[1]+e.clientY
             left >= 0 ? mod_card.style.left =  left+'px' : null
-            top >= 0 ? mod_card.style.top = top +'px' : null
+            top >= 60 ? mod_card.style.top = top +'px' : null
         }
 
         document.onmouseup = ()=>{
@@ -125,11 +150,24 @@ function closeModal(id='all'){
             mod_main.querySelectorAll('.modal')[0].remove()    
         }
     }else{
-        id = (id=='')? mod_main.querySelectorAll('.modal').length-1 : id
-console.log(`document.getElementById('card-'${id}).remove()`)        
+        id = (id=='')? mod_main.querySelectorAll('.modal').length-1 : id    
 //        mod_main.querySelector('#modal-'+id).remove()
         mod_main.querySelector('#card-'+id).remove()
         delete main_data[id]
     }
     mod_main.style.display = (document.querySelectorAll('.modal-content').length < 1) ? "none" : 'block'
+}
+
+function queueModal(id){
+
+    const up = document.querySelector('#card-'+id)
+    const pop = document.querySelectorAll('.modal-content')
+    const up_index = parseInt(up.style.zIndex)
+    let max = 0
+    for(let i=0; i<pop.length; i++){
+        const pop_index = parseInt(pop[i].style.zIndex)
+        max = Math.max(max,pop_index)
+        pop_index > up_index ? pop[i].style.zIndex = pop_index -1 : null        
+    }
+    up.style.zIndex = max
 }

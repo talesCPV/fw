@@ -78,8 +78,12 @@
                 setLog(`Deleção de Cargo (${pageData.cargo})`)
             }else{
                 setLog(`Alteração de Cargo (${pageData.cargo}, ${pageData.salario.money()}, ${parseInt(pageData.mensal) ? 'MENSALISTA' : 'HORISTA'}, ${pageData.cbo}) -> (${params.cargo},${params.sal.money()},${parseInt(params.mensal) ? 'MENSALISTA' : 'HORISTA'} ,${params.cbo})`)
+            }            
+            try{
+                main_data.adm_cargos.func.fillCargo()
+            }catch{
+                console.error('Tela fechada pelo usuário!')
             }
-            main_data.adm_cargos.func.fillCargo()
             closeModal('adm_view_cargo')
         })
     })

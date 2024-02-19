@@ -7,7 +7,7 @@
      
     </style>
 
-    <fieldset class="fds-busca">
+    <fieldset class="fds-busca prod">
         <legend>Busca</legend>
         <div class="inline">
             <label for="edtBusca">por:</label>
@@ -20,8 +20,8 @@
                 <option value="estoque" signal="<=" val="estq_min">Estoque Baixo</option>
                 <option value="ramo" signal="LIKE" >Fornecedor</option>
             </select>
-            <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca')">
-            <button id="btnBusca" class="btn-round" ><span class="mdi mdi-magnify"></span></button>
+            <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca-prod')">
+            <button id="btnBusca-prod" class="btn-round" ><span class="mdi mdi-magnify"></span></button>
             <button id="btnNovo" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
 
         </div>
@@ -38,7 +38,7 @@
     pageFunc.fillProd = ()=>{      
         const tbl = document.getElementById('tblProd')
         tbl.innerHTML = ''
-        const query = getVal()
+        const query = getVal('prod')
         const params = new Object;
             params.field = query[0]
             params.signal = query[1]
@@ -54,7 +54,7 @@
         });
     }
 
-    document.querySelector('#btnBusca').addEventListener('click',()=>{
+    document.querySelector('#btnBusca-prod').addEventListener('click',()=>{
         pageFunc.fillProd()
     })
 
