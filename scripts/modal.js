@@ -28,7 +28,7 @@ async function openHTML(template='',where="content-screen",label="", data="",wid
                     document.getElementById(where).innerHTML = cont;                    
                 }
 
-                const new_obj = page_name == 'login' ? 'dashboard' : page_name
+                const new_obj = page_name
 
                 main_data[new_obj] = new Object
                 main_data[new_obj].data = typeof(data) != 'object' ? new Object : data

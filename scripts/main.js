@@ -15,7 +15,7 @@ function forceHTTPS(){
 /*  DATABASE  */
 function queryDB(params,cod){
 
-    const access = main_data.dashboard.data.access == undefined ? '^k^ax^(cybp`wz^lb)^_d`p) ^qs/m%hrg`Pd^!ao^uQ^"TT' : main_data.dashboard.data.access
+    const access = main_data.dashboard == undefined ? '^k^ax^(cybp`wz^lb)^_d`p) ^qs/m%hrg`Pd^!ao^uQ^"TT' : main_data.dashboard.data.access
     const hash = localStorage.getItem('hash') == undefined ? 0 : localStorage.getItem('hash')
 
     const data = new URLSearchParams()
