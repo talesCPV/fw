@@ -62,9 +62,11 @@
         openHTML('adm_view_prod.html','pop-up','Cadastro de Produtos')
     })
 
-    document.querySelector('#tblProd').addEventListener('click',(e)=>{
-        
+    document.querySelector('#tblProd').addEventListener('click',(e)=>{        
         try{
+            if(main_data.hasOwnProperty('adm_view_prod')){
+                closeModal('adm_view_prod')
+            }
             data = e.target.parentNode.data
             data != undefined ? openHTML('adm_view_prod.html','pop-up',`Edição de Produtos - ${data.descricao.toUpperCase()}`,data) : null
         }catch{}

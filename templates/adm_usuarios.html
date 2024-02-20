@@ -66,6 +66,9 @@
     document.querySelector('#tblUser').addEventListener('click',(e)=>{
         data = e.target.parentNode.data
         try{
+            if(main_data.hasOwnProperty('adm_view_user')){
+                closeModal('adm_view_user')
+            }
             data.mode = 'edit'
             data != undefined ? openHTML('adm_view_user.html','pop-up','Editar Usuario',data) : null
         }catch{

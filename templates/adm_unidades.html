@@ -63,6 +63,9 @@
     })
 
     document.querySelector('#tblUND').addEventListener('click',(e)=>{
+        if(main_data.hasOwnProperty('adm_view_und')){
+            closeModal('adm_view_und')
+        }
         data = e.target.parentNode.data
         data != undefined ? openHTML('adm_view_und.html','pop-up',`Unidades - ${data.nome.toUpperCase()}`,data,500) : null
     })

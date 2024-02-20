@@ -46,25 +46,45 @@ async function openHTML(template='',where="content-screen",label="", data="",wid
 
 function newModal(title, content, width, id){
 
-    const mod_main = document.querySelector('#myModal')
-    const index = mod_main.querySelectorAll('.modal-content').length        
     const offset = 15
+
+    const mod_main = document.querySelector('#myModal')
+    const pages = mod_main.querySelectorAll('.modal-content')    
+    const call_page = new Object
+    call_page.i = 0
+    for(let i=1; i<pages.length; i++){
+        call_page.i = parseInt(pages[call_page.i].style.zIndex) < parseInt(pages[i].style.zIndex) ? i : call_page.i
+    }
+
+    if(pages[call_page.i] == undefined){
+        call_page.zIndex = mod_main.querySelectorAll('.modal-content').length +1          
+        call_page.top = 95
+        call_page.left = (document.querySelector('#main-screen').offsetWidth - parseInt(width))/2 + call_page.zIndex*offset
+    }else{
+        call_page.zIndex = parseInt(pages[call_page.i].style.zIndex)+1
+        call_page.top = parseInt(pages[call_page.i].style.top)+15
+        call_page.left = parseInt(pages[call_page.i].style.left)+15
+    }
+
+
+
+//    const index = pages.length
 
     const backModal = document.createElement('div')
         backModal.classList = 'modal'
         backModal.id = 'modal-'+id
-        backModal.style.zIndex = 2+index
+        backModal.style.zIndex = call_page.zIndex+2
         backModal.style.display = 'block'
 
     const mod_card = document.createElement('div')
         mod_card.classList = 'modal-content'
         mod_card.id = 'card-'+id        
         mod_card.style.position = 'absolute'
-        mod_card.style.zIndex = 3+index
+        mod_card.style.zIndex = call_page.zIndex+1
         mod_card.style.margin = '0 auto'
         mod_card.style.width = width
-        mod_card.style.top = 80 + index*offset+'px'
-        mod_card.style.left = (document.querySelector('#main-screen').offsetWidth - parseInt(width))/2 + index*offset+'px'
+        mod_card.style.top = call_page.top+'px'
+        mod_card.style.left = call_page.left+'px'
         mod_card.style.overflow = 'auto'
         mod_card.addEventListener('mousedown',(e)=>{
             queueModal(id)
@@ -73,12 +93,10 @@ function newModal(title, content, width, id){
     const resize = document.createElement('div')
         resize.className = 'modal-resize'
         resize.addEventListener('mousedown',(e)=>{
-            console.log(e)
             document.onmousemove = (e)=>{
                 e.preventDefault();
                 mod_card.style.width = (e.clientX - parseInt(mod_card.style.left) )+'px'
                 mod_card.style.height = e.clientY - parseInt(mod_card.style.top)+'px' 
-                console.log(e.clientX - parseInt(mod_card.style.left))
             }
     
             document.onmouseup = ()=>{
@@ -159,7 +177,6 @@ function closeModal(id='all'){
 }
 
 function queueModal(id){
-
     const up = document.querySelector('#card-'+id)
     const pop = document.querySelectorAll('.modal-content')
     const up_index = parseInt(up.style.zIndex)

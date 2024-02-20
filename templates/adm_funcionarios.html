@@ -59,6 +59,9 @@
 
     document.querySelector('#tblFunc').addEventListener('click',(e)=>{
         try{
+            if(main_data.hasOwnProperty('adm_view_func')){
+                closeModal('adm_view_func')
+            }
             data = e.target.parentNode.data
             data != undefined ? openHTML('adm_view_func.html','pop-up',`Edição de dados - ${data.nome.toUpperCase()}`,data) : null
         }catch{
