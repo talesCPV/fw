@@ -29,7 +29,8 @@
                 $email = getEmail();
                 
                 $path = getcwd().'/../config/log/'.date("m_Y").'.txt';
-                $line =  date("d/m/Y H:i", strtotime('-4 hours')).' '.$email.' : '.mb_convert_encoding($_POST["line"],'UTF-8'); 
+//                $line =  date("d/m/Y H:i", strtotime('-4 hours')).' '.$email.' : '.mb_convert_encoding($_POST["line"],'UTF-8'); 
+                $line =  date("d/m/Y H:i").' '.$email.' : '.mb_convert_encoding($_POST["line"],'UTF-8'); 
                 
                 $fp = fopen($path, "a+");
                 fwrite($fp, utf8_encode($line."\n")); 

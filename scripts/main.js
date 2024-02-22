@@ -14,10 +14,8 @@ function forceHTTPS(){
 
 /*  DATABASE  */
 function queryDB(params,cod){
-
-    const access = main_data.dashboard == undefined ? '^k^ax^(cybp`wz^lb)^_d`p) ^qs/m%hrg`Pd^!ao^uQ^"TT' : main_data.dashboard.data.access
+    const access = main_data.dashboard == undefined ? -1 : main_data.dashboard.data.access
     const hash = localStorage.getItem('hash') == undefined ? 0 : localStorage.getItem('hash')
-
     const data = new URLSearchParams()
         data.append("access", access)
         data.append("hash", hash)
@@ -134,12 +132,24 @@ function pictab(e){
             const json = JSON.parse(resolve)[0]
             const unread = json.new_mail
             document.querySelector('#mail-badge').innerHTML = unread!='0' ? unread : ''
+            document.querySelector('#mail-badge-mobile').innerHTML = document.querySelector('#mail-badge').innerHTML
         })
     }
 
  /*  MENU  */ 
 function openMenu(){
-
+    var usr_menu = `<li class="usr-menu">
+    <label class="toggle" for="drop-100" style="text-align: center;"><span id="mail-badge-mobile" class="badge"></span><span class="mdi mdi-account"></span> ${localStorage.getItem('email').toLowerCase()}</label>
+    <a id="usr-name"><span id="mail-badge" class="badge"></span>@${localStorage.getItem('nome').toLowerCase()}</a>
+    <input type="checkbox" id="drop-100">
+    <ul>
+        <li> <a href="javascript:openHTML('usr_viewUser.html','pop-up','Alteração de Senha',{},500)"><span class="mdi mdi-account"></span>Perfil</a></li>
+        <li> <a href="javascript:openHTML('usr_mail.html','pop-up','Comunicação Interna')"><span class="mdi mdi-email-outline"></span>Mens.</a></li>
+        <li> <a href="javascript:openHTML('usr_agenda.html','content-screen')"><span class="mdi mdi-calendar-edit"></span>Agenda</a></li>
+        <li> <a href="javascript:openHTML('usr_config.html','pop-up','Aparência de Sistema',{},500)"><span class="mdi mdi-pencil-circle"></span>Config.</a></li>
+        <li> <a href="javascript:logout()"><span class="mdi mdi-power"></span>Logout</a></li>
+    </ul>
+</li>`
     var drop = 0
     const data = new URLSearchParams();        
         data.append("hash", localStorage.getItem('hash'));
@@ -153,24 +163,40 @@ function openMenu(){
         fetch(myRequest)
         .then(function (response){        
             if (response.status === 200) { 
+/*                
+                document.querySelector('#lbl-user').innerHTML = '<span id="mail-badge-lbl" class="badge"></span> @'+localStorage.getItem('nome').toLowerCase()
                 document.querySelector('#usr-name').innerHTML = '<span id="mail-badge" class="badge"></span> @'+localStorage.getItem('nome').toLowerCase()
-                resolve(response.text()); 
-                checkUserMail()                  
-            } else { 
-                reject(new Error("Houve algum erro na comunicação com o servidor"));                    
-            } 
-        });
-    }); 
+  */              resolve(response.text())
+            } else {
+                reject(new Error("Houve algum erro na comunicação com o servidor"))
+            }
+        })
+    })
 
     myPromisse.then((resolve)=>{
         const menu_data = JSON.parse(resolve)
         const menu = document.querySelector('.menu')
+        menu.innerHTML = usr_menu
         pushMenu(menu, menu_data)
+        checkUserMail()
+
     });
 
+    function userMenu(){
+
+        const li_master = document.createElement('li')
+        const label = document.createElement('label')
+        label.className = 'toggle'
+        label.for = 'drop-usr'
+
+
+
+    }
+
     function pushMenu(menu, obj){
-        menu.innerHTML = ''
+//        menu.innerHTML = ''
         for( let i=0; i<obj.length; i++){
+            main_data.dashboard.data.access = obj[i].access 
             const li = document.createElement('li')                 
             const a = document.createElement('a')
 

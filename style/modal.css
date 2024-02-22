@@ -4,6 +4,14 @@
     --white : #f3f2edfd;
 }
 
+.fullscreen{
+  width: 100% !important;
+  height: calc(100% - 60px) !important;
+  max-width: unset !important;
+  top: 60px !important;
+  left: 0 !important;
+}
+
 .modal {
     display: none; 
     position: fixed; 

@@ -1,6 +1,6 @@
 
 async function openHTML(template='',where="content-screen",label="", data="",width='auto'){
-    width = width == 'auto' ? (document.querySelector('#main-screen').offsetWidth - 60)+'px' : width
+    width = width == 'auto' ? (document.querySelector('#main-screen').offsetWidth - 60)+'px' : width+'px'
     if(template.trim() != "" && !main_data.hasOwnProperty(template.split('.')[0])){
         const page_name = template.split('.')[0]
         return await new Promise((resolve,reject) =>{
@@ -66,10 +66,6 @@ function newModal(title, content, width, id){
         call_page.left = parseInt(pages[call_page.i].style.left)+15
     }
 
-
-
-//    const index = pages.length
-
     const backModal = document.createElement('div')
         backModal.classList = 'modal'
         backModal.id = 'modal-'+id
@@ -113,6 +109,14 @@ function newModal(title, content, width, id){
     mod_title.className = 'modal-title'    
     mod_title.id = 'head-'+id
 
+    mod_title.addEventListener('dblclick',()=>{
+        if(mod_card.classList.contains('fullscreen')){
+            mod_card.classList.remove('fullscreen')
+        }else{
+            mod_card.classList.add('fullscreen')
+        }
+    })
+
     mod_title.addEventListener('mousedown',(e)=>{
         const x = parseInt(mod_card.style.left)
         const y = parseInt(mod_card.style.top)
@@ -131,7 +135,6 @@ function newModal(title, content, width, id){
             document.onmouseup = null;
             document.onmousemove = null;
         }
-
     })
 
     const p = document.createElement('p')

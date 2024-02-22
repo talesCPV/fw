@@ -8,19 +8,21 @@
 
         $cod = $_POST["cod"];
         $params = json_decode($_POST["params"],true);
-        $l_access = json_decode(decrip($_POST["access"]),true);
         $rows = array();
         $hash = $_POST["hash"];
         $access = '0';
 
-        foreach($l_access as $val){
-            $access = $access. ','.$val;
+        if($_POST["access"] != '-1'){
+            $l_access = json_decode(decrip($_POST["access"]),true);
+            foreach($l_access as $val){
+                $access = $access. ','.$val;
+            }
         }
 
-        include "connect.php";        
-        include "sql.php"; 
+        include "connect.php";
+        include "sql.php";
 
-        $query = $query_db[$_POST["cod"]];       
+        $query = $query_db[$_POST["cod"]];
         $query = str_replace('@access','"('.$access.')"',$query); // put mod access allow
         $query = str_replace('@hash','"'.$hash.'"',$query); // put user hash value
 

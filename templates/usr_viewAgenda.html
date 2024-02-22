@@ -27,6 +27,7 @@
     const pageFunc = main_data.usr_viewAgenda.func
 
     document.getElementById('txtSchedule').value = document.getElementById(pageData.data).innerHTML.trim()
+    document.getElementById('txtSchedule').focus()
     document.getElementById('btnSalvar').addEventListener('click',()=>{
     
         const text = document.getElementById('txtSchedule').value.trim()
@@ -47,7 +48,7 @@
             document.getElementById(pageData.data).innerHTML = text
             document.getElementById(pageData.data).parentNode.style.background = color
             document.getElementById(pageData.data).parentNode.style.color = font
-            closeModal()
+            closeModal('usr_viewAgenda')
         }); 
 
     })

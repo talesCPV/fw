@@ -3,7 +3,6 @@
 
     <style>
         body{
-/*            background-image: url('https://img.wallpapersafari.com/desktop/1536/864/66/27/CMAa8P.jpg');*/
             background-image: url('assets/background.jpg');
             background-repeat: no-repeat;
             background-attachment: fixed;
@@ -24,7 +23,6 @@
             align-items: center;
             background-color: rgba(168,232,79,0.9);
             text-align: center;
-
         }
 
         .frm-login *{
@@ -38,27 +36,22 @@
                 position: relative;
                 width: 80%;
                 height: auto;
-               /* margin: auto;*/
                 padding-top: 0;
                 margin: 25vh auto;
                 border-radius: 15px;
             }
-
         }
+        
     </style>
 
     <div class="frm-login">
        
         <a href="#" class="logo"><img src="assets/logo.png" alt=""></a>
-
         <input type="text"     id="edtUser" placeholder="Email" onkeyup="validaEmail(this)">
         <input type="password" id="edtPass" placeholder="Senha" onkeypress="return getEnter(event, 'btnLogin')" >
-        <button id="btnLogin"> LOGIN </button>
-        
+        <button id="btnLogin"> LOGIN </button>        
         <hr size="1" width="90%" />
-
         <p>FW Tecnologia - 2024</p>
-
 
     </div>
 
@@ -80,13 +73,14 @@
             const myPromisse = queryDB(params,'LOG-0');
             myPromisse.then((resolve)=>{
                 const json = JSON.parse(resolve)
-
                 if(json.length>0){                    
-                    localStorage.setItem("id_user",json[0].id);
-                    localStorage.setItem("hash",json[0].hash);
-                    localStorage.setItem("access",json[0].access);
-                    localStorage.setItem("nome",json[0].nome);                    
-                    localStorage.setItem("email",json[0].email);                    
+                    localStorage.setItem("id_user",json[0].id)
+                    localStorage.setItem("hash",json[0].hash)
+                    localStorage.setItem("access",json[0].access)
+                    localStorage.setItem("nome",json[0].nome)
+                    localStorage.setItem("email",json[0].email)
+                    document.querySelector('#edtUser').value = ''
+                    document.querySelector('#edtPass').value = ''
                     openHTML('dashboard.html','main-screen')
 //                    document.documentElement.requestFullscreen();
                 }else{
@@ -94,45 +88,8 @@
                     document.querySelector('#edtUser').focus()
                 }
             })
-
-
-
-
-            function login(i){
-
-                localStorage.setItem("storage",databases[i]);
-                const myPromisse = queryDB(params,0,databases[i])
-
-                myPromisse.then((resolve)=>{
-                    const json = JSON.parse(resolve);
-                    if(json.length > 0){
-                        notfound = false
-                        localStorage.setItem("id_user",json[0].id);
-                        localStorage.setItem("username",json[0].user);
-                        localStorage.setItem("hash",json[0].hash);
-                        localStorage.setItem("access",json[0].class);
-                        localStorage.setItem("nome",json[0].nome);
-                        localStorage.setItem("cel",json[0].cel);
-                        localStorage.setItem("email",json[0].email);
-                        localStorage.setItem("db",json[0].db);
-                        localStorage.setItem("storage",databases[i]);                    
-                        openHTML('dashboard.html','main-screen')
-    //                    document.documentElement.requestFullscreen();
-                                        
-                    }else{
-                        if( i<databases.length-1){
-                            login(i+1)
-                        }else{
-                            alert("Usuário ou senha inválido!");
-                            localStorage.clear();  
-                        }
-                    }                
-                });
-            }
         }
     })
 
 //         'e9a5438692c002bf4e761e95350284a15d740c71bd65edfa8a1217a2be312730'
-
-
 </script>

@@ -509,3 +509,9 @@
 18/02/2024 21:36 admin@fwtecnologia.com.br : Menu Deletado (RAIZera)
 18/02/2024 22:52 admin@fwtecnologia.com.br : Empresa Editada Empresa Teste 2 -> Empresa Teste 2
 19/02/2024 23:21 admin@fwtecnologia.com.br : Empresa Editada Empresa Teste 2 -> Empresa Teste 2
+21/02/2024 09:56 admin@fwtecnologia.com.br : Empresa Editada Empresa Teste 2 -> Empresa Teste 3
+21/02/2024 10:17 admin@fwtecnologia.com.br : Produto Editado teste 2 -> teste 2
+21/02/2024 16:59 admin@fwtecnologia.com.br : Empresa Editada Empresa Teste 3 -> Empresa Teste 2
+21/02/2024 23:57 admin@fwtecnologia.com.br : Menu Alterado (Administracao, none, pop-up, )
+21/02/2024 23:59 admin@fwtecnologia.com.br : Menu Alterado (Ferramentas, none, pop-up, )
+22/02/2024 04:44 admin@fwtecnologia.com.br : Empresa Editada Empresa Teste 2 -> Empresa Teste

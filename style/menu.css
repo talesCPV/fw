@@ -1,9 +1,4 @@
-/* CSS Document */
-
-:root{
-	
-}
-
+/*  MENU CSS  */
 
 #container {
 	margin: 0 auto;
@@ -23,7 +18,6 @@ p {
 	display: none;
 }
 
-/* Giving a background-color to the nav container. */
 nav { 
 	position: fixed;
 	top: 0;
@@ -43,16 +37,19 @@ nav {
 	float: left;
 	font-size:14px;
 	line-height: 40px;
-	margin-top: 10px;
 	cursor: pointer;
 }
 
 #logo img{
-/*	width: 150px;*/
 	height: 50px;
 	position: absolute;
 	top: 5px;
 	left: 5px;
+}
+
+.menu{
+	width: 100%;
+  	padding-left: 60px;
 }
 
 .usr-menu{
@@ -73,22 +70,12 @@ nav {
 	background-color: var(--top-bar-hover);
 }
 
-/* Since we'll have the "ul li" "float:left"
- * we need to add a clear after the container. */
-
 nav:after {
 	content:"";
 	display:table;
 	clear:both;
 }
 
-/* Removing padding, margin and "list-style" from the "ul",
- * and adding "position:reltive"
- 
- 
- AQUI!!!!  -> float rigth
- 
- */
 nav ul {
 	float: left;
 	padding:0;
@@ -97,16 +84,14 @@ nav ul {
 	position: relative;
 	}
 	
-/* Positioning the navigation items inline */
 nav ul li {
 	margin: 0px;
 	display:inline-block;
-	float: left;
+	float: left; 
 	background-color: var(--top-bar);
 	color: var(--top-bar-font);
 	}
 
-/* Styling the links */
 nav a {
 	display:flex;
 	gap: 5px;
@@ -116,10 +101,6 @@ nav a {
 	text-decoration:none;
 }
 
-/*
-nav ul li ul li:hover { background: #000000; }
-*/
-/* Background color change on Hover */
 nav a:hover { 
 	background-color: var(--top-bar-hover); 
 	cursor: pointer;
@@ -129,21 +110,15 @@ nav a:hover {
 	background-color: navy;
 }
 
-/* Hide Dropdowns by Default
- * and giving it a position of absolute */
 nav ul ul {
 	display: none;
 	position: absolute; 
-	/* has to be the same number as the "line-height" of "nav a" */
-	/*top: 60px; */
 }
 	
-/* Display Dropdowns on Hover */
 nav ul li:hover > ul {
 	display:inherit;
 }
 	
-/* Fisrt Tier Dropdown */
 nav ul ul li {
 	width:170px;
 	float:none;
@@ -151,19 +126,12 @@ nav ul ul li {
 	position: relative;
 }
 
-/* Second, Third and more Tiers	
- * We move the 2nd and 3rd etc tier dropdowns to the left
- * by the amount of the width of the first tier.
-*/
 nav ul ul ul li {
 	position: relative;
 	top:-60px;
-	/* has to be the same number as the "width" of "nav ul ul li" */ 
 	left:170px; 
 }
 
-	
-/* Change ' +' in order to change the Dropdown symbol */
 li > a:after { content:  ' +'; }
 li > a:only-child:after { content: ''; }
 
@@ -172,30 +140,34 @@ li > a:only-child:after { content: ''; }
 	background-color: #ffffff00;
 }
 
-/* Media Queries
---------------------------------------------- */
+/* Media Queries */
 
 @media all and (max-width : 768px) {
 
-/*	
-	:root{
-		--top-bar : #254441;
+	.menu{
+		max-height: calc(100vh - 60px);
+		overflow: scroll;
+		padding-left: 0;
 	}
-*/
+
+	.usr-menu{
+		width: 100%;padding: 0;
+	}
+
+	#usr-name{
+		display: none;
+	}
+
 	.hideMenu{
 		display: block;
 	}
 
 	#logo {
-/*		display: block; 
-		padding: 10px 0;*/
-padding: 0;
-margin: 0;
-/*		width: 100%; */
+		padding: 0;
+		margin: 0;
 		text-align: center;
 		float: none;
-/*		height: 45px;*/
-height: 0;
+		height: 0;
 	}
 
 	#logo img{
@@ -203,30 +175,22 @@ height: 0;
 		top: unset;
 		left: unset;
 		padding-top: 8px;
-
-	}
-
-	#usr-name{
-		display: none;
 	}
 
 	nav {
 		margin: 0;
 	}
 
-	/* Hide the navigation menu by default */
-	/* Also hide the  */
 	.toggle + a,
 	.menu {
 		display: none;
 	}
 
-	/* Stylinf the toggle lable */
 	.toggle {
 		display: block;
 		background-color: var(--top-bar);
 		padding:14px 20px;	
-/*		color: var(--top-bar-font);*/
+		color: var(--top-bar-font);
 		font-size:14px;
 		text-decoration:none;
 		border:none;
@@ -236,12 +200,10 @@ height: 0;
 		background-color: var(--top-bar-hover);
 	}
 
-	/* Display Dropdown when clicked on Parent Lable */
-	[id^=drop]:checked + ul {
+	[id^=drop]:checked + ul, [id^=drop]:checked + ul + ul{
 		display: block;
 	}
 
-	/* Change menu item's width to 100% */
 	nav ul li {
 		display: block;
 		width: 100%;
@@ -255,42 +217,30 @@ height: 0;
 	nav ul ul ul a {
 		padding: 0 80px;
 	}
-/*
-	nav a:hover,
- 	nav ul ul ul a {
-		background-color: var(--top-bar-hover);
-	}
-*/  
+
 	nav ul li ul li .toggle,
 	nav ul ul a,
-  nav ul ul ul a{
+  	nav ul ul ul a{
 		padding:14px 0 14px 100px;	
-/*		color:#FFF;*/
 		font-size:14px; 
 	}
   
   
 	nav ul li ul li .toggle,
 	nav ul ul a {
-/*		background-color: #212121; */
 		padding-left: 50px;
 	}
 
-	/* Hide Dropdowns by Default */
 	nav ul ul {
 		float: none;
 		position:static;
-/*		color: #ffffff;*/
-		/* has to be the same number as the "line-height" of "nav a" */
 	}
 		
-	/* Hide menus on hover */
 	nav ul ul li:hover > ul,
 	nav ul li:hover > ul {
 		display: none;
 	}
 		
-	/* Fisrt Tier Dropdown */
 	nav ul ul li {
 		display: block;
 		width: 100%;
@@ -298,8 +248,6 @@ height: 0;
 
 	nav ul ul ul li {
 		position: static;
-		/* has to be the same number as the "width" of "nav ul ul li" */ 
-
 	}
 
 }

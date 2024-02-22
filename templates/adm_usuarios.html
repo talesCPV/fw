@@ -59,7 +59,7 @@
     })
 
     document.querySelector('#btnNovoUser').addEventListener('click',()=>{
-        openHTML('adm_view_user.html','pop-up','Novo Usuario',{'id':'0'})
+        openHTML('adm_view_user.html','pop-up','Novo Usuario',{'id':'0'},800)
     })
     
 
@@ -70,7 +70,7 @@
                 closeModal('adm_view_user')
             }
             data.mode = 'edit'
-            data != undefined ? openHTML('adm_view_user.html','pop-up','Editar Usuario',data) : null
+            data != undefined ? openHTML('adm_view_user.html','pop-up','Editar Usuario',data,800) : null
         }catch{
             null
         }
