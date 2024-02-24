@@ -42,8 +42,7 @@
                     <details open class="menu-data">
                     </details>
                     </li>
-                </ul>         
-                    
+                </ul>
             </fieldset>
         </div>
     </div>
@@ -65,6 +64,7 @@
             summary.itens = data[i].itens
             summary.index = index.concat(i)
             summary.link = data[i].link
+            summary.icone = data[i].icone
             summary.janela = data[i].janela
             summary.width = data[i].width
             summary.label = data[i].label
@@ -77,7 +77,7 @@
                 }
             })
             summary.addEventListener('contextmenu',(e)=>{
-                e.preventDefault();
+                e.preventDefault()
                 openHTML('adm_new_menu.html','pop-up',`Item de Menu - ${data[i].modulo}`,summary,600)
             })
             details.appendChild(summary)

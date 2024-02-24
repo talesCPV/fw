@@ -37,10 +37,8 @@
 
     const myConfig = getConfig(localStorage.getItem('id_user'))
     myConfig.then((response)=>{
-
-        const json = JSON.parse(response)
-
-        if(json == null){
+        const json = response != '' ? JSON.parse(response) : new Object
+        if(!json.hasOwnProperty('wallpaper')){
             pageData.bar_back_color = styleSheet.getPropertyValue('--top-bar')
             pageData.bar_font_color = styleSheet.getPropertyValue('--top-bar-font')
             pageData.bar_mouse_color = styleSheet.getPropertyValue('--top-bar-hover')
@@ -50,6 +48,11 @@
         }else{
             try{
                 main_data.dashboard.data = JSON.parse(response)
+                try{
+                    main_data.dashboard.data.shortcut = JSON.parse(main_data.dashboard.data.shortcut)
+                }catch{
+                    main_data.dashboard.data.shortcut = []
+                }
             }catch{
                 pageData.bar_back_color = styleSheet.getPropertyValue('--top-bar')
                 pageData.bar_font_color = styleSheet.getPropertyValue('--top-bar-font')

@@ -129,6 +129,8 @@ DELIMITER $$
 		SET @id_call = (SELECT IFNULL(id,0) FROM tb_usuario WHERE hash COLLATE utf8_general_ci = Ihash COLLATE utf8_general_ci LIMIT 1);
 		IF(@id_call>0)THEN
 			SELECT COUNT(*) AS new_mail FROM tb_mail WHERE id_to = @id_call AND looked=0;
+		ELSE
+			SELECT 0 AS new_mail ;
         END IF;
 	END $$
 DELIMITER ;

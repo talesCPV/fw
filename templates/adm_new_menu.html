@@ -25,6 +25,11 @@
         </div>
 
         <div class="inline">
+            <label for="edtIcon">Icone</label>
+            <input type="text" id="edtIcon">
+        </div>
+
+        <div class="inline">
             <label for="cmbJanela">Janela</label>
             <select id="cmbJanela">
                 <option value="content-screen">Principal</option>
@@ -38,16 +43,8 @@
         </div>
 
         <div class="inline">
-            <label for="cmbLargura">Largura</label>
-            <select id="cmbLargura">
-                <option value="auto">Auto</option>
-                <option value="300px">300px</option>
-                <option value="400px">400px</option>
-                <option value="500px">500px</option>
-                <option value="600px">600px</option>
-                <option value="700px">700px</option>
-                <option value="800px">800px</option>
-            </select>
+            <label for="edtLargura">Largura</label>
+            <input type="text" id="edtLargura" value="auto">
         </div>
 
         <div class="line">
@@ -74,7 +71,8 @@
     document.querySelector('#edtMod').value = pageData.innerHTML
     document.querySelector('#edtLink').value = pageData.link
     document.querySelector('#edtLabel').value = pageData.label
-    document.querySelector('#cmbLargura').value = pageData.width 
+    document.querySelector('#edtLargura').value = pageData.width 
+    document.querySelector('#edtIcon').value = pageData.icone 
 
     document.querySelector('#btnAddItem').addEventListener('click',()=>{
         const menu = new Object
@@ -125,7 +123,11 @@
             const link = document.querySelector('#edtLink').value.trim()
             const janela = document.querySelector('#cmbJanela').value
             const label = document.querySelector('#edtLabel').value
-            const width = document.querySelector('#cmbLargura').value
+            const icone = document.querySelector('#edtIcon').value
+            let width = document.querySelector('#edtLargura').value.trim()
+
+            width = width != 'auto' ? parseInt(width) : 'auto'
+            width = width == undefined ? 'auto' : width
             
             let obj = main_data.adm_perm.data.json
 
@@ -137,6 +139,7 @@
             obj.link = link == '' ? 'error.html' : link
             obj.janela = janela
             obj.label = label
+            obj.icone = icone
             obj.width = width
             saveMenu()
             setLog(`Menu Alterado (${modulo}, ${link}, ${janela}, ${label})`)

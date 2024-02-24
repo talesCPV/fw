@@ -56,6 +56,10 @@ nav {
 	float: right;
 }
 
+.usr-menu  label{
+	display: none;
+}
+
 #usr-name{
 	display: flex;
 	justify-content: end;
@@ -99,6 +103,7 @@ nav a {
 	color:var(--top-bar-font);
 	font-size:14px;
 	text-decoration:none;
+	align-items: center;
 }
 
 nav a:hover { 
@@ -152,6 +157,13 @@ li > a:only-child:after { content: ''; }
 
 	.usr-menu{
 		width: 100%;padding: 0;
+	}
+
+	.usr-menu label{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 5px;
 	}
 
 	#usr-name{

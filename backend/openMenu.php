@@ -9,7 +9,7 @@ function addItem($access,$obj){
   $menu = [];
 
   for($i = 0; $i< count($obj); $i++){  
-
+//var_dump($obj[$i]);
     if (in_array($access,$obj[$i]->access )) {
       $item = new stdClass();
       $item->modulo = $obj[$i]->modulo;
@@ -18,6 +18,17 @@ function addItem($access,$obj){
       $item->janela = $obj[$i]->janela;
       $item->label = $obj[$i]->label;
       $item->width = $obj[$i]->width;
+      if($obj[$i]->id != ''){
+        $item->id = $obj[$i]->id;
+      }
+      if($obj[$i]->class != ''){
+        $item->class = $obj[$i]->class;
+      }
+      if($obj[$i]->href != ''){
+        $item->href = $obj[$i]->href;
+      }  
+//      property_exists($obj[$i], 'id') ? $item->id = $obj[$i]->id : 0;
+//      property_exists($obj[$i], 'class') ? $item->class = $obj[$i]->class : 0;
       $item->access = crip(json_encode($obj[$i]->access));
       $item->itens = [];
 
@@ -29,6 +40,22 @@ function addItem($access,$obj){
   }
 
   return $menu;
+}
+
+function userMenu(){
+
+  if (file_exists("../config/user_menu.json")) {
+    $fp = fopen("../config/user_menu.json", "r"); 
+    $resp = "";
+  
+    while (!feof ($fp)) {
+        $resp = $resp . fgets($fp,4096);
+    }
+
+    fclose($fp);  
+    $json = json_decode($resp);
+    return addItem(-1,$json->itens);    
+  }
 }
 
   $out = [];
@@ -69,8 +96,12 @@ function addItem($access,$obj){
       }            
 
   }
-        
+
+
+
+
 //    var_dump($out);
-	print json_encode($out);
+//	print json_encode($out);
+print json_encode(array_merge($out, userMenu()));
 
 ?>

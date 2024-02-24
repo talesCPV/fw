@@ -132,28 +132,16 @@ function pictab(e){
             const json = JSON.parse(resolve)[0]
             const unread = json.new_mail
             document.querySelector('#mail-badge').innerHTML = unread!='0' ? unread : ''
-            document.querySelector('#mail-badge-mobile').innerHTML = document.querySelector('#mail-badge').innerHTML
+//            document.querySelector('#mail-badge-mobile').innerHTML = document.querySelector('#mail-badge').innerHTML
         })
     }
 
  /*  MENU  */ 
 function openMenu(){
-    var usr_menu = `<li class="usr-menu">
-    <label class="toggle" for="drop-100" style="text-align: center;"><span id="mail-badge-mobile" class="badge"></span><span class="mdi mdi-account"></span> ${localStorage.getItem('email').toLowerCase()}</label>
-    <a id="usr-name"><span id="mail-badge" class="badge"></span>@${localStorage.getItem('nome').toLowerCase()}</a>
-    <input type="checkbox" id="drop-100">
-    <ul>
-        <li> <a href="javascript:openHTML('usr_viewUser.html','pop-up','Alteração de Senha',{},500)"><span class="mdi mdi-account"></span>Perfil</a></li>
-        <li> <a href="javascript:openHTML('usr_mail.html','pop-up','Comunicação Interna')"><span class="mdi mdi-email-outline"></span>Mens.</a></li>
-        <li> <a href="javascript:openHTML('usr_agenda.html','content-screen')"><span class="mdi mdi-calendar-edit"></span>Agenda</a></li>
-        <li> <a href="javascript:openHTML('usr_config.html','pop-up','Aparência de Sistema',{},500)"><span class="mdi mdi-pencil-circle"></span>Config.</a></li>
-        <li> <a href="javascript:logout()"><span class="mdi mdi-power"></span>Logout</a></li>
-    </ul>
-</li>`
+
     var drop = 0
     const data = new URLSearchParams();        
         data.append("hash", localStorage.getItem('hash'));
-
     const myRequest = new Request("backend/openMenu.php",{
         method : "POST",
         body : data
@@ -174,24 +162,15 @@ function openMenu(){
     })
 
     myPromisse.then((resolve)=>{
+//console.log(resolve)        
         const menu_data = JSON.parse(resolve)
         const menu = document.querySelector('.menu')
-        menu.innerHTML = usr_menu
+        menu.innerHTML = ''//usr_menu
         pushMenu(menu, menu_data)
         checkUserMail()
+        addShortcut()
 
     });
-
-    function userMenu(){
-
-        const li_master = document.createElement('li')
-        const label = document.createElement('label')
-        label.className = 'toggle'
-        label.for = 'drop-usr'
-
-
-
-    }
 
     function pushMenu(menu, obj){
 //        menu.innerHTML = ''
@@ -200,8 +179,14 @@ function openMenu(){
             const li = document.createElement('li')                 
             const a = document.createElement('a')
 
-//            a.href = obj[i].script
-            a.innerHTML = obj[i].modulo            
+            if(obj[i].hasOwnProperty('class')){
+                li.className = obj[i].class
+            }
+            if(obj[i].hasOwnProperty('href')){
+                a.href = obj[i].href
+            }            
+
+            a.innerHTML = obj[i].modulo
             if (obj[i].itens.length > 0 ){
                 const lbl = document.createElement('label')
                 lbl.htmlFor = `drop-${drop}`
@@ -209,6 +194,15 @@ function openMenu(){
                 lbl.innerHTML = obj[i].modulo + ' ▸'  
                 li.appendChild(lbl)
                 li.appendChild(a)
+                if(obj[i].modulo == '@username'){
+                    a.innerHTML = '@'+localStorage.getItem('nome').toLowerCase()                    
+                    lbl.innerHTML = localStorage.getItem('email').toLowerCase()
+                    const span = document.createElement('span')
+                    span.className = 'badge' 
+                    span.id = 'mail-badge'
+                    a.appendChild(span)
+//                    lbl.appendChild(span)
+                }
 
                 const ckb = document.createElement('input')
                 ckb.type = 'checkbox';
@@ -228,11 +222,125 @@ function openMenu(){
                     main_data.dashboard.data.access = obj[i].access                              
                     openHTML(obj[i].link,obj[i].janela,obj[i].label,{},obj[i].width)
                 })    
+                a.addEventListener('contextmenu',(e)=>{
+                    e.preventDefault()
+                    if(confirm('Criar atalho na área de trabalho?')){
+                        const myConfig = getConfig(localStorage.getItem('id_user'))
+                        myConfig.then((response)=>{
+                          
+                            const json = response != '' ? JSON.parse(response) : new Object
+                            if(!json.hasOwnProperty('shortcut')){
+                                json.shortcut = []
+                            }else{
+                                json.shortcut = JSON.parse(json.shortcut)
+                            }
+                            const shortcut = new Object
+                            shortcut.name = obj[i].modulo 
+                            shortcut.link = obj[i].link
+                            shortcut.icone = obj[i].icone
+                            shortcut.janela = obj[i].janela
+                            shortcut.label = obj[i].label
+                            shortcut.width = obj[i].width
+                            shortcut.x = 100
+                            shortcut.y = 100
+                            json.shortcut.push(shortcut)
+                            setConfig(localStorage.getItem('id_user'),'shortcut' , JSON.stringify(json.shortcut))
+                            .then((resolve)=>{
+                                addShortcut()
+                                main_data.dashboard.data.shortcut = json.shortcut
+                            })
+                        })
+                    }
+                })     
                 li.appendChild(a)                
             }
             menu.appendChild(li)
         }
     }
+}
+
+function addShortcut(){
+    const myConfig = getConfig(localStorage.getItem('id_user'))
+    myConfig.then((response)=>{
+        const main = document.querySelector('#main-screen')
+        const icones = document.querySelectorAll('.icone')
+        const json = response != '' ? JSON.parse(response) : new Object
+
+        for(let i=0; i<icones.length; i++){
+            icones[i].remove()
+        }
+
+        if(!json.hasOwnProperty('shortcut')){
+            json.shortcut = []
+        }else{
+            json.shortcut = JSON.parse(json.shortcut)
+        }
+
+        for(let i=0; i<json.shortcut.length; i++){
+            const div = document.createElement('div')
+            const label = document.createElement('p')
+            div.className = 'icone'
+
+            label.innerHTML= json.shortcut[i].name
+            div.appendChild(label)
+
+            const icon = document.createElement('span')
+            icon.className = `mdi ${json.shortcut[i].icone}`
+            div.appendChild(icon)
+
+            div.addEventListener('mousedown',(e)=>{
+                const size =  main_data.dashboard.data.shortcut.length
+                const x = parseInt(div.style.left)
+                const y = parseInt(div.style.top)
+                const pos = [x,y,e.clientX, e.clientY]
+                document.onmousemove = (e,p=pos)=>{
+                    e.preventDefault();                  
+                    const left = p[0]-p[2]+e.clientX
+                    const top = p[1]-p[3]+e.clientY
+                    left >= 0 ? div.style.left =  left+'px' : null
+                    top >= 60 ? div.style.top = top +'px' : null
+                }
+        
+                document.onmouseup = (e,p=pos)=>{
+                    e.preventDefault()                     
+                    const sc = main_data.dashboard.data.shortcut
+                    const move = (e.clientX != p[2] || e.clientY != p[3])
+                    for(let j=0; j<sc.length; j++){
+                        if(sc[j].link == json.shortcut[i].link){
+                            sc[i].x = p[0]-p[2]+e.clientX
+                            sc[i].y = p[1]-p[3]+e.clientY                      
+                            setConfig(localStorage.getItem('id_user'),'shortcut' , JSON.stringify(sc))
+                        }
+                    }
+                    /* icon click */
+                    if(!move && main_data.dashboard.data.shortcut.length == size){
+                        openHTML(json.shortcut[i].link,json.shortcut[i].janela,json.shortcut[i].label,{},json.shortcut[i].width)
+                    }
+                    document.onmouseup = null;
+                    document.onmousemove = null;                    
+                }
+            })           
+
+            div.addEventListener('contextmenu',(e)=>{
+                e.preventDefault()
+                if(confirm('Deletar atalho?')){                    
+                    const sc = main_data.dashboard.data.shortcut
+                    for(let j=0; j<sc.length; j++){
+                        if(sc[j].link == json.shortcut[i].link){
+                            sc.splice(i,1)
+                            setConfig(localStorage.getItem('id_user'),'shortcut' , JSON.stringify(sc))
+                            addShortcut()
+                        }
+                    }
+                    div.style.left = '0'
+                }
+            })
+
+            div.style.left = json.shortcut[i].x + 'px'
+            div.style.top = json.shortcut[i].y + 'px'
+            main.appendChild(div)
+        }
+    })
 }
 
 /* IMAGE */

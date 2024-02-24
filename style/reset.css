@@ -217,6 +217,40 @@
         border-radius: 50%;
         font-size: 1.5em;
     }
+    /* ATALHOS ICONES */
+
+    .icone{
+        position: absolute;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+        width: 80px;
+        height: 80px;
+        cursor: pointer;
+        background-color: var(--top-bar);
+        border-radius: 50%;
+    }
+
+    .icone:active{
+        cursor: grabbing;
+    }
+
+    .icone:hover{
+        background-color: var(--top-bar-hover);
+        
+    }
+
+    .icone span{
+        font-size: xxx-large;
+    }
+
+    .icone p{
+        font-size: 0.7em;
+        max-width: 60px;
+        line-height: 1em;
+        padding-top: 8px;
+    }
 
     /* BADGES */
     .badge{
@@ -327,9 +361,23 @@
         table{
             font-size: small;
         }
-
+/*
         .badge{
             padding-left: 10px;
+        }
+*/
+
+        #main-screen{
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            padding-top: 70px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icone{
+            position: unset;
         }
 
         .form-base{
