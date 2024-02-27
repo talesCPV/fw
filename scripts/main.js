@@ -289,7 +289,7 @@ function addShortcut(){
             div.appendChild(icon)
 
             div.addEventListener('mousedown',(e)=>{
-                const size =  main_data.dashboard.data.shortcut.length
+            
                 const x = parseInt(div.style.left)
                 const y = parseInt(div.style.top)
                 const pos = [x,y,e.clientX, e.clientY]
@@ -302,7 +302,7 @@ function addShortcut(){
                 }
         
                 document.onmouseup = (e,p=pos)=>{
-                    e.preventDefault()                     
+                    e.preventDefault()
                     const sc = main_data.dashboard.data.shortcut
                     const move = (e.clientX != p[2] || e.clientY != p[3])
                     for(let j=0; j<sc.length; j++){
@@ -312,18 +312,25 @@ function addShortcut(){
                             setConfig(localStorage.getItem('id_user'),'shortcut' , JSON.stringify(sc))
                         }
                     }
+
                     /* icon click */
-                    if(!move && main_data.dashboard.data.shortcut.length == size){
+                    if(!move && e.button == 0){
                         openHTML(json.shortcut[i].link,json.shortcut[i].janela,json.shortcut[i].label,{},json.shortcut[i].width)
                     }
+
                     document.onmouseup = null;
-                    document.onmousemove = null;                    
+                    document.onmousemove = null;
                 }
+            
             })           
 
             div.addEventListener('contextmenu',(e)=>{
                 e.preventDefault()
-                if(confirm('Deletar atalho?')){                    
+            
+                const tbl = []
+                const obj = new Object
+                obj.label = 'Deletar Atalho?'
+                obj.link = ()=>{
                     const sc = main_data.dashboard.data.shortcut
                     for(let j=0; j<sc.length; j++){
                         if(sc[j].link == json.shortcut[i].link){
@@ -334,6 +341,8 @@ function addShortcut(){
                     }
                     div.style.left = '0'
                 }
+                tbl.push(obj)
+                menuContext(tbl,e)
             })
 
             div.style.left = json.shortcut[i].x + 'px'

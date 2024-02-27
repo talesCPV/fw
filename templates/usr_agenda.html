@@ -4,86 +4,131 @@
  
     <style>
 
-        h2{
-            width: 100%;
-            text-align: center;
-            color: ivory;
-        }
-
         .calendar{
             margin: 10px;
-        display : grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-        grid-template-rows: 1fr repeat(6, 4fr);
-        gap: 5px;
+            display : grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr repeat(6, 4fr);
+            gap: 5px;
+
+            container-type: inline-size;
+            min-width: 0;
         }
 
         .dayLabel{
-
-        padding-top : 5px;
-        background : #606060;
-        color : #FFFFFF;
-        text-align: center;
-    
+            padding-top : 5px;
+            background : #606060;
+            color : #FFFFFF;
+            text-align: center;
         }
 
         .dayText{
-        top: -20px;
-        display: flex;
-        justify-content: left;
-        flex-wrap: wrap;
-        width : 100%;
-        height : 78%;
-        color: rgb(0, 0, 0);
+            top: -20px;
+            display: flex;
+            justify-content: left;
+            flex-wrap: wrap;
+            width : 100%;
+            height : 78%;
+            color: rgb(0, 0, 0);
+            text-align: center;
         }
 
         .daysquare{
-        padding: 4px;
-        color: #b6b6b6;
-        cursor : pointer;
-        text-align: right;
-        max-height: 150px;
-        overflow: hidden;
+            padding: 4px;
+            color: #b6b6b6;
+            cursor : pointer;
+            text-align: right;
+            max-height: 150px;
+            overflow: hidden;
         }    
 
         #cmbMes, #edtAno{
-        width: 48%;
-        padding: 5px;
-        margin: 5px;
-        font-size: 20px;
+            width: 48%;
+            padding: 5px;
+            margin: 5px;
+            font-size: 20px;
         }
 
+        .dayLabel:nth-child(1)::after{
+            content: 'Domingo';
+        }
+        .dayLabel:nth-child(2)::after{
+            content: 'Segunda';
+        }
+        .dayLabel:nth-child(3)::after{
+            content: 'Terça';
+        }
+        .dayLabel:nth-child(4)::after{
+            content: 'Quarta';
+        }
+        .dayLabel:nth-child(5)::after{
+            content: 'Quinta';
+        }
+        .dayLabel:nth-child(6)::after{
+            content: 'Sexta';
+        }
+        .dayLabel:nth-child(7)::after{
+            content: 'Sábado';
+        }
+
+    @container (max-width: 768px) {
+
+        .dayLabel:nth-child(1)::after{
+            content: 'Dom.';
+        }
+        .dayLabel:nth-child(2)::after{
+            content: 'Seg.';
+        }
+        .dayLabel:nth-child(3)::after{
+            content: 'Ter.';
+        }
+        .dayLabel:nth-child(4)::after{
+            content: 'Qua.';
+        }
+        .dayLabel:nth-child(5)::after{
+            content: 'Qui.';
+        }
+        .dayLabel:nth-child(6)::after{
+            content: 'Sex.';
+        }
+        .dayLabel:nth-child(7)::after{
+            content: 'Sab.';
+        }
+
+        .daysquare{
+            font-size: 0.7em;
+        }
+
+    }
+
+    @media all and (max-width : 768px) {
+        .calendar{
+            max-height: 60vh;
+            background-color: #606060;
+        }
+    }
 
     </style>
-    <div class="form-base">
-
-        <h1>AGENDA</h1>
 
         <div class="inline">
-    
             <select name="cmbMes" id="cmbMes">
-            <option value='0'>JANEIRO</option>
-            <option value='1'>FEVEREIRO</option>
-            <option value='2'>MARÇO</option>
-            <option value='3'>ABRIL</option>
-            <option value='4'>MAIO</option>
-            <option value='5'>JUNHO</option>
-            <option value='6'>JULHO</option>
-            <option value='7'>AGOSTO</option>
-            <option value='8'>SETEMBRO</option>
-            <option value='9'>OUTUBRO</option>
-            <option value='10'>NOVEMBRO</option>
-            <option value='11'>DEZEMBRO</option>
+                <option value='0'>JANEIRO</option>
+                <option value='1'>FEVEREIRO</option>
+                <option value='2'>MARÇO</option>
+                <option value='3'>ABRIL</option>
+                <option value='4'>MAIO</option>
+                <option value='5'>JUNHO</option>
+                <option value='6'>JULHO</option>
+                <option value='7'>AGOSTO</option>
+                <option value='8'>SETEMBRO</option>
+                <option value='9'>OUTUBRO</option>
+                <option value='10'>NOVEMBRO</option>
+                <option value='11'>DEZEMBRO</option>
             </select>
-
             <input type="number" id="edtAno" name="edtAno" min="2000" max="2100" value=''>
-
         </div>
 
         <div class="calendar"></div>
-
-
-    </div>
 
 </template>
 
@@ -92,7 +137,6 @@
     const cmbMes = document.querySelector('#cmbMes'); 
     const cmbAno = document.querySelector('#edtAno'); 
     const user_id = localStorage.getItem("id");
-//    const today = new Date(); // ja existe no dashboard
 
     cmbAno.value = today.getFullYear();
     cmbMes.value = today.getMonth();
@@ -130,13 +174,13 @@
         const schedule = busca(day,endDay);
 
         screen.innerHTML=`
-            <div class='dayLabel'>Domingo</div>
-            <div class='dayLabel'>Segunda</div>
-            <div class='dayLabel'>Terça</div>
-            <div class='dayLabel'>Quarta</div>
-            <div class='dayLabel'>Quinta</div>
-            <div class='dayLabel'>Sexta</div>
-            <div class='dayLabel'>Sábado</div>`;
+            <div class='dayLabel'></div>
+            <div class='dayLabel'></div>
+            <div class='dayLabel'></div>
+            <div class='dayLabel'></div>
+            <div class='dayLabel'></div>
+            <div class='dayLabel'></div>
+            <div class='dayLabel'></div>`;
 
         for(let x=0; x<7; x++){
             for(let y=0; y<6; y++){

@@ -36,7 +36,7 @@
                         "link":"usr_agenda.html",
                         "janela":"pop-up",
                         "label":"Agenda",
-                        "width":"",
+                        "width":"auto",
                         "access":[-1],
                         "itens":[]
                     },

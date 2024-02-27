@@ -1,6 +1,10 @@
 
 /* FIELDSET BUSCA */
 
+.fds-busca{
+    container-type: inline-size;
+}
+
 .fds-busca select{
     max-width: 200px;
 }
@@ -8,7 +12,9 @@
 
 
 
-@media all and (max-width : 768px) {
+
+/*@media all and (max-width : 768px) {*/
+@container (max-width: 500px) {
 
     .fds-busca .inline{
         flex-direction: unset;

@@ -65,13 +65,13 @@ function newModal(title, content, width, id){
         call_page.top = parseInt(pages[call_page.i].style.top)+15
         call_page.left = parseInt(pages[call_page.i].style.left)+15
     }
-
+/*
     const backModal = document.createElement('div')
         backModal.classList = 'modal'
         backModal.id = 'modal-'+id
         backModal.style.zIndex = call_page.zIndex+2
         backModal.style.display = 'block'
-
+*/
     const mod_card = document.createElement('div')
         mod_card.classList = 'modal-content'
         mod_card.id = 'card-'+id        
@@ -190,4 +190,48 @@ function queueModal(id){
         pop_index > up_index ? pop[i].style.zIndex = pop_index -1 : null        
     }
     up.style.zIndex = max
+}
+
+function menuContext(tbl,e){
+    const mod_main = document.querySelector('#myModal')
+
+    const backModal = document.createElement('div')
+        backModal.classList = 'modal'
+        backModal.id = 'context'
+        backModal.style.zIndex = 200
+        backModal.style.display = 'block'
+        backModal.style.backgroundColor = 'unset'
+        backModal.addEventListener('click',()=>{
+            document.querySelector('#context').remove()
+            mod_main.style.display = (document.querySelectorAll('.modal-content').length < 1) ? "none" : 'block'
+        })
+
+    const mod_card = document.createElement('div')
+        mod_card.classList = 'modal-content'
+        mod_card.id = 'card-context'       
+        mod_card.style.position = 'absolute'
+        mod_card.style.zIndex = 100
+        mod_card.style.margin = '0 auto'
+//        mod_card.style.width = 'auto'
+        mod_card.style.top = e.clientY+'px'
+        mod_card.style.left = e.clientX+'px'
+        mod_card.style.overflow = 'auto'
+
+    const mod_content = document.createElement('table')
+        mod_content.classList = 'modal-text'
+        for(let i=0; i<tbl.length; i++){
+            const tr = document.createElement('tr')
+            const td = document.createElement('td')
+            td.innerHTML = tbl[i].label
+            td.addEventListener('click',()=>{
+                tbl[i].link()
+            })
+            tr.appendChild(td)            
+            mod_content.appendChild(tr)
+        }
+        mod_card.appendChild(mod_content)
+
+    backModal.appendChild(mod_card)
+    mod_main.appendChild(backModal)
+    mod_main.style.display = "block"
 }

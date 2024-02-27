@@ -538,3 +538,4 @@
 24/02/2024 02:48 admin@fwtecnologia.com.br : Empresa Cadastrada  -> empresa 2
 24/02/2024 02:48 admin@fwtecnologia.com.br : Empresa Editada empresa 2 -> empresa 3
 24/02/2024 03:08 admin@fwtecnologia.com.br : Menu Alterado (Relogio de Ponto, rh_relogio_ponto.html, pop-up, Relogio de Ponto)
+27/02/2024 02:11 admin@fwtecnologia.com.br : Menu Alterado (Cargos, adm_cargos.html, pop-up, Cargos)

@@ -47,7 +47,7 @@
             tbl.style.display = json.length > 0 ? 'inline-table' : 'none'
             tbl.head('Razao Social,CNPJ,Tipo')
             for(let i=0; i<json.length;i++){
-                tbl.plot(json[i],'razao_social,cnpj,cliente','str,cnp,cha 1=CLIENTE 0=FORNECEDOR')
+                tbl.plot(json[i],'razao_social,cnpj,cliente','str,cnp,cha 1=CLI 0=FORN ')
             }         
         });
     }

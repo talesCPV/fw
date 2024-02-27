@@ -400,11 +400,12 @@
 
         .inline{
             flex-direction: column;
+            align-items: center;
         }
 
         .inline label{
             text-align: left;
-            width: 98%;
+            width: 100% !important;
         }
 
         .inline *{
