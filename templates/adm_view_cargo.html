@@ -1,0 +1,93 @@
+<template>
+    <style>
+
+        .linCKB{
+            display: flex;
+            flex-direction: row;
+        }
+
+        .linCKB label {
+            text-align: right;
+            width: auto;
+            min-width: 120px;
+            align-self: flex-end;
+            padding: 10px;
+            white-space: nowrap;
+        }
+
+        .linCKB input[type=checkbox]{
+            margin: 30px 10px 10px 0 !important;
+
+        }
+
+    </style>
+    
+    <fieldset>
+        <legend>Registro de Cargos</legend>
+
+        <div class="inline">
+            <label for="edtCargo">Cargo</label>
+            <input type="text" id="edtCargo" maxlength="30">
+        </div>
+
+        <div class="inline">
+            <label for="edtSal">Salário</label>
+            <input type="text" id="edtSal" onkeyup="return valFloat(this)">
+            <label for="edtCBO">CBO</label>
+            <input type="text" id="edtCBO" maxlength="8" onkeyup="return valInt(this)">
+            <div class="linCKB">
+                <label for="ckbHora">Horista</label>
+                <input type="checkbox" id="ckbHora" checked>
+            </div>    
+        </div>
+
+        <button id="btnSaveCargo" class="btn">Salvar</button>
+    
+      </fieldset>    
+
+
+
+</template>
+<script>
+
+    const pageData = main_data.adm_view_cargo.data
+    const pageFunc = main_data.adm_view_cargo.func
+
+    pageFunc.fill = ()=>{
+        if(parseInt(pageData.id)>0){
+            document.querySelector('#edtCargo').value = pageData.cargo
+            document.querySelector('#edtSal').value = pageData.salario
+            document.querySelector('#edtCBO').value = pageData.cbo
+            document.querySelector('#ckbHora').checked = parseInt(pageData.mensal) ? 0 : 1
+        }
+    }
+
+
+    document.querySelector('#btnSaveCargo').addEventListener('click',()=>{
+        const params = new Object
+            params.id = pageData.id
+            params.cargo = document.querySelector('#edtCargo').value.trim()
+            params.sal = document.querySelector('#edtSal').value.trim()
+            params.mensal = document.querySelector('#ckbHora').checked ? 0 : 1
+            params.cbo = document.querySelector('#edtCBO').value.trim()
+        const myPromisse = queryDB(params,'ADM-2');
+        myPromisse.then((resolve)=>{
+            if(params.id == '0'){
+                setLog(`Inclusão de novo Cargo (${params.cargo})`)
+            }else if(params.cargo == ''){
+                setLog(`Deleção de Cargo (${pageData.cargo})`)
+            }else{
+                setLog(`Alteração de Cargo (${pageData.cargo}, ${pageData.salario.money()}, ${parseInt(pageData.mensal) ? 'MENSALISTA' : 'HORISTA'}, ${pageData.cbo}) -> (${params.cargo},${params.sal.money()},${parseInt(params.mensal) ? 'MENSALISTA' : 'HORISTA'} ,${params.cbo})`)
+            }            
+            try{
+                main_data.adm_cargos.func.fillCargo()
+            }catch{
+                console.error('Tela fechada pelo usuário!')
+            }
+            closeModal('adm_view_cargo')
+        })
+    })
+
+    pageFunc.fill()
+
+</script>

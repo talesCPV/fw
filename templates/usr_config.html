@@ -1,0 +1,159 @@
+
+<template>
+    <style>
+
+        .fds-wallpaper{
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+
+        #cmbWallpaper{
+            max-width: 300px;
+        }
+
+        #btnSave{
+            width: 98%;
+        }
+
+    </style>
+  <fieldset class="fds-wallpaper">
+    <legend>Papel de Parede</legend>
+
+    <select id="cmbWallpaper">
+        <option value="assets/wallpaper_01.jpg">Wallpaper 01</option>
+        <option value="assets/wallpaper_02.jpg">Wallpaper 02</option>
+        <option value="assets/wallpaper_03.jpg">Wallpaper 03</option>
+        <option value="assets/wallpaper_04.jpg">Wallpaper 04</option>        
+    </select>        
+
+    <canvas width="300" height="300" id="cnvImg"></canvas>
+    <input  name="up_file" id="up_file" type="file" accept=".jpg,.jpeg">
+
+<!--    <button id="btnUserUp">Salvar</button>-->
+
+  </fieldset>
+
+  <fieldset>
+    <legend>Menu</legend>
+    <div class="inline">
+        <label for="edtBarColor">Cor de Fundo</label>
+        <input type="color" id="edtBarColor">
+        <input id="rngBarColor" type="range" min="0" max="255" step="1" value="255">
+    </div>
+    <div class="inline">
+        <label for="edtBarFontColor">Cor da Fonte</label>
+        <input type="color" id="edtBarFontColor">
+        <input id="rngFontColor" type="range" min="0" max="255" step="1" value="255">
+    </div>
+    <div class="inline">
+        <label for="edtBarMouse">Selecionado</label>
+        <input type="color" id="edtBarMouse">
+        <input id="rngBarMouse" type="range" min="0" max="255" step="1" value="255">
+    </div>
+
+  </fieldset>
+
+
+  <fieldset>
+    <legend>Janelas</legend>
+    <div class="inline">
+        <label for="edtWinColor">Cor de Fundo</label>
+        <input type="color" id="edtWinColor">
+        <input id="rngWinColor" type="range" min="0" max="255" step="1" value="255">
+    </div>
+    <div class="inline">
+        <label for="edtWinFontColor">Cor da Fonte</label>
+        <input type="color" id="edtWinFontColor">
+        <input id="rngWinFontColor" type="range" min="0" max="255" step="1" value="255">
+    </div>
+  </fieldset>
+  <button id="btnSave">Salvar</button>
+
+</template>
+<script>
+
+    const pageData = main_data.usr_config.data
+    const pageFunc = main_data.usr_config.func
+    const dashboard = main_data.dashboard.data
+    const styleSheet = document.styleSheets[0].cssRules[2].style
+
+    document.querySelector('#edtBarColor').value = dashboard.bar_back_color.substr(0,7)
+    document.querySelector('#edtBarFontColor').value = dashboard.bar_font_color.substr(0,7)
+    document.querySelector('#edtBarMouse').value = dashboard.bar_mouse_color.substr(0,7)
+    document.querySelector('#edtWinColor').value = dashboard.win_back_color.substr(0,7)
+    document.querySelector('#edtWinFontColor').value = dashboard.win_font_color.substr(0,7)
+    
+    document.querySelector('#rngBarColor').value = parseInt(dashboard.bar_back_color.substr(7,2),16)
+    document.querySelector('#rngFontColor').value = parseInt(dashboard.bar_font_color.substr(7,2),16)
+    document.querySelector('#rngBarMouse').value = parseInt(dashboard.bar_mouse_color.substr(7,2),16)
+    document.querySelector('#rngWinColor').value = parseInt(dashboard.win_back_color.substr(7,2),16)
+    document.querySelector('#rngWinFontColor').value = parseInt(dashboard.win_font_color.substr(7,2),16)
+
+    loadImg(dashboard.wallpaper)
+
+    const cmb = document.querySelector('#cmbWallpaper')
+    for(let i=0; i<cmb.options.length; i++){
+        if(cmb.options[i].value == dashboard.wallpaper){
+            cmb.options.selectedIndex = i
+        }
+    }
+
+    function saveConfig(){
+
+        setConfig(localStorage.getItem('id_user'),'bar_back_color' , dashboard.bar_back_color)
+        setConfig(localStorage.getItem('id_user'),'bar_font_color' , dashboard.bar_font_color)
+        setConfig(localStorage.getItem('id_user'),'bar_mouse_color', dashboard.bar_mouse_color)
+        setConfig(localStorage.getItem('id_user'),'win_back_color' , dashboard.win_back_color)
+        setConfig(localStorage.getItem('id_user'),'win_font_color' , dashboard.win_font_color)
+        setConfig(localStorage.getItem('id_user'),'wallpaper',dashboard.wallpaper)
+    }
+
+    document.querySelector('#up_file').addEventListener('change',()=>{
+        const up = uploadImage('up_file',`assets/users/${localStorage.getItem('id_user')}/`,'wallpaper')
+        up.then((resp)=>{
+            dashboard.wallpaper = `assets/users/${localStorage.getItem('id_user')}/${resp}`
+            main_data.dashboard.func.wallpaper()
+            saveConfig()
+            loadImg(`assets/users/${localStorage.getItem('id_user')}/${resp}`)
+        })
+    })
+
+    document.querySelector('#cmbWallpaper').addEventListener('change',()=>{
+        const cmb = document.querySelector('#cmbWallpaper')
+        loadImg(cmb.value)
+
+        dashboard.wallpaper = cmb.value
+        saveConfig()
+        main_data.dashboard.func.wallpaper()
+//        setConfig(localStorage.getItem('id_user'),'wallpaper',cmb.value)
+    })
+
+    document.querySelector('#btnSave').addEventListener('click',()=>{
+
+        try{
+
+            dashboard.bar_back_color = document.querySelector('#edtBarColor').value + parseInt(document.querySelector('#rngBarColor').value).toString(16).padStart(2, "0")
+            dashboard.bar_font_color = document.querySelector('#edtBarFontColor').value + parseInt(document.querySelector('#rngFontColor').value).toString(16).padStart(2, "0")
+            dashboard.bar_mouse_color = document.querySelector('#edtBarMouse').value + parseInt(document.querySelector('#rngBarMouse').value).toString(16).padStart(2, "0")
+            dashboard.win_back_color = document.querySelector('#edtWinColor').value + parseInt(document.querySelector('#rngWinColor').value).toString(16).padStart(2, "0")
+            dashboard.win_font_color = document.querySelector('#edtWinFontColor').value + parseInt(document.querySelector('#rngWinFontColor').value).toString(16).padStart(2, "0")
+
+            saveConfig()
+
+            main_data.dashboard.func.setBarStyle()
+            
+            closeModal('usr_config')
+
+        }catch{
+            console.log('Error!!')
+        } 
+
+
+    })
+
+
+</script>

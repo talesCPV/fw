@@ -1,0 +1,90 @@
+<template>
+
+    <style>
+        @import url("style/menu.css");     
+        
+        body{
+            background-image: url('assets/wallpaper_03.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            background-blend-mode: hard-light;
+            background-position: center;
+        }        
+
+        #content-screen{
+            margin-top: 80px;
+        }
+
+    </style>
+    
+    <nav>        
+        <div id="logo"><img src="assets/logo.png" alt="" id="imgLogo"></div>
+        <label for="drop" class="toggle">&#9776;</label>
+        <input type="checkbox" id="drop" />
+        <ul class="menu"></ul>
+    </nav>
+
+    <div id="content-screen"></div>
+    
+</template>
+<script>
+
+    openMenu()
+    const pageData = main_data.dashboard.data
+    const pageFunc = main_data.dashboard.func
+    const styleSheet = document.styleSheets[0].cssRules[2].style
+
+    const myConfig = getConfig(localStorage.getItem('id_user'))
+    myConfig.then((response)=>{
+        const json = response != '' ? JSON.parse(response) : new Object
+        if(!json.hasOwnProperty('wallpaper')){
+            pageData.bar_back_color = styleSheet.getPropertyValue('--top-bar')
+            pageData.bar_font_color = styleSheet.getPropertyValue('--top-bar-font')
+            pageData.bar_mouse_color = styleSheet.getPropertyValue('--top-bar-hover')
+            pageData.win_back_color = styleSheet.getPropertyValue('--win-back')
+            pageData.win_font_color = styleSheet.getPropertyValue('--win-font')
+            pageData.wallpaper = 'assets/wallpaper_03.jpg'
+        }else{
+            try{
+                main_data.dashboard.data = JSON.parse(response)
+                try{
+                    main_data.dashboard.data.shortcut = JSON.parse(main_data.dashboard.data.shortcut)
+                }catch{
+                    main_data.dashboard.data.shortcut = []
+                }
+            }catch{
+                pageData.bar_back_color = styleSheet.getPropertyValue('--top-bar')
+                pageData.bar_font_color = styleSheet.getPropertyValue('--top-bar-font')
+                pageData.bar_mouse_color = styleSheet.getPropertyValue('--top-bar-hover')
+                pageData.win_back_color = styleSheet.getPropertyValue('--win-back')
+                pageData.win_font_color = styleSheet.getPropertyValue('--win-font')
+                pageData.wallpaper = 'assets/wallpaper_03.jpg'
+            }
+        }
+
+        pageFunc.wallpaper()
+        pageFunc.setBarStyle()
+    })
+
+    pageFunc.wallpaper = ()=>{
+        document.querySelector('body').style.backgroundImage = `url(${main_data.dashboard.data.wallpaper}?${new Date().getTime()})`
+    } 
+
+    pageFunc.setBarStyle = ()=>{
+        styleSheet.setProperty('--top-bar', main_data.dashboard.data.bar_back_color)
+        styleSheet.setProperty('--top-bar-font', main_data.dashboard.data.bar_font_color)
+        styleSheet.setProperty('--top-bar-hover', main_data.dashboard.data.bar_mouse_color)
+        styleSheet.setProperty('--win-back', main_data.dashboard.data.win_back_color);
+        styleSheet.setProperty('--win-font', main_data.dashboard.data.win_font_color);
+    }
+
+    document.querySelector('#imgLogo').addEventListener('click',()=>{
+        document.querySelector('#content-screen').innerHTML = ''
+        const obj = Object.keys(main_data)
+        for(let i=0; i<obj.length; i++){
+            obj[i] != 'dashboard' ? delete main_data[obj[i]] : null
+        }
+    })
+
+</script>

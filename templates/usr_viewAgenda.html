@@ -1,0 +1,57 @@
+<template>
+    <style>
+
+        .form-modal {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #txtSchedule{
+            margin: 10px;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+
+    </style>
+    <div class='form-modal'>
+        <textarea rows = '20' id='txtSchedule' maxlength="255"> </textarea>
+        <button id="btnSalvar" class="btn" >Salvar</button>
+      </div> 
+
+</template>
+
+<script>
+
+    const pageData = main_data.usr_viewAgenda.data
+    const pageFunc = main_data.usr_viewAgenda.func
+
+    document.getElementById('txtSchedule').value = document.getElementById(pageData.data).innerHTML.trim()
+    document.getElementById('txtSchedule').focus()
+    document.getElementById('btnSalvar').addEventListener('click',()=>{
+    
+        const text = document.getElementById('txtSchedule').value.trim()
+        let color = "#f8f693"
+        let font = "#000000"
+
+        if(text.trim() == ''){
+            color = "#F0F0F0"; 
+            font = "#b6b6b6" 
+        }
+
+        const params = new Object;
+            params.data_agd = pageData.data
+            params.obs = text
+
+        const resp = queryDB(params,'CAL-1')
+        resp.then((resolve)=>{
+            document.getElementById(pageData.data).innerHTML = text
+            document.getElementById(pageData.data).parentNode.style.background = color
+            document.getElementById(pageData.data).parentNode.style.color = font
+            closeModal('usr_viewAgenda')
+        }); 
+
+    })
+
+
+</script>

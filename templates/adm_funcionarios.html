@@ -1,0 +1,72 @@
+<template>
+    <style>
+
+    </style>
+
+        <fieldset class="fds-busca func">
+            <legend>Busca</legend>
+            <div class="inline">
+                <label for="cmbBusca">Pesquisa</label>
+                <select id="cmbBusca">
+                    <option value="nome" signal="LIKE">Nome</option>
+                    <option value="ativo" signal="=" val="1" selected>Ativos</option>
+                    <option value="ativo" signal="=" val="0" >Inativos</option>
+                    <option value="cargo" signal="LIKE">Cargo</option>
+                    <option value="setor" signal="LIKE">Setor</option>
+                    <option value="mensal" signal="=" val="0">Horista</option>
+                    <option value="mensal" signal="=" val="1">Mensalista</option>
+                </select>
+                <input type="text" id="edtBusca" onkeypress="return getEnter(event, 'btnBusca-func')">
+                <button id="btnBusca-func" class="btn-round" ><span class="mdi mdi-magnify"></span></button>
+                <button id="btnNovo" class="btn-round"><span class="mdi mdi-plus-thick"></span></button>            
+            </div>
+        </fieldset>
+
+        <table id="tblFunc"></table>
+
+</template>
+<script>
+
+    const pageData = main_data.adm_funcionarios.data
+    const pageFunc = main_data.adm_funcionarios.func
+
+    pageFunc.fillFunc = ()=>{      
+        const tbl = document.getElementById('tblFunc')
+        tbl.innerHTML = ''
+        const query = getVal('func')
+        const params = new Object;
+            params.field = query[0]
+            params.signal = query[1]
+            params.value = query[2]
+        const myPromisse = queryDB(params,'FUN-0');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+            tbl.style.display = json.length > 0 ? 'inline-table' : 'none'
+            tbl.head('Nome,Cargo,Setor')
+            for(let i=0; i<json.length;i++){
+                tbl.plot(json[i],'nome,cargo,setor','str,Upp,Upp')
+            }         
+        });
+    }
+
+    document.querySelector('#btnNovo').addEventListener('click',()=>{
+        openHTML('adm_view_func.html','pop-up','Cadastro de Funcionário')
+    })
+
+    document.querySelector('#btnBusca-func').addEventListener('click',()=>{
+        pageFunc.fillFunc()
+    })
+
+    document.querySelector('#tblFunc').addEventListener('click',(e)=>{
+        try{
+            if(main_data.hasOwnProperty('adm_view_func')){
+                closeModal('adm_view_func')
+            }
+            data = e.target.parentNode.data
+            data != undefined ? openHTML('adm_view_func.html','pop-up',`Edição de dados - ${data.nome.toUpperCase()}`,data) : null
+        }catch{
+            null
+        }
+    })
+
+</script>

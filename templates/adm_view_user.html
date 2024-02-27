@@ -1,0 +1,151 @@
+<template>
+    <style>
+
+        #btnDelUser{
+            display: none;
+        }
+
+        .linCKB{
+            display: flex;
+            flex-direction: row;
+        }
+
+        .linCKB label {
+            text-align: right;
+            width: auto;
+            min-width: 120px;
+            align-self: flex-end;
+            padding: 10px;
+            white-space: nowrap;
+        }
+
+        .linCKB input[type=checkbox]{
+            margin: 30px 10px 10px 0 !important;
+
+        }
+
+    </style>
+    
+    <fieldset>
+        <legend>Registro de Usuário</legend>
+
+        <div class="inline">
+            <label for="edtEmail">Email</label>
+            <input type="text" id="edtEmail" maxlength="70" onkeyup="validaEmail(this)">
+        </div>
+
+        <div class="inline">
+            <label for="edtPass">Password</label>
+            <input type="password" id="edtPass" maxlength="25">
+        </div>
+
+        <div class="inline">
+            <label for="edtRepass">Repita Pass.</label>
+            <input type="password" id="edtRepass" maxlength="25">
+        </div>        
+
+        <div class="inline">
+            <label for="edtAcesso">Perfil de Acesso</label>
+            <select id="cmbPerfil"></select>  
+        </div>
+
+        <div class="inline">
+            <button id="btnDelUser"  class="btn">Deletar</button>
+            <button id="btnSaveUser" class="btn">Salvar </button>
+        </div>
+    
+      </fieldset>    
+
+</template>
+<script>
+
+    const pageData = main_data.adm_view_user.data
+    const pageFunc = main_data.adm_view_user.func
+
+    pageFunc.fillData = ()=>{
+        if(parseInt(pageData.id)>0){
+            document.querySelector('#edtEmail').value = pageData.email
+            document.querySelector('#cmbPerfil').value = pageData.access
+            document.querySelector('#btnDelUser').style.display = 'block'
+        }
+    }
+
+    pageFunc.setUser = (id, email)=>{
+
+        const message = email=='' ? 'Deleção de usuário' : id>0 ? 'Alteração de usuário' : 'Inserção de novo usuários' 
+
+        const params = new Object
+                params.id = id
+                params.email = email
+                params.pass = document.querySelector('#edtPass').value.trim()
+                params.acesso = document.querySelector('#cmbPerfil').value
+        
+            const myPromisse = queryDB(params,'USR-1');
+            myPromisse.then((resolve)=>{
+                setLog(`${message}, email:${pageData.email} -> ${params.email}, acesso:${pageData.access} -> ${params.acesso}`)                
+                try{
+                    main_data.adm_usuarios.func.fillUser()
+                }catch{
+                    console.error('Tela fechada pelo usuário!')
+                }
+                closeModal('adm_view_user')
+            })
+    }
+
+    pageFunc.fillPerm = ()=>{
+
+        const cmb = document.querySelector('#cmbPerfil')
+        cmb.innerHTML = ''
+        const params = new Object;
+            params.field = 'nome'
+            params.signal = 'LIKE'
+            params.value = "'%%'"
+        const myPromisse = queryDB(params,'ADM-5');
+        myPromisse.then((resolve)=>{
+            const json = JSON.parse(resolve)
+
+            function addOpt(id,nome){
+                const opt = document.createElement('option')
+                opt.value = id
+                opt.innerHTML = nome
+                opt.selected = pageData.access == id 
+                cmb.appendChild(opt)
+            }
+
+
+            if(pageData.access=='0'){
+                addOpt(0,'ADMINISTRADOR ROOT')
+            }
+
+            for(let i=0; i<json.length;i++){               
+                addOpt(json[i].id,json[i].nome)
+            }
+        });
+    }
+
+    document.querySelector('#btnSaveUser').addEventListener('click',()=>{
+        if(checkField(['edtEmail']) && checkRepass(['edtPass','edtRepass'])){
+            const id = parseInt(pageData.id)
+            const email = document.querySelector('#edtEmail').value.trim().toLowerCase()
+            const pass = document.querySelector('#edtPass')
+            if(id==0 && pass.value.trim()==''){
+                alert('Favor digitar uma senha válida!')
+                pass.focus()
+            }else{
+                pageFunc.setUser(id, email)
+            }
+        }
+    })
+
+    document.querySelector('#btnDelUser').addEventListener('click',()=>{
+        if(confirm(`Deseja deletar o usuário ${pageData.email}?`)){
+            const id = parseInt(pageData.id)
+            pageFunc.setUser(id,'')
+        }        
+    })
+
+
+    pageFunc.fillData()
+    pageFunc.fillPerm()
+
+</script>
