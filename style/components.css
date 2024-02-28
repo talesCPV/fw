@@ -50,6 +50,7 @@
 /* FIELDSET BUSCA */
 
     .fds-busca{
+        container-name : busca;
         container-type: inline-size;
     }
 
@@ -155,7 +156,7 @@
     }
 
 
-@container (max-width: 500px) {
+@container busca (max-width: 500px) {
 
     .fds-busca .inline{
         flex-direction: unset;
@@ -182,6 +183,25 @@
 
     .icone{
         position: unset;
+    }
+
+    .fds-busca .inline{
+        flex-direction: unset;
+        flex-wrap: wrap;
+    }
+
+    .fds-busca label{
+        display: none;
+    }
+
+    .fds-busca input{
+        order: 5;
+        width: 100%;
+    }
+
+    .fds-busca select{
+        max-width: unset;
+        width: calc(100% - 140px);
     }
 
 

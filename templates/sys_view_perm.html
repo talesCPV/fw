@@ -53,8 +53,8 @@
 </template>
 <script>
 
-    const pageData = main_data.adm_view_perm.data
-    const pageFunc = main_data.adm_view_perm.func
+    const pageData = main_data.sys_view_perm.data
+    const pageFunc = main_data.sys_view_perm.func
     const allow = document.querySelector('#cmbAllow')
     const forbid = document.querySelector('#cmbForb')
 
@@ -65,7 +65,7 @@
             params.field = 'nome'
             params.signal = 'LIKE'
             params.value = "'%%'"
-        const myPromisse = queryDB(params,'ADM-5');
+        const myPromisse = queryDB(params,'SYS-1');
         myPromisse.then((resolve)=>{
             const json = JSON.parse(resolve)
 
@@ -101,11 +101,11 @@
         }        
             
         try{
-            main_data.adm_perm.func.setAccess(pageData.index,perm)
+            main_data.sys_perm.func.setAccess(pageData.index,perm)
         }catch{
             alert('Não Salvou, tela principal fechada pelo usuário!')
         }  
-        closeModal('adm_view_perm')
+        closeModal('sys_view_perm')
     })
 
 </script>
