@@ -39,12 +39,11 @@ function queryDB(params,cod){
     });      
 }
 
-function getConfig(field,file='config.json',order='read',value=0){
+function getConfig(field){
     const data = new URLSearchParams();        
-        data.append("order", order);
+        data.append("user", localStorage.getItem('id_user'));
         data.append("field", field);
-        data.append("value", value);
-        data.append("file",file);
+        data.append("file",'config.json');
     const myRequest = new Request("backend/getConfig.php",{
         method : "POST",
         body : data
@@ -62,11 +61,12 @@ function getConfig(field,file='config.json',order='read',value=0){
     }); 
 }
 
-function setConfig(user,field,value){
+function setConfig(field,value){
     const data = new URLSearchParams();        
-        data.append("user", user);
-        data.append("field", field);
-        data.append("value", value);
+    data.append("user", localStorage.getItem('id_user'));
+    data.append("field", field);
+    data.append("file",'config.json');
+    data.append("value", value);
     const myRequest = new Request("backend/setConfig.php",{
         method : "POST",
         body : data
@@ -225,15 +225,18 @@ function openMenu(){
                 a.addEventListener('contextmenu',(e)=>{
                     e.preventDefault()
                     if(confirm('Criar atalho na área de trabalho?')){
-                        const myConfig = getConfig(localStorage.getItem('id_user'))
+                        const myConfig = getConfig('shortcut')
                         myConfig.then((response)=>{
                           
-                            const json = response != '' ? JSON.parse(response) : new Object
+                            const json = response != '' ? JSON.parse(JSON.parse(response)) : []
+console.log(json)                            
+/*
                             if(!json.hasOwnProperty('shortcut')){
                                 json.shortcut = []
                             }else{
                                 json.shortcut = JSON.parse(json.shortcut)
                             }
+*/                            
                             const shortcut = new Object
                             shortcut.name = obj[i].modulo 
                             shortcut.link = obj[i].link
@@ -243,8 +246,8 @@ function openMenu(){
                             shortcut.width = obj[i].width
                             shortcut.x = 100
                             shortcut.y = 100
-                            json.shortcut.push(shortcut)
-                            setConfig(localStorage.getItem('id_user'),'shortcut' , JSON.stringify(json.shortcut))
+                            json.push(shortcut)
+                            setConfig('shortcut' , JSON.stringify(json))
                             .then((resolve)=>{
                                 addShortcut()
                                 main_data.dashboard.data.shortcut = json.shortcut
@@ -260,8 +263,9 @@ function openMenu(){
 }
 
 function addShortcut(){
-    const myConfig = getConfig(localStorage.getItem('id_user'))
+    const myConfig = getConfig('shortcut')
     myConfig.then((response)=>{
+console.log(response)        
         const main = document.querySelector('#main-screen')
         const icones = document.querySelectorAll('.icone')
         const json = response != '' ? JSON.parse(response) : new Object
@@ -275,7 +279,6 @@ function addShortcut(){
         }else{
             json.shortcut = JSON.parse(json.shortcut)
         }
-
         for(let i=0; i<json.shortcut.length; i++){
             const div = document.createElement('div')
             const label = document.createElement('p')

@@ -81,17 +81,17 @@
     const dashboard = main_data.dashboard.data
     const styleSheet = document.styleSheets[0].cssRules[2].style
 
-    document.querySelector('#edtBarColor').value = dashboard.bar_back_color.substr(0,7)
-    document.querySelector('#edtBarFontColor').value = dashboard.bar_font_color.substr(0,7)
-    document.querySelector('#edtBarMouse').value = dashboard.bar_mouse_color.substr(0,7)
-    document.querySelector('#edtWinColor').value = dashboard.win_back_color.substr(0,7)
-    document.querySelector('#edtWinFontColor').value = dashboard.win_font_color.substr(0,7)
+    document.querySelector('#edtBarColor').value = dashboard.colors.bar_back_color.substr(0,7)
+    document.querySelector('#edtBarFontColor').value = dashboard.colors.bar_font_color.substr(0,7)
+    document.querySelector('#edtBarMouse').value = dashboard.colors.bar_mouse_color.substr(0,7)
+    document.querySelector('#edtWinColor').value = dashboard.colors.win_back_color.substr(0,7)
+    document.querySelector('#edtWinFontColor').value = dashboard.colors.win_font_color.substr(0,7)
     
-    document.querySelector('#rngBarColor').value = parseInt(dashboard.bar_back_color.substr(7,2),16)
-    document.querySelector('#rngFontColor').value = parseInt(dashboard.bar_font_color.substr(7,2),16)
-    document.querySelector('#rngBarMouse').value = parseInt(dashboard.bar_mouse_color.substr(7,2),16)
-    document.querySelector('#rngWinColor').value = parseInt(dashboard.win_back_color.substr(7,2),16)
-    document.querySelector('#rngWinFontColor').value = parseInt(dashboard.win_font_color.substr(7,2),16)
+    document.querySelector('#rngBarColor').value = parseInt(dashboard.colors.bar_back_color.substr(7,2),16)
+    document.querySelector('#rngFontColor').value = parseInt(dashboard.colors.bar_font_color.substr(7,2),16)
+    document.querySelector('#rngBarMouse').value = parseInt(dashboard.colors.bar_mouse_color.substr(7,2),16)
+    document.querySelector('#rngWinColor').value = parseInt(dashboard.colors.win_back_color.substr(7,2),16)
+    document.querySelector('#rngWinFontColor').value = parseInt(dashboard.colors.win_font_color.substr(7,2),16)
 
     loadImg(dashboard.wallpaper)
 
@@ -102,22 +102,12 @@
         }
     }
 
-    function saveConfig(){
-
-        setConfig(localStorage.getItem('id_user'),'bar_back_color' , dashboard.bar_back_color)
-        setConfig(localStorage.getItem('id_user'),'bar_font_color' , dashboard.bar_font_color)
-        setConfig(localStorage.getItem('id_user'),'bar_mouse_color', dashboard.bar_mouse_color)
-        setConfig(localStorage.getItem('id_user'),'win_back_color' , dashboard.win_back_color)
-        setConfig(localStorage.getItem('id_user'),'win_font_color' , dashboard.win_font_color)
-        setConfig(localStorage.getItem('id_user'),'wallpaper',dashboard.wallpaper)
-    }
-
     document.querySelector('#up_file').addEventListener('change',()=>{
         const up = uploadImage('up_file',`assets/users/${localStorage.getItem('id_user')}/`,'wallpaper')
         up.then((resp)=>{
             dashboard.wallpaper = `assets/users/${localStorage.getItem('id_user')}/${resp}`
             main_data.dashboard.func.wallpaper()
-            saveConfig()
+            setConfig('wallpaper',dashboard.wallpaper)
             loadImg(`assets/users/${localStorage.getItem('id_user')}/${resp}`)
         })
     })
@@ -127,7 +117,7 @@
         loadImg(cmb.value)
 
         dashboard.wallpaper = cmb.value
-        saveConfig()
+        setConfig('wallpaper',dashboard.wallpaper)
         main_data.dashboard.func.wallpaper()
 //        setConfig(localStorage.getItem('id_user'),'wallpaper',cmb.value)
     })
@@ -136,13 +126,13 @@
 
         try{
 
-            dashboard.bar_back_color = document.querySelector('#edtBarColor').value + parseInt(document.querySelector('#rngBarColor').value).toString(16).padStart(2, "0")
-            dashboard.bar_font_color = document.querySelector('#edtBarFontColor').value + parseInt(document.querySelector('#rngFontColor').value).toString(16).padStart(2, "0")
-            dashboard.bar_mouse_color = document.querySelector('#edtBarMouse').value + parseInt(document.querySelector('#rngBarMouse').value).toString(16).padStart(2, "0")
-            dashboard.win_back_color = document.querySelector('#edtWinColor').value + parseInt(document.querySelector('#rngWinColor').value).toString(16).padStart(2, "0")
-            dashboard.win_font_color = document.querySelector('#edtWinFontColor').value + parseInt(document.querySelector('#rngWinFontColor').value).toString(16).padStart(2, "0")
+            dashboard.colors.bar_back_color = document.querySelector('#edtBarColor').value + parseInt(document.querySelector('#rngBarColor').value).toString(16).padStart(2, "0")
+            dashboard.colors.bar_font_color = document.querySelector('#edtBarFontColor').value + parseInt(document.querySelector('#rngFontColor').value).toString(16).padStart(2, "0")
+            dashboard.colors.bar_mouse_color = document.querySelector('#edtBarMouse').value + parseInt(document.querySelector('#rngBarMouse').value).toString(16).padStart(2, "0")
+            dashboard.colors.win_back_color = document.querySelector('#edtWinColor').value + parseInt(document.querySelector('#rngWinColor').value).toString(16).padStart(2, "0")
+            dashboard.colors.win_font_color = document.querySelector('#edtWinFontColor').value + parseInt(document.querySelector('#rngWinFontColor').value).toString(16).padStart(2, "0")
 
-            saveConfig()
+            setConfig('colors' , JSON.stringify(dashboard.colors))
 
             main_data.dashboard.func.setBarStyle()
             
