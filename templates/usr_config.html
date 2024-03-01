@@ -11,7 +11,7 @@
         }
 
 
-        #cmbWallpaper{
+        .fds-wallpaper select{
             max-width: 300px;
         }
 
@@ -27,8 +27,25 @@
         <option value="assets/wallpaper_01.jpg">Wallpaper 01</option>
         <option value="assets/wallpaper_02.jpg">Wallpaper 02</option>
         <option value="assets/wallpaper_03.jpg">Wallpaper 03</option>
-        <option value="assets/wallpaper_04.jpg">Wallpaper 04</option>        
-    </select>        
+        <option value="assets/wallpaper_04.jpg">Wallpaper 04</option>
+    </select>
+
+    <select id="cmbEfect">
+        <option value="normal">Normal</option>
+        <option value="hard-light">Escuro</option>
+        <option value="color-dodge">Queimado</option>
+        <option value="diference">Sombra</option>
+        <option value="exclusion">Sombra leve</option>
+        <option value="overlay">Overlay</option>
+        <option value="luminosity">Preto e Branco</option>
+    </select>
+
+    <select id="cmbSize">
+        <option value="1">Normal</option>
+        <option value="2">Tela Cheia</option>
+        <option value="3">Repetir</option>
+        <option value="4">Grande</option>
+    </select>
 
     <canvas width="300" height="300" id="cnvImg"></canvas>
     <input  name="up_file" id="up_file" type="file" accept=".jpg,.jpeg">
@@ -93,7 +110,10 @@
     document.querySelector('#rngWinColor').value = parseInt(dashboard.colors.win_back_color.substr(7,2),16)
     document.querySelector('#rngWinFontColor').value = parseInt(dashboard.colors.win_font_color.substr(7,2),16)
 
-    loadImg(dashboard.wallpaper)
+    loadImg(dashboard.wallpaper.pic)
+    document.querySelector('#cmbEfect').value = dashboard.wallpaper.efect
+    document.querySelector('#cmbSize').value = dashboard.wallpaper.size == 'cover' ? 2  : dashboard.wallpaper.size == 'contain' ? 4 : dashboard.wallpaper.repeat == 'repeat' ? 3 : 1
+
 
     const cmb = document.querySelector('#cmbWallpaper')
     for(let i=0; i<cmb.options.length; i++){
@@ -103,24 +123,57 @@
     }
 
     document.querySelector('#up_file').addEventListener('change',()=>{
-        const up = uploadImage('up_file',`assets/users/${localStorage.getItem('id_user')}/`,'wallpaper')
+        const up = uploadImage('up_file',`config/user/${localStorage.getItem('id_user')}/`,'wallpaper')
         up.then((resp)=>{
-            dashboard.wallpaper = `assets/users/${localStorage.getItem('id_user')}/${resp}`
+            dashboard.wallpaper.pic = `config/user/${localStorage.getItem('id_user')}/${resp}`
             main_data.dashboard.func.wallpaper()
-            setConfig('wallpaper',dashboard.wallpaper)
-            loadImg(`assets/users/${localStorage.getItem('id_user')}/${resp}`)
+            setConfig('wallpaper', JSON.stringify(dashboard.wallpaper))
+            loadImg(`config/user/${localStorage.getItem('id_user')}/${resp}`)
         })
     })
 
     document.querySelector('#cmbWallpaper').addEventListener('change',()=>{
-        const cmb = document.querySelector('#cmbWallpaper')
-        loadImg(cmb.value)
+        const cmb = document.querySelector('#cmbWallpaper').value
+        loadImg(cmb)
 
-        dashboard.wallpaper = cmb.value
-        setConfig('wallpaper',dashboard.wallpaper)
+        dashboard.wallpaper.pic = cmb
+        setConfig('wallpaper', JSON.stringify(dashboard.wallpaper))
         main_data.dashboard.func.wallpaper()
-//        setConfig(localStorage.getItem('id_user'),'wallpaper',cmb.value)
     })
+
+    document.querySelector('#cmbEfect').addEventListener('change',()=>{        
+        dashboard.wallpaper.efect = document.querySelector('#cmbEfect').value
+        setConfig('wallpaper',JSON.stringify(dashboard.wallpaper))
+        main_data.dashboard.func.wallpaper()
+//        loadImg(dashboard.wallpaper.pic)
+        loadImg(dashboard.wallpaper.pic,'cnvImg',document.querySelector('#cmbEfect').value)
+    })
+
+    document.querySelector('#cmbSize').addEventListener('change',()=>{        
+        switch(document.querySelector('#cmbSize').value){
+            case '1': // Normal
+                dashboard.wallpaper.repeat = 'no-repeat'
+                dashboard.wallpaper.size = 'inherit'
+                break
+            case '2': // Tela Cheia
+                dashboard.wallpaper.repeat = 'no-repeat'
+                dashboard.wallpaper.size = 'cover'
+                break
+            case '3': // Repetir
+                dashboard.wallpaper.repeat = 'repeat'
+                dashboard.wallpaper.size = 'inherit'
+                break
+            case '4': // Grande
+                dashboard.wallpaper.repeat = 'no-repeat'
+                dashboard.wallpaper.size = 'contain'
+        }
+
+        setConfig('wallpaper',JSON.stringify(dashboard.wallpaper))
+        main_data.dashboard.func.wallpaper()
+
+    
+    })
+
 
     document.querySelector('#btnSave').addEventListener('click',()=>{
 

@@ -1,0 +1,1 @@
+01/03/2024 13:29 admin@fwtecnologia.com.br : Alteracao de usuario, email:teste@fwtecnologia.com.br -> teste@fwtecnologia.com.br, acesso:10 -> 10

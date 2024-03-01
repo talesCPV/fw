@@ -1,7 +1,7 @@
 <?php   
 	if (IsSet($_POST["user"]) && IsSet($_POST["field"]) && IsSet($_POST["file"])){
         
-        $path = getcwd().'/../assets/func/'.$_POST["user"].'/';
+        $path = getcwd().'/../config/user/'.$_POST["user"].'/';
         $field = $_POST["field"];
 
         if (!file_exists($path)) {
