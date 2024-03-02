@@ -42,13 +42,17 @@
         "ADM-1"  => 'CALL sp_view_setor(@access,@hash,"x00","x01","x02");', // FIELD,SIGNAL, VALUE
         "ADM-2"  => 'CALL sp_set_cargo(@access,@hash,x00,"x01",x02,x03,"x04");', // ID_CARGO, CARGO, SALARIO, MENSAL, CBO
         "ADM-3"  => 'CALL sp_view_cargo(@access,@hash,"x00","x01","x02");', // FIELD,SIGNAL, VALUE
-        "ADM-4"  => 'CALL sp_set_usr_perm_perf(@access,@hash,x00,"x01");', // ID, NOME
-        "ADM-5"  => 'CALL sp_view_usr_perm_perf(@access,@hash,"x00","x01","x02");', // FIELD,SIGNAL, VALUE
-        "ADM-6"  => 'CALL sp_set_und(@access,@hash,x00,"x01","x02");', // ID,NOME, SIGLA
-        "ADM-7"  => 'CALL sp_view_und(@access,@hash,"x00","x01","x02");', // FIELD,SIGNAL, VALUE
+        "ADM-4"  => 'CALL sp_set_und(@access,@hash,x00,"x01","x02");', // ID,NOME, SIGLA
+        "ADM-5"  => 'CALL sp_view_und(@access,@hash,"x00","x01","x02");', // FIELD,SIGNAL, VALUE
+
+        /* SYSTEMA */
+        "SYS-0"  => 'CALL sp_set_usr_perm_perf(@access,@hash,x00,"x01");', // ID, NOME
+        "SYS-1"  => 'CALL sp_view_usr_perm_perf(@access,@hash,"x00","x01","x02");', // FIELD,SIGNAL, VALUE
 
         /* RELOGIO DE PONTO */
         "REL-0"  => 'CALL sp_view_relogio_ponto(@access,@hash,"x00","x01");', // DATA INICIO, DATA FINAL
+
+
 
     );
 

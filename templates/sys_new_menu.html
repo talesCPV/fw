@@ -58,14 +58,14 @@
 </template>
 <script>
 
-    const pageData = main_data.adm_new_menu.data
-    const pageFunc = main_data.adm_new_menu.func
+    const pageData = main_data.sys_new_menu.data
+    const pageFunc = main_data.sys_new_menu.func
     const link = pageData.link
 
     function saveMenu(){
-        main_data.adm_perm.func.refreshMenu()
-        main_data.adm_perm.func.setMenu(JSON.stringify(main_data.adm_perm.data.json))
-        closeModal('adm_new_menu')
+        main_data.sys_perm.func.refreshMenu()
+        main_data.sys_perm.func.setMenu(JSON.stringify(main_data.sys_perm.data.json))
+        closeModal('sys_new_menu')
     }
 
     document.querySelector('#edtMod').value = pageData.innerHTML
@@ -87,7 +87,7 @@
             menu.itens = []
         
         const index = pageData.index
-        let obj = main_data.adm_perm.data.json
+        let obj = main_data.sys_perm.data.json
 
         for(let i=0; i<index.length; i++){
             obj = obj.itens[index[i]]        
@@ -102,7 +102,7 @@
         if(pageData.id != 'menu-raiz'){
             if(confirm(`Deseja realmente deletar o menu ${pageData.innerHTML.toUpperCase()} e todos seus ítens?`)){
                 const index = pageData.index
-                let obj = main_data.adm_perm.data.json
+                let obj = main_data.sys_perm.data.json
 
                 for(let i=0; i<index.length-1; i++){
                     obj = obj.itens[index[i]]        
@@ -129,7 +129,7 @@
             width = width != 'auto' ? parseInt(width) : 'auto'
             width = width == undefined ? 'auto' : width
             
-            let obj = main_data.adm_perm.data.json
+            let obj = main_data.sys_perm.data.json
 
             for(let i=0; i<index.length; i++){
                 obj = obj.itens[index[i]]        

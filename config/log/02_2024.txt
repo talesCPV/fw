@@ -539,3 +539,58 @@
 24/02/2024 02:48 admin@fwtecnologia.com.br : Empresa Editada empresa 2 -> empresa 3
 24/02/2024 03:08 admin@fwtecnologia.com.br : Menu Alterado (Relogio de Ponto, rh_relogio_ponto.html, pop-up, Relogio de Ponto)
 27/02/2024 02:11 admin@fwtecnologia.com.br : Menu Alterado (Cargos, adm_cargos.html, pop-up, Cargos)
+27/02/2024 14:05 admin@fwtecnologia.com.br : Produto RESERVADO -> copo d'agua : 500 UND
+27/02/2024 14:10 admin@fwtecnologia.com.br : Produto RESERVADO -> copo d'agua : 500 UND
+27/02/2024 14:11 admin@fwtecnologia.com.br : Produto Editado teste -> teste
+27/02/2024 14:12 admin@fwtecnologia.com.br : Produto Editado teste 3 -> teste 3
+27/02/2024 14:12 admin@fwtecnologia.com.br : Produto Editado Trevira -> Trevira
+27/02/2024 14:12 admin@fwtecnologia.com.br : Produto RESERVADO -> teste : 50 UND
+27/02/2024 14:12 admin@fwtecnologia.com.br : Produto RESERVADO -> teste : 50 UND
+27/02/2024 14:33 admin@fwtecnologia.com.br : Menu Alterado (Produtos, adm_produtos.html, pop-up, Produtos)
+27/02/2024 14:57 admin@fwtecnologia.com.br : Menu Alterado (Setores, adm_setores.html, pop-up, Setores)
+28/02/2024 13:17 admin@fwtecnologia.com.br : Menu Alterado (Permissoes, sys_perm.html, pop-up, Permissoes)
+28/02/2024 13:30 admin@fwtecnologia.com.br : Menu Alterado (Usuarios, sys_usuarios.html, pop-up, Usuarios)
+28/02/2024 13:36 admin@fwtecnologia.com.br : Insercao de novo usuarios, email:undefined -> teste@fwtecnologia.com.br, acesso:undefined -> 10
+28/02/2024 13:38 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Cadastros, Acesso:[[0,3,8,9]])
+28/02/2024 13:38 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Gerencia, Acesso:[[0,1]])
+28/02/2024 13:38 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Parametros, Acesso:[[0]])
+28/02/2024 13:38 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Comercial, Acesso:[[0]])
+28/02/2024 13:38 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Engenharia, Acesso:[[0,1,10]])
+28/02/2024 13:38 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Ferramentas, Acesso:[[0,1,3,8,9]])
+28/02/2024 13:38 admin@fwtecnologia.com.br : Permissao alterada, Modulo: RH, Acesso:[[0]])
+28/02/2024 13:38 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Producao, Acesso:[[0]])
+28/02/2024 13:39 admin@fwtecnologia.com.br : Menu Incluido (Sistema)
+28/02/2024 13:40 admin@fwtecnologia.com.br : Menu Incluido (Permissoes)
+28/02/2024 13:40 admin@fwtecnologia.com.br : Menu Incluido (Usuarios)
+28/02/2024 13:40 admin@fwtecnologia.com.br : Menu Alterado (Usuarios, sys_usuarios.html, pop-up, )
+28/02/2024 13:41 admin@fwtecnologia.com.br : Menu Alterado (Usuarios, sys_usuarios.html, pop-up, Usuarios)
+28/02/2024 13:42 admin@fwtecnologia.com.br : Menu Alterado (Permissoes, sys_perm.html, pop-up, Permissoes)
+28/02/2024 13:43 admin@fwtecnologia.com.br : Menu Incluido (Log do Sistema)
+28/02/2024 13:44 admin@fwtecnologia.com.br : Menu Alterado (Log do Sistema, adm_log.html, pop-up, Log do Sistema)
+28/02/2024 13:44 admin@fwtecnologia.com.br : Menu Alterado (Usuarios, sys_usuarios.html, pop-up, Usuarios)
+28/02/2024 13:45 admin@fwtecnologia.com.br : Menu Alterado (Permissoes, sys_perm.html, pop-up, Permissoes)
+28/02/2024 13:45 admin@fwtecnologia.com.br : Menu Deletado (Gerencia)
+28/02/2024 13:45 admin@fwtecnologia.com.br : Menu Deletado (Gerencia)
+28/02/2024 13:45 admin@fwtecnologia.com.br : Menu Deletado (Gerencia)
+28/02/2024 13:46 admin@fwtecnologia.com.br : Menu Alterado (Parametros, menu, pop-up, )
+28/02/2024 13:47 admin@fwtecnologia.com.br : Menu Incluido (Setores)
+28/02/2024 13:47 admin@fwtecnologia.com.br : Menu Incluido (Cargos)
+28/02/2024 13:47 admin@fwtecnologia.com.br : Menu Incluido (Unidades)
+28/02/2024 13:48 admin@fwtecnologia.com.br : Menu Alterado (Setores, adm_setores.htnl, pop-up, Setores)
+28/02/2024 13:49 admin@fwtecnologia.com.br : Menu Alterado (Cargos, adm_cargos.html, pop-up, Cargos)
+28/02/2024 13:49 admin@fwtecnologia.com.br : Menu Alterado (Unidades, adm_unidades.html, pop-up, Unidades)
+28/02/2024 13:51 admin@fwtecnologia.com.br : Menu Alterado (Setores, adm_setores.html, pop-up, Setores)
+28/02/2024 13:52 admin@fwtecnologia.com.br : Menu Deletado (Parametros)
+28/02/2024 13:57 admin@fwtecnologia.com.br : Menu Alterado (Log do Sistema, sys_log.html, pop-up, Log do Sistema)
+28/02/2024 13:59  : admin@fwtecnologia.com.br -> Senha alterada pelo usuario
+28/02/2024 14:33 admin@fwtecnologia.com.br : Edicao de Unidade (Metro Linear -> Metro Linear, M -> ML)
+28/02/2024 14:33 admin@fwtecnologia.com.br : Edicao de Unidade (Metro Linear -> Metro Linear, ML -> M)
+28/02/2024 14:34 admin@fwtecnologia.com.br : Produto RESERVADO -> teste : 10 UND
+28/02/2024 14:35 admin@fwtecnologia.com.br : Produto RESERVADO -> teste : 15 UND
+28/02/2024 14:35 admin@fwtecnologia.com.br : Produto RESERVADO -> teste : 10 UND
+28/02/2024 14:40 admin@fwtecnologia.com.br : Produto Cadastrado  -> Parafuso
+28/02/2024 14:41 admin@fwtecnologia.com.br :  Imagem Alterada -> Produto: Parafuso
+28/02/2024 14:42 admin@fwtecnologia.com.br : Produto RESERVADO -> Parafuso : 500 UND
+28/02/2024 14:43 admin@fwtecnologia.com.br : Produto RESERVADO -> Parafuso : 500 UND
+28/02/2024 14:43 admin@fwtecnologia.com.br : Produto RESERVADO -> Parafuso : 500 UND
+28/02/2024 14:43 admin@fwtecnologia.com.br : Produto RESERVADO -> Parafuso : 500 UND

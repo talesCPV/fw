@@ -717,6 +717,9 @@ DELIMITER $$
 				VALUES (Iid_prod,Iid_proj,Iid_user,Iqtd,Ipago)
 				ON DUPLICATE KEY UPDATE
 				qtd=Iqtd, pago=Ipago;
+			IF(Ipago = 1)THEN
+				UPDATE tb_produto SET estoque = estoque-Iqtd WHERE id=Iid_prod;
+            END IF;
         END IF;
 	END $$
 DELIMITER ;

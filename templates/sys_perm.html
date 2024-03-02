@@ -50,8 +50,8 @@
 </template>
 <script>
 
-    const pageData = main_data.adm_perm.data
-    const pageFunc = main_data.adm_perm.func
+    const pageData = main_data.sys_perm.data
+    const pageFunc = main_data.sys_perm.func
 
     function createTree(data,index){
         const ul = document.createElement('ul')
@@ -73,12 +73,12 @@
             }
             summary.addEventListener('click',(e)=>{                        
                 if(data[i].itens.length == 0){                            
-                    openHTML('adm_view_perm.html','pop-up',`Controle de Permissão - ${data[i].modulo}`,summary,800)
+                    openHTML('sys_view_perm.html','pop-up',`Controle de Permissão - ${data[i].modulo}`,summary,800)
                 }
             })
             summary.addEventListener('contextmenu',(e)=>{
                 e.preventDefault()
-                openHTML('adm_new_menu.html','pop-up',`Item de Menu - ${data[i].modulo}`,summary,600)
+                openHTML('sys_new_menu.html','pop-up',`Item de Menu - ${data[i].modulo}`,summary,600)
             })
             details.appendChild(summary)
             details.appendChild(createTree(data[i].itens,index.concat(i)))
@@ -140,7 +140,7 @@
         sum.width = 'auto'
         sum.addEventListener('contextmenu',(e)=>{
             e.preventDefault();
-            openHTML('adm_new_menu.html','pop-up',`Novo Módulo Raíz`,sum,600)
+            openHTML('sys_new_menu.html','pop-up',`Novo Módulo Raíz`,sum,600)
         })
         ul_menu.appendChild(sum)
         ul_menu.appendChild(createTree(pageData.json.itens,[]))
@@ -154,7 +154,7 @@
             params.field = query[0]
             params.signal = query[1]
             params.value = query[2]
-        const myPromisse = queryDB(params,'ADM-5');
+        const myPromisse = queryDB(params,'SYS-1');
         myPromisse.then((resolve)=>{
             const json = JSON.parse(resolve)
             tbl.style.display = json.length > 0 ? 'inline-table' : 'none'
@@ -220,7 +220,7 @@
                 params.id = 0
                 params.nome = prompt('Digite o nome do Perfil:').toUpperCase()
 
-            const myPromisse = queryDB(params,'ADM-4');
+            const myPromisse = queryDB(params,'SYS-0');
             myPromisse.then((resolve)=>{
                 setLog(`Inclusão de novo Perfil de usuário (${params.nome})`)
                 pageFunc.fillPerfil()
@@ -237,7 +237,7 @@
                 params.id = data.id
                 params.nome = prompt('Digite o nome do Perfil:',data.nome).toUpperCase().trim()
 
-            const myPromisse = queryDB(params,'ADM-4');
+            const myPromisse = queryDB(params,'SYS-0');
             myPromisse.then((resolve)=>{
                 setLog(`${params.nome =='' ? 'Deleção' : 'Edição'} de Perfil de Usuário (${data.nome} -> ${params.nome})`)
                 pageFunc.fillPerfil()

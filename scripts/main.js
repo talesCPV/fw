@@ -39,12 +39,11 @@ function queryDB(params,cod){
     });      
 }
 
-function getConfig(field,file='config.json',order='read',value=0){
+function getConfig(field){
     const data = new URLSearchParams();        
-        data.append("order", order);
+        data.append("user", localStorage.getItem('id_user'));
         data.append("field", field);
-        data.append("value", value);
-        data.append("file",file);
+        data.append("file",'config.json');
     const myRequest = new Request("backend/getConfig.php",{
         method : "POST",
         body : data
@@ -62,11 +61,12 @@ function getConfig(field,file='config.json',order='read',value=0){
     }); 
 }
 
-function setConfig(user,field,value){
+function setConfig(field,value){
     const data = new URLSearchParams();        
-        data.append("user", user);
-        data.append("field", field);
-        data.append("value", value);
+    data.append("user", localStorage.getItem('id_user'));
+    data.append("field", field);
+    data.append("file",'config.json');
+    data.append("value", value);
     const myRequest = new Request("backend/setConfig.php",{
         method : "POST",
         body : data
@@ -225,15 +225,9 @@ function openMenu(){
                 a.addEventListener('contextmenu',(e)=>{
                     e.preventDefault()
                     if(confirm('Criar atalho na área de trabalho?')){
-                        const myConfig = getConfig(localStorage.getItem('id_user'))
+                        const myConfig = getConfig('shortcut')
                         myConfig.then((response)=>{
-                          
-                            const json = response != '' ? JSON.parse(response) : new Object
-                            if(!json.hasOwnProperty('shortcut')){
-                                json.shortcut = []
-                            }else{
-                                json.shortcut = JSON.parse(json.shortcut)
-                            }
+                            const json = response != '' ? JSON.parse(JSON.parse(response)) : []
                             const shortcut = new Object
                             shortcut.name = obj[i].modulo 
                             shortcut.link = obj[i].link
@@ -243,8 +237,8 @@ function openMenu(){
                             shortcut.width = obj[i].width
                             shortcut.x = 100
                             shortcut.y = 100
-                            json.shortcut.push(shortcut)
-                            setConfig(localStorage.getItem('id_user'),'shortcut' , JSON.stringify(json.shortcut))
+                            json.push(shortcut)
+                            setConfig('shortcut' , JSON.stringify(json))
                             .then((resolve)=>{
                                 addShortcut()
                                 main_data.dashboard.data.shortcut = json.shortcut
@@ -260,32 +254,27 @@ function openMenu(){
 }
 
 function addShortcut(){
-    const myConfig = getConfig(localStorage.getItem('id_user'))
+    const myConfig = getConfig('shortcut')
     myConfig.then((response)=>{
         const main = document.querySelector('#main-screen')
         const icones = document.querySelectorAll('.icone')
-        const json = response != '' ? JSON.parse(response) : new Object
-
+        const json = response != '' ? JSON.parse(JSON.parse(response)) : new Object
+        main_data.dashboard.data.shortcut = json
+        
         for(let i=0; i<icones.length; i++){
             icones[i].remove()
         }
 
-        if(!json.hasOwnProperty('shortcut')){
-            json.shortcut = []
-        }else{
-            json.shortcut = JSON.parse(json.shortcut)
-        }
-
-        for(let i=0; i<json.shortcut.length; i++){
+        for(let i=0; i<json.length; i++){
             const div = document.createElement('div')
             const label = document.createElement('p')
             div.className = 'icone'
 
-            label.innerHTML= json.shortcut[i].name
+            label.innerHTML= json[i].name
             div.appendChild(label)
 
             const icon = document.createElement('span')
-            icon.className = `mdi ${json.shortcut[i].icone}`
+            icon.className = `mdi ${json[i].icone}`
             div.appendChild(icon)
 
             div.addEventListener('mousedown',(e)=>{
@@ -306,16 +295,16 @@ function addShortcut(){
                     const sc = main_data.dashboard.data.shortcut
                     const move = (e.clientX != p[2] || e.clientY != p[3])
                     for(let j=0; j<sc.length; j++){
-                        if(sc[j].link == json.shortcut[i].link){
+                        if(sc[j].link == json[i].link){
                             sc[i].x = p[0]-p[2]+e.clientX
                             sc[i].y = p[1]-p[3]+e.clientY                      
-                            setConfig(localStorage.getItem('id_user'),'shortcut' , JSON.stringify(sc))
+                            setConfig('shortcut' , JSON.stringify(sc))
                         }
                     }
 
                     /* icon click */
                     if(!move && e.button == 0){
-                        openHTML(json.shortcut[i].link,json.shortcut[i].janela,json.shortcut[i].label,{},json.shortcut[i].width)
+                        openHTML(json[i].link,json[i].janela,json[i].label,{},json[i].width)
                     }
 
                     document.onmouseup = null;
@@ -333,9 +322,9 @@ function addShortcut(){
                 obj.link = ()=>{
                     const sc = main_data.dashboard.data.shortcut
                     for(let j=0; j<sc.length; j++){
-                        if(sc[j].link == json.shortcut[i].link){
+                        if(sc[j].link == json[i].link){
                             sc.splice(i,1)
-                            setConfig(localStorage.getItem('id_user'),'shortcut' , JSON.stringify(sc))
+                            setConfig('shortcut' , JSON.stringify(sc))
                             addShortcut()
                         }
                     }
@@ -345,8 +334,8 @@ function addShortcut(){
                 menuContext(tbl,e)
             })
 
-            div.style.left = json.shortcut[i].x + 'px'
-            div.style.top = json.shortcut[i].y + 'px'
+            div.style.left = json[i].x + 'px'
+            div.style.top = json[i].y + 'px'
             main.appendChild(div)
         }
     })
@@ -392,8 +381,8 @@ function showFile(idFile='up_file',idCanvas='cnvImg'){
     }
 }
 
-function loadImg(filename, id='#cnvImg') {
-    var ctx = document.querySelector(id);     
+function loadImg(filename, id='cnvImg',efect='normal') {
+    var ctx = document.getElementById(id);     
     try{
         if (ctx.getContext) {
             ctx = ctx.getContext('2d');
@@ -403,6 +392,7 @@ function loadImg(filename, id='#cnvImg') {
                 ar = aspect_ratio(img,ctx.width,ctx.height)                
                 ctx.canvas.width = ar[2]
                 ctx.canvas.height = ar[3]
+                ctx.globalCompositeOperation = efect
                 ctx.drawImage(img, 0, 0,img.width,img.height,0,0,ar[2],ar[3]);
             };        
             img.src = filename+'?'+new Date().getTime()

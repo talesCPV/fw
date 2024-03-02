@@ -11,8 +11,12 @@
         }
 
 
-        #cmbWallpaper{
-            max-width: 300px;
+        .fds-wallpaper .inline{
+            width: 100%;
+        }
+
+        .fds-wallpaper  .inline :first-child{
+            min-width: 75px;
         }
 
         #btnSave{
@@ -23,15 +27,50 @@
   <fieldset class="fds-wallpaper">
     <legend>Papel de Parede</legend>
 
-    <select id="cmbWallpaper">
-        <option value="assets/wallpaper_01.jpg">Wallpaper 01</option>
-        <option value="assets/wallpaper_02.jpg">Wallpaper 02</option>
-        <option value="assets/wallpaper_03.jpg">Wallpaper 03</option>
-        <option value="assets/wallpaper_04.jpg">Wallpaper 04</option>        
-    </select>        
-
     <canvas width="300" height="300" id="cnvImg"></canvas>
-    <input  name="up_file" id="up_file" type="file" accept=".jpg,.jpeg">
+
+    <div class="inline">
+        <label for="up_file">Upload</label>
+        <input  name="up_file" id="up_file" type="file" accept=".jpg,.jpeg">
+    </div>
+    <div class="inline">
+        <label for="cmbWallpaper">Padrão</label>
+        <select id="cmbWallpaper">
+            <option value="unset">Nenhum</option>
+            <option value="assets/wallpaper_01.jpg">Wallpaper 01</option>
+            <option value="assets/wallpaper_02.jpg">Wallpaper 02</option>
+            <option value="assets/wallpaper_03.jpg">Wallpaper 03</option>
+            <option value="assets/wallpaper_04.jpg">Wallpaper 04</option>
+        </select>
+    </div>
+    <div class="inline">
+        <label for="cmbEfect">Efeito</label>
+        <select id="cmbEfect">
+            <option value="normal">Normal</option>
+            <option value="hard-light">Filme</option>
+            <option value="color-dodge">Queimado</option>
+            <option value="exclusion">Negativo</option>
+            <option value="overlay">Overlay</option>
+            <option value="luminosity">Preto e Branco</option>
+        </select>    
+    </div>
+    <div class="inline">
+        <label for="cmbSize">Tamanho</label>
+        <select id="cmbSize">
+            <option value="1">Normal</option>
+            <option value="2">Tela Cheia</option>
+            <option value="3">Repetir</option>
+            <option value="4">Grande</option>
+        </select>    
+    </div>
+
+    <div class="inline">
+        <label for="edtFundo">Fundo</label>
+        <input type="color" id="edtFundo">
+        <input id="rngBackColor" type="range" min="1" max="255" step="1" value="255">
+
+    </div>
+
 
 <!--    <button id="btnUserUp">Salvar</button>-->
 
@@ -54,9 +93,7 @@
         <input type="color" id="edtBarMouse">
         <input id="rngBarMouse" type="range" min="0" max="255" step="1" value="255">
     </div>
-
   </fieldset>
-
 
   <fieldset>
     <legend>Janelas</legend>
@@ -81,79 +118,104 @@
     const dashboard = main_data.dashboard.data
     const styleSheet = document.styleSheets[0].cssRules[2].style
 
-    document.querySelector('#edtBarColor').value = dashboard.bar_back_color.substr(0,7)
-    document.querySelector('#edtBarFontColor').value = dashboard.bar_font_color.substr(0,7)
-    document.querySelector('#edtBarMouse').value = dashboard.bar_mouse_color.substr(0,7)
-    document.querySelector('#edtWinColor').value = dashboard.win_back_color.substr(0,7)
-    document.querySelector('#edtWinFontColor').value = dashboard.win_font_color.substr(0,7)
+    document.querySelector('#edtBarColor').value = dashboard.colors.bar_back_color.substr(0,7)
+    document.querySelector('#edtBarFontColor').value = dashboard.colors.bar_font_color.substr(0,7)
+    document.querySelector('#edtBarMouse').value = dashboard.colors.bar_mouse_color.substr(0,7)
+    document.querySelector('#edtWinColor').value = dashboard.colors.win_back_color.substr(0,7)
+    document.querySelector('#edtWinFontColor').value = dashboard.colors.win_font_color.substr(0,7)
     
-    document.querySelector('#rngBarColor').value = parseInt(dashboard.bar_back_color.substr(7,2),16)
-    document.querySelector('#rngFontColor').value = parseInt(dashboard.bar_font_color.substr(7,2),16)
-    document.querySelector('#rngBarMouse').value = parseInt(dashboard.bar_mouse_color.substr(7,2),16)
-    document.querySelector('#rngWinColor').value = parseInt(dashboard.win_back_color.substr(7,2),16)
-    document.querySelector('#rngWinFontColor').value = parseInt(dashboard.win_font_color.substr(7,2),16)
+    document.querySelector('#rngBarColor').value = parseInt(dashboard.colors.bar_back_color.substr(7,2),16)
+    document.querySelector('#rngFontColor').value = parseInt(dashboard.colors.bar_font_color.substr(7,2),16)
+    document.querySelector('#rngBarMouse').value = parseInt(dashboard.colors.bar_mouse_color.substr(7,2),16)
+    document.querySelector('#rngWinColor').value = parseInt(dashboard.colors.win_back_color.substr(7,2),16)
+    document.querySelector('#rngWinFontColor').value = parseInt(dashboard.colors.win_font_color.substr(7,2),16)
 
-    loadImg(dashboard.wallpaper)
+    loadImg(dashboard.wallpaper.pic)
+    document.querySelector('#cmbEfect').value = dashboard.wallpaper.efect
+    document.querySelector('#cmbSize').value = dashboard.wallpaper.size == 'cover' ? 2  : dashboard.wallpaper.size == 'contain' ? 4 : dashboard.wallpaper.repeat == 'repeat' ? 3 : 1
+    document.querySelector('#edtFundo').value = dashboard.wallpaper.color.substr(0,7)
+    document.querySelector('#rngBackColor').value = parseInt(dashboard.wallpaper.color.substr(7,2),16)
 
     const cmb = document.querySelector('#cmbWallpaper')
     for(let i=0; i<cmb.options.length; i++){
-        if(cmb.options[i].value == dashboard.wallpaper){
+        if(cmb.options[i].value == dashboard.wallpaper.pic){
             cmb.options.selectedIndex = i
         }
     }
 
-    function saveConfig(){
-
-        setConfig(localStorage.getItem('id_user'),'bar_back_color' , dashboard.bar_back_color)
-        setConfig(localStorage.getItem('id_user'),'bar_font_color' , dashboard.bar_font_color)
-        setConfig(localStorage.getItem('id_user'),'bar_mouse_color', dashboard.bar_mouse_color)
-        setConfig(localStorage.getItem('id_user'),'win_back_color' , dashboard.win_back_color)
-        setConfig(localStorage.getItem('id_user'),'win_font_color' , dashboard.win_font_color)
-        setConfig(localStorage.getItem('id_user'),'wallpaper',dashboard.wallpaper)
+    function saveWallpaper(){
+        dashboard.wallpaper.efect = document.querySelector('#cmbEfect').value
+        dashboard.wallpaper.color = document.querySelector('#edtFundo').value+ parseInt(document.querySelector('#rngBackColor').value).toString(16).padStart(2, "0")
+        setConfig('wallpaper',JSON.stringify(dashboard.wallpaper))
+        main_data.dashboard.func.wallpaper()
     }
 
     document.querySelector('#up_file').addEventListener('change',()=>{
-        const up = uploadImage('up_file',`assets/users/${localStorage.getItem('id_user')}/`,'wallpaper')
+        const up = uploadImage('up_file',`config/user/${localStorage.getItem('id_user')}/`,'wallpaper')
         up.then((resp)=>{
-            dashboard.wallpaper = `assets/users/${localStorage.getItem('id_user')}/${resp}`
+            dashboard.wallpaper.pic = `config/user/${localStorage.getItem('id_user')}/${resp}`
             main_data.dashboard.func.wallpaper()
-            saveConfig()
-            loadImg(`assets/users/${localStorage.getItem('id_user')}/${resp}`)
+            setConfig('wallpaper', JSON.stringify(dashboard.wallpaper))
+            loadImg(`config/user/${localStorage.getItem('id_user')}/${resp}`)
         })
     })
 
     document.querySelector('#cmbWallpaper').addEventListener('change',()=>{
-        const cmb = document.querySelector('#cmbWallpaper')
-        loadImg(cmb.value)
-
-        dashboard.wallpaper = cmb.value
-        saveConfig()
-        main_data.dashboard.func.wallpaper()
-//        setConfig(localStorage.getItem('id_user'),'wallpaper',cmb.value)
+        const cmb = document.querySelector('#cmbWallpaper').value
+        loadImg(cmb)
+        dashboard.wallpaper.pic = cmb
+        saveWallpaper()
     })
+
+    document.querySelector('#edtFundo').addEventListener('change',()=>{
+        saveWallpaper()
+    })
+
+    document.querySelector('#rngBackColor').addEventListener('change',()=>{
+        saveWallpaper()
+    })
+
+    document.querySelector('#cmbEfect').addEventListener('change',()=>{
+        saveWallpaper()
+    })
+
+    document.querySelector('#cmbSize').addEventListener('change',()=>{        
+        switch(document.querySelector('#cmbSize').value){
+            case '1': // Normal
+                dashboard.wallpaper.repeat = 'no-repeat'
+                dashboard.wallpaper.size = 'inherit'
+                break
+            case '2': // Tela Cheia
+                dashboard.wallpaper.repeat = 'no-repeat'
+                dashboard.wallpaper.size = 'cover'
+                break
+            case '3': // Repetir
+                dashboard.wallpaper.repeat = 'repeat'
+                dashboard.wallpaper.size = 'inherit'
+                break
+            case '4': // Grande
+                dashboard.wallpaper.repeat = 'no-repeat'
+                dashboard.wallpaper.size = 'contain'
+        }
+        saveWallpaper()
+    })
+
 
     document.querySelector('#btnSave').addEventListener('click',()=>{
 
         try{
+            dashboard.colors.bar_back_color = document.querySelector('#edtBarColor').value + parseInt(document.querySelector('#rngBarColor').value).toString(16).padStart(2, "0")
+            dashboard.colors.bar_font_color = document.querySelector('#edtBarFontColor').value + parseInt(document.querySelector('#rngFontColor').value).toString(16).padStart(2, "0")
+            dashboard.colors.bar_mouse_color = document.querySelector('#edtBarMouse').value + parseInt(document.querySelector('#rngBarMouse').value).toString(16).padStart(2, "0")
+            dashboard.colors.win_back_color = document.querySelector('#edtWinColor').value + parseInt(document.querySelector('#rngWinColor').value).toString(16).padStart(2, "0")
+            dashboard.colors.win_font_color = document.querySelector('#edtWinFontColor').value + parseInt(document.querySelector('#rngWinFontColor').value).toString(16).padStart(2, "0")
 
-            dashboard.bar_back_color = document.querySelector('#edtBarColor').value + parseInt(document.querySelector('#rngBarColor').value).toString(16).padStart(2, "0")
-            dashboard.bar_font_color = document.querySelector('#edtBarFontColor').value + parseInt(document.querySelector('#rngFontColor').value).toString(16).padStart(2, "0")
-            dashboard.bar_mouse_color = document.querySelector('#edtBarMouse').value + parseInt(document.querySelector('#rngBarMouse').value).toString(16).padStart(2, "0")
-            dashboard.win_back_color = document.querySelector('#edtWinColor').value + parseInt(document.querySelector('#rngWinColor').value).toString(16).padStart(2, "0")
-            dashboard.win_font_color = document.querySelector('#edtWinFontColor').value + parseInt(document.querySelector('#rngWinFontColor').value).toString(16).padStart(2, "0")
-
-            saveConfig()
-
+            setConfig('colors' , JSON.stringify(dashboard.colors))
             main_data.dashboard.func.setBarStyle()
-            
             closeModal('usr_config')
-
         }catch{
             console.log('Error!!')
         } 
-
-
     })
-
 
 </script>

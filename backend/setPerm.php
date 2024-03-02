@@ -22,7 +22,5 @@
             var_dump($menu['menu']);
             return file_put_contents($path, json_encode($menu));
         }
-
     }
- 
 ?>

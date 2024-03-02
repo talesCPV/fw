@@ -1,10 +1,17 @@
 <?php   
-	if (IsSet($_POST["field"])){
-        $path = getcwd().'/../config/'.$_POST["file"];
+	if (IsSet($_POST["user"]) && IsSet($_POST["field"]) && IsSet($_POST["file"])){
+        
+        $path = getcwd().'/../config/user/'.$_POST["user"].'/';
         $field = $_POST["field"];
-        $order = $_POST["order"];
-        $value = $_POST["value"];      
-        if (file_exists($path)) {          
+
+        if (!file_exists($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        $path = $path.$_POST["file"];
+
+        if (file_exists($path)) {
+
             $fp = fopen($path, "r");
             $txt = "";
             while (!feof ($fp)) {
@@ -14,19 +21,13 @@
             $json = json_decode($txt); 
 
             if(property_exists($json, $field)){
-                if($order == 'read'){
-//                    echo $json->$field .'|';
-                    $out =$json->$field;
-                    print json_encode($out);
-                }else{ 
-                    if(!property_exists($json, $field)){
-                        $json->$field = new class{};
-                    }               
-                    $json->$field->$order = $value;                                        
-                    return file_put_contents($path, json_encode($json));
-                }    
+                print json_encode($json->$field);
             }
-        }        
-    }
 
+        }else{
+            $myfile = fopen($path, "w");
+            fwrite($myfile, "{}");
+            fclose($myfile);
+        }
+    }
 ?>

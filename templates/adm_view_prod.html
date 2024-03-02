@@ -147,7 +147,7 @@
             params.field = 'id'
             params.signal = '>='
             params.value = '1'
-        const myPromisse = queryDB(params,'ADM-7');
+        const myPromisse = queryDB(params,'ADM-5');
         myPromisse.then((resolve)=>{
             const json = JSON.parse(resolve)
             const cmb = document.querySelector('#cmdUnd')
@@ -171,6 +171,7 @@
             openFields(1)
             document.querySelector('#btnDel').disabled = 1
             document.querySelector('#btnEdit').disabled = 1
+            document.querySelector('#up_file').disabled = 1
         }else{
             document.querySelector('#edtDesc').value = pageData.descricao
             document.querySelector('#edtCodFW').value = pageData.cod_int

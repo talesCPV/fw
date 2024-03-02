@@ -59,8 +59,8 @@
 </template>
 <script>
 
-    const pageData = main_data.adm_view_user.data
-    const pageFunc = main_data.adm_view_user.func
+    const pageData = main_data.sys_view_user.data
+    const pageFunc = main_data.sys_view_user.func
 
     pageFunc.fillData = ()=>{
         if(parseInt(pageData.id)>0){
@@ -75,21 +75,21 @@
         const message = email=='' ? 'Deleção de usuário' : id>0 ? 'Alteração de usuário' : 'Inserção de novo usuários' 
 
         const params = new Object
-                params.id = id
-                params.email = email
-                params.pass = document.querySelector('#edtPass').value.trim()
-                params.acesso = document.querySelector('#cmbPerfil').value
+            params.id = id
+            params.email = email
+            params.pass = document.querySelector('#edtPass').value.trim()
+            params.acesso = document.querySelector('#cmbPerfil').value
         
-            const myPromisse = queryDB(params,'USR-1');
-            myPromisse.then((resolve)=>{
-                setLog(`${message}, email:${pageData.email} -> ${params.email}, acesso:${pageData.access} -> ${params.acesso}`)                
-                try{
-                    main_data.adm_usuarios.func.fillUser()
-                }catch{
-                    console.error('Tela fechada pelo usuário!')
-                }
-                closeModal('adm_view_user')
-            })
+        const myPromisse = queryDB(params,'USR-1');
+        myPromisse.then((resolve)=>{
+            setLog(`${message}, email:${pageData.email} -> ${params.email}, acesso:${pageData.access} -> ${params.acesso}`)                
+            try{
+                main_data.sys_usuarios.func.fillUser()
+            }catch{
+                console.error('Tela fechada pelo usuário!')
+            }
+            closeModal('sys_view_user')
+        })
     }
 
     pageFunc.fillPerm = ()=>{
@@ -100,7 +100,7 @@
             params.field = 'nome'
             params.signal = 'LIKE'
             params.value = "'%%'"
-        const myPromisse = queryDB(params,'ADM-5');
+        const myPromisse = queryDB(params,'SYS-1');
         myPromisse.then((resolve)=>{
             const json = JSON.parse(resolve)
 
@@ -111,7 +111,6 @@
                 opt.selected = pageData.access == id 
                 cmb.appendChild(opt)
             }
-
 
             if(pageData.access=='0'){
                 addOpt(0,'ADMINISTRADOR ROOT')
@@ -143,7 +142,6 @@
             pageFunc.setUser(id,'')
         }        
     })
-
 
     pageFunc.fillData()
     pageFunc.fillPerm()

@@ -31,8 +31,8 @@
 </template>
 <script>
 
-    const pageData = main_data.adm_usuarios.data
-    const pageFunc = main_data.adm_usuarios.func
+    const pageData = main_data.sys_usuarios.data
+    const pageFunc = main_data.sys_usuarios.func
   
     pageFunc.fillUser = ()=>{      
         const tbl = document.getElementById('tblUser')
@@ -59,18 +59,18 @@
     })
 
     document.querySelector('#btnNovoUser').addEventListener('click',()=>{
-        openHTML('adm_view_user.html','pop-up','Novo Usuario',{'id':'0'},800)
+        openHTML('sys_view_user.html','pop-up','Novo Usuario',{'id':'0'},800)
     })
     
 
     document.querySelector('#tblUser').addEventListener('click',(e)=>{
         data = e.target.parentNode.data
         try{
-            if(main_data.hasOwnProperty('adm_view_user')){
-                closeModal('adm_view_user')
+            if(main_data.hasOwnProperty('sys_view_user')){
+                closeModal('sys_view_user')
             }
             data.mode = 'edit'
-            data != undefined ? openHTML('adm_view_user.html','pop-up','Editar Usuario',data,800) : null
+            data != undefined ? openHTML('sys_view_user.html','pop-up','Editar Usuario',data,800) : null
         }catch{
             null
         }

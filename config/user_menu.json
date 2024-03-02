@@ -11,7 +11,7 @@
                 "access":[-1],
                 "itens":[
                     {
-                        "modulo":"Perfil",
+                        "modulo":"Usuário",
                         "icone":"mdi mdi-account",
                         "link":"usr_viewUser.html",
                         "janela":"pop-up",

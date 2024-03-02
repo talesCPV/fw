@@ -69,13 +69,10 @@
 			$st1 = -1;
 		}
 
-		
-
 		$word[23] = shift("#",floor($size / 2),1); 
 		$word[36] = shift("g",ceil($size / 2),-1);
 		$word[28] = chr($ch1);
 		$word[11] = chr($ch2);
-
 
 		for($i=0; $i<$size;$i++){
 
@@ -87,8 +84,6 @@
 		}
 
 		return($word);
-
-
 //		return trim($word);
 
 	};
@@ -142,7 +137,6 @@
 		return($word);
 //		return trim($word);
 		
-
 	};
 
 	if (IsSet($_POST ["std"])){
@@ -156,6 +150,5 @@
 		}
 
 	}
-
 
 ?>

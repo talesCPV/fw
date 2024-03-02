@@ -47,9 +47,9 @@
         myPromisse.then((resolve)=>{
             const json = JSON.parse(resolve)
             tbl.style.display = json.length > 0 ? 'inline-table' : 'none'
-            tbl.head('Descrição|w70,Und.,Reserv.,Estq.,Disp.')
+            tbl.head('Descrição|w70,Und.,Estq.,Reserv.,Disp.')
             for(let i=0; i<json.length;i++){
-                tbl.plot(json[i],'descricao,und,reserva,estoque,disponivel','str,Upp,str,str,str')
+                tbl.plot(json[i],'descricao,und,estoque,reserva,disponivel','str,Upp,str,str,str')
             }         
         });
     }
