@@ -45,7 +45,24 @@
         color: #16a083;
         background-color: #ffffff;
       }
+/* Edit + Button */
 
+      .edtbtn{
+        display: flex;
+        width: 100%;
+        padding: 10px;
+        gap: 5px;
+      }
+
+      .edtbtn *{
+        margin: 0;
+      }
+
+      .edtbtn button{
+        font-size: 1.8em;
+        padding: 0;
+        width: 45px;
+      }
 
 /* FIELDSET BUSCA */
 

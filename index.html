@@ -15,7 +15,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.2.3/jspdf.plugin.autotable.min.js"></script>
 
-
     <!-- Internal CDNs -->    
     <script src="scripts/main.js"></script>
     <script src="scripts/backend.js"></script>
@@ -23,8 +22,6 @@
     <script src="scripts/prototype.js"></script>
     <script src="scripts/validation.js"></script>
     <script src="scripts/js_pdf.js"></script>
-    
-
     
     <title>FW Tecnologia</title>
 </head>
@@ -43,6 +40,10 @@
     }else{
         openHTML('login.html','main-screen')
     }
+
+    document.querySelector('html').addEventListener('contextmenu',(e)=>{
+        e.preventDefault()
+    })
 
 </script>
 </html>

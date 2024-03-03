@@ -26,7 +26,10 @@
 
         <div class="inline">
             <label for="edtIcon">Icone</label>
-            <input type="text" id="edtIcon">
+            <div class="edtbtn">
+                <input type="text" id="edtIcon" readonly>
+                <button id="btnIcon"><span class="mdi mdi-image-search-outline"></span></button>                
+            </div>
         </div>
 
         <div class="inline">
@@ -146,5 +149,8 @@
         }
     })
 
+    document.querySelector('#btnIcon').addEventListener('click',()=>{
+        openHTML('sys_icons.html','pop-up','Busca de Icones',{},600)
+    })
 
 </script>

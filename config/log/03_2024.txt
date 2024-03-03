@@ -9,3 +9,11 @@
 02/03/2024 03:41 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Comercial, Acesso:[[0]])
 02/03/2024 03:41 admin@fwtecnologia.com.br : Permissao alterada, Modulo: Engenharia, Acesso:[[0,1,10]])
 02/03/2024 03:41 admin@fwtecnologia.com.br : Produto RESERVADO -> Parafuso : 1000 UND
+03/03/2024 01:51 admin@fwtecnologia.com.br : Menu Alterado (Projetos, sys_icons.html, pop-up, )
+03/03/2024 03:18 admin@fwtecnologia.com.br : Menu Alterado (Projetos, sys_icons.html, pop-up, )
+03/03/2024 03:21 admin@fwtecnologia.com.br : Menu Alterado (Projetos, sys_icons.html, pop-up, )
+03/03/2024 03:21 admin@fwtecnologia.com.br : Menu Alterado (Projetos, none, pop-up, )
+03/03/2024 03:23 admin@fwtecnologia.com.br : Menu Alterado (Compras, none, pop-up, )
+03/03/2024 03:25 admin@fwtecnologia.com.br : Menu Alterado (Vendas, none, pop-up, )
+03/03/2024 03:25 admin@fwtecnologia.com.br : Menu Alterado (Contatos, none, pop-up, )
+03/03/2024 03:28 admin@fwtecnologia.com.br : Menu Alterado (Apontamento, none, pop-up, )
